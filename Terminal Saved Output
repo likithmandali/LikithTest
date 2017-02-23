@@ -1,0 +1,134 @@
+Last login: Tue Oct 11 22:20:50 on ttys000
+Likiths-MBP:~ likithmandali$ vi test.sh
+Likiths-MBP:~ likithmandali$ ./test.sh
+-bash: ./test.sh: Permission denied
+Likiths-MBP:~ likithmandali$ chmod 755 test.sh
+Likiths-MBP:~ likithmandali$ ./test.sh
+Hello World
+likithmandali
+Likiths-MBP:~ likithmandali$ pwd
+/Users/likithmandali
+Likiths-MBP:~ likithmandali$ ls -ltr
+total 8
+drwxr-xr-x+    4 likithmandali  staff    136 Mar 20  2013 Public
+drwxr-xr-x     2 likithmandali  staff     68 Oct  7  2013 1
+drwxr-xr-x     4 likithmandali  staff    136 Oct  7  2013 test
+drwx------     3 likithmandali  staff    102 May 28  2014 Applications
+drwx------+   16 likithmandali  staff    544 Jul 27  2014 Movies
+drwx------+   17 likithmandali  staff    578 Mar 14  2016 Music
+drwx------@   23 likithmandali  staff    782 May 10 18:10 Desktop
+drwx------+ 1327 likithmandali  staff  45118 Aug 19 20:06 Pictures
+drwxr-xr-x@   41 likithmandali  staff   1394 Sep 28 00:05 Documents
+drwx------@   17 likithmandali  staff    578 Oct 10 00:37 Dropbox
+drwx------@   67 likithmandali  staff   2278 Oct 13 21:06 Library
+drwx------+  172 likithmandali  staff   5848 Oct 14 18:59 Downloads
+-rwxr-xr-x     1 likithmandali  staff     45 Oct 14 19:02 test.sh
+Likiths-MBP:~ likithmandali$ rm -rf test.sh 
+Likiths-MBP:~ likithmandali$ cd test/
+Likiths-MBP:test likithmandali$ ls
+2	test
+Likiths-MBP:test likithmandali$ ls -ltr
+total 0
+drwxr-xr-x  2 likithmandali  staff  68 Oct  7  2013 test
+drwxr-xr-x  2 likithmandali  staff  68 Oct  7  2013 2
+Likiths-MBP:test likithmandali$ cd test/
+Likiths-MBP:test likithmandali$ ls
+Likiths-MBP:test likithmandali$ ls -ltr
+Likiths-MBP:test likithmandali$ pwd
+/Users/likithmandali/test/test
+Likiths-MBP:test likithmandali$ ls
+Likiths-MBP:test likithmandali$ vi test1.sh
+Likiths-MBP:test likithmandali$ ls
+Likiths-MBP:test likithmandali$ vi test1.sh
+Likiths-MBP:test likithmandali$ ls -ltr
+total 8
+-rw-r--r--  1 likithmandali  staff  33 Oct 31 20:02 test1.sh
+Likiths-MBP:test likithmandali$ chmod +x test1.sh 
+Likiths-MBP:test likithmandali$ ls -ltr
+total 8
+-rwxr-xr-x  1 likithmandali  staff  33 Oct 31 20:02 test1.sh
+Likiths-MBP:test likithmandali$ chmod u+x test1.sh 
+Likiths-MBP:test likithmandali$ ls -ltr
+total 8
+-rwxr-xr-x  1 likithmandali  staff  33 Oct 31 20:02 test1.sh
+Likiths-MBP:test likithmandali$ ./test1.sh 
+Hello World
+Likiths-MBP:test likithmandali$ which datecp
+Likiths-MBP:test likithmandali$ ls 
+test1.sh
+Likiths-MBP:test likithmandali$ touch /bin
+touch: /bin: Operation not permitted
+Likiths-MBP:test likithmandali$ mkdir bin
+Likiths-MBP:test likithmandali$ touch ~/bin/datecp
+touch: /Users/likithmandali/bin/datecp: No such file or directory
+Likiths-MBP:test likithmandali$ ls
+bin		test1.sh
+Likiths-MBP:test likithmandali$ cd bin
+Likiths-MBP:bin likithmandali$ touch datecp
+Likiths-MBP:bin likithmandali$ ls
+datecp
+Likiths-MBP:bin likithmandali$ chmod u+x datecp
+Likiths-MBP:bin likithmandali$ nano datecp
+
+  GNU nano 2.0.6                                                    File: datecp                                                                                                    Modified  
+
+#!/bin/bash
+
+# This will copy a file, appending the date and time
+# to the end of the file name. 
+
+date +%m_%d_%y-%H.%M.%S
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                     [ Unknown Command ]
+^G Get Help                    ^O WriteOut                    ^R Read File                   ^Y Prev Page                   ^K Cut Text                    ^C Cur Pos
+^X Exit                        ^J Justify                     ^W Where Is                    ^V Next Page                   ^U UnCut Text                  ^T To Spell
