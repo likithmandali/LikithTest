@@ -2,3 +2,5 @@
 
 print "hi, liki!"
 
+print "test"
+
