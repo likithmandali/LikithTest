@@ -1,3 +1,46 @@
+npm audit fix
+
+added 3 packages, removed 1 package, changed 8 packages, and audited 387 packages in 6s
+
+88 packages are looking for funding
+  run `npm fund` for details
+
+# npm audit report
+
+brace-expansion  <=5.0.7
+Severity: high
+brace-expansion: DoS via unbounded expansion length causing an out-of-memory process crash - https://github.com/advisories/GHSA-mh99-v99m-4gvg
+No fix available
+node_modules/brace-expansion
+  minimatch  2.0.0 - 10.0.2
+  Depends on vulnerable versions of brace-expansion
+  node_modules/minimatch
+    dotgitignore  >=1.0.3
+    Depends on vulnerable versions of minimatch
+    node_modules/dotgitignore
+      commit-and-tag-version  *
+      Depends on vulnerable versions of dotgitignore
+      node_modules/commit-and-tag-version
+
+4 high severity vulnerabilities
+
+Some issues need review, and may require choosing
+a different dependency.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #8 [3/7] RUN npm install -g npm@latest
 #8 0.624 npm error code EBADENGINE
 #8 0.624 npm error engine Unsupported engine
