@@ -1,0 +1,1314 @@
+$ poetry show --tree
+ai-server-sdk 0.0.17 Utility package to connect to AI Server instances.
+├── jsonpickle *
+├── pandas *
+│   ├── numpy >=1.26.0 
+│   ├── numpy >=1.23.2 (circular dependency aborted here)
+│   ├── python-dateutil >=2.8.2 
+│   │   └── six >=1.5 
+│   ├── pytz >=2020.1 
+│   └── tzdata >=2022.7 
+└── requests *
+    ├── certifi >=2023.5.7 
+    ├── charset-normalizer >=2,<4 
+    ├── idna >=2.5,<4 
+    └── urllib3 >=1.26,<3 
+aiofiles 25.1.0 File support for asyncio.
+aiohttp 3.13.5 Async http client/server framework (asyncio)
+├── aiohappyeyeballs >=2.5.0
+├── aiosignal >=1.4.0
+│   ├── frozenlist >=1.1.0 
+│   └── typing-extensions >=4.2 
+├── attrs >=17.3.0
+├── frozenlist >=1.1.1
+├── multidict >=4.5,<7.0
+├── propcache >=0.2.0
+└── yarl >=1.17.0,<2.0
+    ├── idna >=2.0 
+    ├── multidict >=4.0 
+    └── propcache >=0.2.1 
+anyio 3.7.1 High level compatibility layer for multiple asynchronous event loop implementations
+├── idna >=2.8
+└── sniffio >=1.1
+bandit 1.9.2 Security oriented static analyser for python code.
+├── colorama >=0.3.9
+├── pyyaml >=5.3.1
+├── rich *
+│   ├── markdown-it-py >=2.2.0 
+│   │   └── mdurl >=0.1,<1.0 
+│   └── pygments >=2.13.0,<3.0.0 
+└── stevedore >=1.20.0
+bcrypt 4.3.0 Modern password hashing for your software and your servers
+black 26.3.1 The uncompromising code formatter.
+├── click >=8.0.0
+│   └── colorama * 
+├── mypy-extensions >=0.4.3
+├── packaging >=22.0
+├── pathspec >=1.0.0
+├── platformdirs >=2
+└── pytokens >=0.4.0,<0.5.0
+boto3 1.42.6 The AWS SDK for Python
+├── botocore >=1.42.6,<1.43.0
+│   ├── jmespath >=0.7.1,<2.0.0 
+│   ├── python-dateutil >=2.1,<3.0.0 
+│   │   └── six >=1.5 
+│   └── urllib3 >=1.25.4,<2.2.0 || >2.2.0,<3 
+├── jmespath >=0.7.1,<2.0.0
+└── s3transfer >=0.16.0,<0.17.0
+    └── botocore >=1.37.4,<2.0a0 
+        ├── jmespath >=0.7.1,<2.0.0 
+        ├── python-dateutil >=2.1,<3.0.0 
+        │   └── six >=1.5 
+        └── urllib3 >=1.25.4,<2.2.0 || >2.2.0,<3 
+celery 5.6.0 Distributed Task Queue.
+├── billiard >=4.2.1,<5.0
+├── click >=8.1.2,<9.0
+│   └── colorama * 
+├── click-didyoumean >=0.3.0
+│   └── click >=7 
+│       └── colorama * 
+├── click-plugins >=1.1.1
+│   └── click >=4.0 
+│       └── colorama * 
+├── click-repl >=0.2.0
+│   ├── click >=7.0 
+│   │   └── colorama * 
+│   └── prompt-toolkit >=3.0.36 
+│       └── wcwidth * 
+├── exceptiongroup >=1.3.0
+│   └── typing-extensions >=4.6.0 
+├── kombu >=5.6.0
+│   ├── amqp >=5.1.1,<6.0.0 
+│   │   └── vine >=5.0.0,<6.0.0 
+│   ├── packaging * 
+│   ├── tzdata >=2025.2 
+│   └── vine 5.1.0 (circular dependency aborted here)
+├── python-dateutil >=2.8.2
+│   └── six >=1.5 
+├── tzlocal *
+│   └── tzdata * 
+└── vine >=5.1.0,<6.0
+certifi 2025.11.12 Python package for providing Mozilla's CA Bundle.
+chardet 5.2.0 Universal encoding detector for Python 3
+click 8.3.1 Composable command line interface toolkit
+└── colorama *
+colorama 0.4.6 Cross-platform colored terminal text.
+cryptography 46.0.6 cryptography is a package which provides cryptographic recipes and primitives to Python developers.
+└── cffi >=2.0.0
+    └── pycparser * 
+dj-database-url 2.3.0 Use Database URLs in your Django Application.
+├── django >=4.2
+│   ├── asgiref >=3.8.1 
+│   ├── sqlparse >=0.3.1 
+│   └── tzdata * 
+└── typing-extensions >=3.10.0.0
+django 5.2.12 A high-level Python web framework that encourages rapid development and clean, pragmatic design.
+├── asgiref >=3.8.1
+├── sqlparse >=0.3.1
+└── tzdata *
+django-stubs 4.2.7 Mypy stubs for Django
+├── django *
+│   ├── asgiref >=3.8.1 
+│   ├── sqlparse >=0.3.1 
+│   └── tzdata * 
+├── django-stubs-ext >=4.2.7
+│   ├── django * 
+│   │   ├── asgiref >=3.8.1 
+│   │   ├── sqlparse >=0.3.1 
+│   │   └── tzdata * 
+│   └── typing-extensions * 
+├── mypy >=1.7.0,<1.8.0
+│   ├── mypy-extensions >=1.0.0 
+│   └── typing-extensions >=4.1.0 
+├── types-pytz *
+├── types-pyyaml *
+└── typing-extensions *
+djlint 1.36.4 HTML Template Linter and Formatter
+├── click >=8.0.1
+│   └── colorama * 
+├── colorama >=0.4.4
+├── cssbeautifier >=1.14.4
+│   ├── editorconfig >=0.12.2 
+│   ├── jsbeautifier * 
+│   │   ├── editorconfig >=0.12.2 (circular dependency aborted here)
+│   │   └── six >=1.13.0 
+│   └── six >=1.13.0 (circular dependency aborted here)
+├── jsbeautifier >=1.14.4
+│   ├── editorconfig >=0.12.2 
+│   └── six >=1.13.0 
+├── json5 >=0.9.11
+├── pathspec >=0.12
+├── pyyaml >=6
+├── regex >=2023
+└── tqdm >=4.62.2
+    └── colorama * 
+docx2pdf 0.1.8 Convert docx to pdf on Windows or macOS directly using Microsoft Word (must be installed).
+├── appscript >=1.1.0
+│   └── lxml >=4.7.1 
+├── pywin32 >=227
+└── tqdm >=4.41.0
+    └── colorama * 
+fastapi 0.124.2 FastAPI framework, high performance, easy to learn, fast to code, ready for production
+├── annotated-doc >=0.0.2
+├── pydantic >=1.7.4,<1.8 || >1.8,<1.8.1 || >1.8.1,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0
+│   ├── annotated-types >=0.4.0 
+│   ├── email-validator >=2.0.0 
+│   │   ├── dnspython >=2.0.0 
+│   │   └── idna >=2.0.0 
+│   ├── pydantic-core 2.20.1 
+│   │   └── typing-extensions >=4.6.0,<4.7.0 || >4.7.0 
+│   ├── typing-extensions >=4.12.2 (circular dependency aborted here)
+│   └── typing-extensions >=4.6.1 (circular dependency aborted here)
+├── starlette >=0.40.0,<0.51.0
+│   ├── anyio >=3.6.2,<5 
+│   │   ├── idna >=2.8 
+│   │   └── sniffio >=1.1 
+│   └── typing-extensions >=4.10.0 
+└── typing-extensions >=4.8.0
+fastapi-sso 0.19.0 FastAPI plugin to enable SSO to most common providers (such as Facebook login, Google login and login via Microsoft Office 365 Account)
+├── fastapi >=0.80
+│   ├── annotated-doc >=0.0.2 
+│   ├── pydantic >=1.7.4,<1.8 || >1.8,<1.8.1 || >1.8.1,<2.0.0 || >2.0.0,<2.0.1 || >2.0.1,<2.1.0 || >2.1.0,<3.0.0 
+│   │   ├── annotated-types >=0.4.0 
+│   │   ├── email-validator >=2.0.0 
+│   │   │   ├── dnspython >=2.0.0 
+│   │   │   └── idna >=2.0.0 
+│   │   ├── pydantic-core 2.20.1 
+│   │   │   └── typing-extensions >=4.6.0,<4.7.0 || >4.7.0 
+│   │   ├── typing-extensions >=4.12.2 (circular dependency aborted here)
+│   │   └── typing-extensions >=4.6.1 (circular dependency aborted here)
+│   ├── starlette >=0.40.0,<0.51.0 
+│   │   ├── anyio >=3.6.2,<5 
+│   │   │   ├── idna >=2.8 (circular dependency aborted here)
+│   │   │   └── sniffio >=1.1 
+│   │   └── typing-extensions >=4.10.0 (circular dependency aborted here)
+│   └── typing-extensions >=4.8.0 (circular dependency aborted here)
+├── httpx >=0.23.0
+│   ├── anyio * 
+│   │   ├── idna >=2.8 
+│   │   └── sniffio >=1.1 
+│   ├── certifi * 
+│   ├── httpcore ==1.* 
+│   │   ├── certifi * (circular dependency aborted here)
+│   │   └── h11 >=0.16 
+│   └── idna * (circular dependency aborted here)
+├── oauthlib >=3.1.0
+├── pydantic >=1.8.0
+│   ├── annotated-types >=0.4.0 
+│   ├── email-validator >=2.0.0 
+│   │   ├── dnspython >=2.0.0 
+│   │   └── idna >=2.0.0 
+│   ├── pydantic-core 2.20.1 
+│   │   └── typing-extensions >=4.6.0,<4.7.0 || >4.7.0 
+│   ├── typing-extensions >=4.12.2 (circular dependency aborted here)
+│   └── typing-extensions >=4.6.1 (circular dependency aborted here)
+└── pyjwt >=2.10.1,<3.0.0
+fuzzywuzzy 0.18.0 Fuzzy string matching in python
+gunicorn 23.0.0 WSGI HTTP Server for UNIX
+└── packaging *
+h11 0.16.0 A pure-Python, bring-your-own-I/O implementation of HTTP/1.1
+httptools 0.7.1 A collection of framework independent HTTP protocol utils.
+idna 3.11 Internationalized Domain Names in Applications (IDNA)
+ipython 8.37.0 IPython: Productive Interactive Computing
+├── colorama *
+├── decorator *
+├── jedi >=0.16
+│   └── parso >=0.8.4,<0.9.0 
+├── matplotlib-inline *
+│   └── traitlets * 
+├── pexpect >4.3
+│   └── ptyprocess >=0.5 
+├── prompt-toolkit >=3.0.41,<3.1.0
+│   └── wcwidth * 
+├── pygments >=2.4.0
+├── stack-data *
+│   ├── asttokens >=2.1.0 
+│   ├── executing >=1.2.0 
+│   └── pure-eval * 
+├── traitlets >=5.13.0
+└── typing-extensions >=4.6
+jinja2 3.1.6 A very fast and expressive template engine.
+└── markupsafe >=2.0
+jupyter 1.1.1 Jupyter metapackage. Install all the Jupyter components in one go.
+├── ipykernel *
+│   ├── appnope >=0.1.2 
+│   ├── comm >=0.1.1 
+│   ├── debugpy >=1.6.5 
+│   ├── ipython >=7.23.1 
+│   │   ├── colorama * 
+│   │   ├── decorator * 
+│   │   ├── jedi >=0.16 
+│   │   │   └── parso >=0.8.4,<0.9.0 
+│   │   ├── matplotlib-inline * 
+│   │   │   └── traitlets * 
+│   │   ├── pexpect >4.3 
+│   │   │   └── ptyprocess >=0.5 
+│   │   ├── prompt-toolkit >=3.0.41,<3.1.0 
+│   │   │   └── wcwidth * 
+│   │   ├── pygments >=2.4.0 
+│   │   ├── stack-data * 
+│   │   │   ├── asttokens >=2.1.0 
+│   │   │   ├── executing >=1.2.0 
+│   │   │   └── pure-eval * 
+│   │   ├── traitlets >=5.13.0 (circular dependency aborted here)
+│   │   └── typing-extensions >=4.6 
+│   ├── jupyter-client >=8.0.0 
+│   │   ├── jupyter-core >=5.1 
+│   │   │   ├── platformdirs >=2.5 
+│   │   │   └── traitlets >=5.3 (circular dependency aborted here)
+│   │   ├── python-dateutil >=2.8.2 
+│   │   │   └── six >=1.5 
+│   │   ├── pyzmq >=25.0 
+│   │   │   └── cffi * 
+│   │   │       └── pycparser * 
+│   │   ├── tornado >=6.4.1 
+│   │   └── traitlets >=5.3 (circular dependency aborted here)
+│   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   ├── matplotlib-inline >=0.1 (circular dependency aborted here)
+│   ├── nest-asyncio >=1.4 
+│   ├── packaging >=22 
+│   ├── psutil >=5.7 
+│   ├── pyzmq >=25 (circular dependency aborted here)
+│   ├── tornado >=6.2 (circular dependency aborted here)
+│   └── traitlets >=5.4.0 (circular dependency aborted here)
+├── ipywidgets *
+│   ├── comm >=0.1.3 
+│   ├── ipython >=6.1.0 
+│   │   ├── colorama * 
+│   │   ├── decorator * 
+│   │   ├── jedi >=0.16 
+│   │   │   └── parso >=0.8.4,<0.9.0 
+│   │   ├── matplotlib-inline * 
+│   │   │   └── traitlets * 
+│   │   ├── pexpect >4.3 
+│   │   │   └── ptyprocess >=0.5 
+│   │   ├── prompt-toolkit >=3.0.41,<3.1.0 
+│   │   │   └── wcwidth * 
+│   │   ├── pygments >=2.4.0 
+│   │   ├── stack-data * 
+│   │   │   ├── asttokens >=2.1.0 
+│   │   │   ├── executing >=1.2.0 
+│   │   │   └── pure-eval * 
+│   │   ├── traitlets >=5.13.0 (circular dependency aborted here)
+│   │   └── typing-extensions >=4.6 
+│   ├── jupyterlab-widgets >=3.0.15,<3.1.0 
+│   ├── traitlets >=4.3.1 (circular dependency aborted here)
+│   └── widgetsnbextension >=4.0.14,<4.1.0 
+├── jupyter-console *
+│   ├── ipykernel >=6.14 
+│   │   ├── appnope >=0.1.2 
+│   │   ├── comm >=0.1.1 
+│   │   ├── debugpy >=1.6.5 
+│   │   ├── ipython >=7.23.1 
+│   │   │   ├── colorama * 
+│   │   │   ├── decorator * 
+│   │   │   ├── jedi >=0.16 
+│   │   │   │   └── parso >=0.8.4,<0.9.0 
+│   │   │   ├── matplotlib-inline * 
+│   │   │   │   └── traitlets * 
+│   │   │   ├── pexpect >4.3 
+│   │   │   │   └── ptyprocess >=0.5 
+│   │   │   ├── prompt-toolkit >=3.0.41,<3.1.0 
+│   │   │   │   └── wcwidth * 
+│   │   │   ├── pygments >=2.4.0 
+│   │   │   ├── stack-data * 
+│   │   │   │   ├── asttokens >=2.1.0 
+│   │   │   │   ├── executing >=1.2.0 
+│   │   │   │   └── pure-eval * 
+│   │   │   ├── traitlets >=5.13.0 (circular dependency aborted here)
+│   │   │   └── typing-extensions >=4.6 
+│   │   ├── jupyter-client >=8.0.0 
+│   │   │   ├── jupyter-core >=5.1 
+│   │   │   │   ├── platformdirs >=2.5 
+│   │   │   │   └── traitlets >=5.3 (circular dependency aborted here)
+│   │   │   ├── python-dateutil >=2.8.2 
+│   │   │   │   └── six >=1.5 
+│   │   │   ├── pyzmq >=25.0 
+│   │   │   │   └── cffi * 
+│   │   │   │       └── pycparser * 
+│   │   │   ├── tornado >=6.4.1 
+│   │   │   └── traitlets >=5.3 (circular dependency aborted here)
+│   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   │   ├── matplotlib-inline >=0.1 (circular dependency aborted here)
+│   │   ├── nest-asyncio >=1.4 
+│   │   ├── packaging >=22 
+│   │   ├── psutil >=5.7 
+│   │   ├── pyzmq >=25 (circular dependency aborted here)
+│   │   ├── tornado >=6.2 (circular dependency aborted here)
+│   │   └── traitlets >=5.4.0 (circular dependency aborted here)
+│   ├── ipython * (circular dependency aborted here)
+│   ├── jupyter-client >=7.0.0 (circular dependency aborted here)
+│   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   ├── prompt-toolkit >=3.0.30 (circular dependency aborted here)
+│   ├── pygments * (circular dependency aborted here)
+│   ├── pyzmq >=17 (circular dependency aborted here)
+│   └── traitlets >=5.4 (circular dependency aborted here)
+├── jupyterlab *
+│   ├── async-lru >=1.0.0 
+│   ├── httpx >=0.25.0,<1 
+│   │   ├── anyio * 
+│   │   │   ├── idna >=2.8 
+│   │   │   └── sniffio >=1.1 
+│   │   ├── certifi * 
+│   │   ├── httpcore ==1.* 
+│   │   │   ├── certifi * (circular dependency aborted here)
+│   │   │   └── h11 >=0.16 
+│   │   └── idna * (circular dependency aborted here)
+│   ├── ipykernel >=6.5.0,<6.30.0 || >6.30.0 
+│   │   ├── appnope >=0.1.2 
+│   │   ├── comm >=0.1.1 
+│   │   ├── debugpy >=1.6.5 
+│   │   ├── ipython >=7.23.1 
+│   │   │   ├── colorama * 
+│   │   │   ├── decorator * 
+│   │   │   ├── jedi >=0.16 
+│   │   │   │   └── parso >=0.8.4,<0.9.0 
+│   │   │   ├── matplotlib-inline * 
+│   │   │   │   └── traitlets * 
+│   │   │   ├── pexpect >4.3 
+│   │   │   │   └── ptyprocess >=0.5 
+│   │   │   ├── prompt-toolkit >=3.0.41,<3.1.0 
+│   │   │   │   └── wcwidth * 
+│   │   │   ├── pygments >=2.4.0 
+│   │   │   ├── stack-data * 
+│   │   │   │   ├── asttokens >=2.1.0 
+│   │   │   │   ├── executing >=1.2.0 
+│   │   │   │   └── pure-eval * 
+│   │   │   ├── traitlets >=5.13.0 (circular dependency aborted here)
+│   │   │   └── typing-extensions >=4.6 
+│   │   ├── jupyter-client >=8.0.0 
+│   │   │   ├── jupyter-core >=5.1 
+│   │   │   │   ├── platformdirs >=2.5 
+│   │   │   │   └── traitlets >=5.3 (circular dependency aborted here)
+│   │   │   ├── python-dateutil >=2.8.2 
+│   │   │   │   └── six >=1.5 
+│   │   │   ├── pyzmq >=25.0 
+│   │   │   │   └── cffi * 
+│   │   │   │       └── pycparser * 
+│   │   │   ├── tornado >=6.4.1 
+│   │   │   └── traitlets >=5.3 (circular dependency aborted here)
+│   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   │   ├── matplotlib-inline >=0.1 (circular dependency aborted here)
+│   │   ├── nest-asyncio >=1.4 
+│   │   ├── packaging >=22 
+│   │   ├── psutil >=5.7 
+│   │   ├── pyzmq >=25 (circular dependency aborted here)
+│   │   ├── tornado >=6.2 (circular dependency aborted here)
+│   │   └── traitlets >=5.4.0 (circular dependency aborted here)
+│   ├── jinja2 >=3.0.3 
+│   │   └── markupsafe >=2.0 
+│   ├── jupyter-core * (circular dependency aborted here)
+│   ├── jupyter-lsp >=2.0.0 
+│   │   └── jupyter-server >=1.1.2 
+│   │       ├── anyio >=3.1.0 (circular dependency aborted here)
+│   │       ├── argon2-cffi >=21.1 
+│   │       │   └── argon2-cffi-bindings * 
+│   │       │       ├── cffi >=1.0.1 (circular dependency aborted here)
+│   │       │       └── cffi >=2.0.0b1 (circular dependency aborted here)
+│   │       ├── jinja2 >=3.0.3 (circular dependency aborted here)
+│   │       ├── jupyter-client >=7.4.4 (circular dependency aborted here)
+│   │       ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   │       ├── jupyter-events >=0.11.0 
+│   │       │   ├── jsonschema >=4.18.0 
+│   │       │   │   ├── attrs >=22.2.0 
+│   │       │   │   ├── fqdn * 
+│   │       │   │   ├── idna * (circular dependency aborted here)
+│   │       │   │   ├── isoduration * 
+│   │       │   │   │   └── arrow >=0.15.0 
+│   │       │   │   │       ├── python-dateutil >=2.7.0 (circular dependency aborted here)
+│   │       │   │   │       └── tzdata * 
+│   │       │   │   ├── jsonpointer >1.13 
+│   │       │   │   ├── jsonschema-specifications >=2023.3.6 
+│   │       │   │   │   └── referencing >=0.31.0 
+│   │       │   │   │       ├── attrs >=22.2.0 (circular dependency aborted here)
+│   │       │   │   │       ├── rpds-py >=0.7.0 
+│   │       │   │   │       └── typing-extensions >=4.4.0 (circular dependency aborted here)
+│   │       │   │   ├── referencing >=0.28.4 (circular dependency aborted here)
+│   │       │   │   ├── rfc3339-validator * 
+│   │       │   │   │   └── six * (circular dependency aborted here)
+│   │       │   │   ├── rfc3986-validator >0.1.0 
+│   │       │   │   ├── rfc3987-syntax >=1.1.0 
+│   │       │   │   │   └── lark >=1.2.2 
+│   │       │   │   ├── rpds-py >=0.7.1 (circular dependency aborted here)
+│   │       │   │   ├── uri-template * 
+│   │       │   │   └── webcolors >=24.6.0 
+│   │       │   ├── packaging * (circular dependency aborted here)
+│   │       │   ├── python-json-logger >=2.0.4 
+│   │       │   ├── pyyaml >=5.3 
+│   │       │   ├── referencing * (circular dependency aborted here)
+│   │       │   ├── rfc3339-validator * (circular dependency aborted here)
+│   │       │   ├── rfc3986-validator >=0.1.1 (circular dependency aborted here)
+│   │       │   └── traitlets >=5.3 (circular dependency aborted here)
+│   │       ├── jupyter-server-terminals >=0.4.4 
+│   │       │   ├── pywinpty >=2.0.3 
+│   │       │   └── terminado >=0.8.3 
+│   │       │       ├── ptyprocess * (circular dependency aborted here)
+│   │       │       ├── pywinpty >=1.1.0 (circular dependency aborted here)
+│   │       │       └── tornado >=6.1.0 (circular dependency aborted here)
+│   │       ├── nbconvert >=6.4.4 
+│   │       │   ├── beautifulsoup4 * 
+│   │       │   │   ├── soupsieve >=1.6.1 
+│   │       │   │   └── typing-extensions >=4.0.0 (circular dependency aborted here)
+│   │       │   ├── bleach !=5.0.0 
+│   │       │   │   ├── tinycss2 >=1.1.0,<1.5 
+│   │       │   │   │   └── webencodings >=0.4 
+│   │       │   │   └── webencodings * (circular dependency aborted here)
+│   │       │   ├── defusedxml * 
+│   │       │   ├── jinja2 >=3.0 (circular dependency aborted here)
+│   │       │   ├── jupyter-core >=4.7 (circular dependency aborted here)
+│   │       │   ├── jupyterlab-pygments * 
+│   │       │   ├── markupsafe >=2.0 (circular dependency aborted here)
+│   │       │   ├── mistune >=2.0.3,<4 
+│   │       │   ├── nbclient >=0.5.0 
+│   │       │   │   ├── jupyter-client >=6.1.12 (circular dependency aborted here)
+│   │       │   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   │       │   │   ├── nbformat >=5.1 
+│   │       │   │   │   ├── fastjsonschema >=2.15 
+│   │       │   │   │   ├── jsonschema >=2.6 (circular dependency aborted here)
+│   │       │   │   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   │       │   │   │   └── traitlets >=5.1 (circular dependency aborted here)
+│   │       │   │   └── traitlets >=5.4 (circular dependency aborted here)
+│   │       │   ├── nbformat >=5.7 (circular dependency aborted here)
+│   │       │   ├── packaging * (circular dependency aborted here)
+│   │       │   ├── pandocfilters >=1.4.1 
+│   │       │   ├── pygments >=2.4.1 (circular dependency aborted here)
+│   │       │   └── traitlets >=5.1 (circular dependency aborted here)
+│   │       ├── nbformat >=5.3.0 (circular dependency aborted here)
+│   │       ├── overrides >=5.0 
+│   │       ├── packaging >=22.0 (circular dependency aborted here)
+│   │       ├── prometheus-client >=0.9 
+│   │       ├── pywinpty >=2.0.1 (circular dependency aborted here)
+│   │       ├── pyzmq >=24 (circular dependency aborted here)
+│   │       ├── send2trash >=1.8.2 
+│   │       ├── terminado >=0.8.3 (circular dependency aborted here)
+│   │       ├── tornado >=6.2.0 (circular dependency aborted here)
+│   │       ├── traitlets >=5.6.0 (circular dependency aborted here)
+│   │       └── websocket-client >=1.7 
+│   ├── jupyter-server >=2.4.0,<3 (circular dependency aborted here)
+│   ├── jupyterlab-server >=2.28.0,<3 
+│   │   ├── babel >=2.10 
+│   │   ├── jinja2 >=3.0.3 (circular dependency aborted here)
+│   │   ├── json5 >=0.9.0 
+│   │   ├── jsonschema >=4.18.0 (circular dependency aborted here)
+│   │   ├── jupyter-server >=1.21,<3 (circular dependency aborted here)
+│   │   ├── packaging >=21.3 (circular dependency aborted here)
+│   │   └── requests >=2.31 
+│   │       ├── certifi >=2023.5.7 (circular dependency aborted here)
+│   │       ├── charset-normalizer >=2,<4 
+│   │       ├── idna >=2.5,<4 (circular dependency aborted here)
+│   │       └── urllib3 >=1.26,<3 
+│   ├── notebook-shim >=0.2 
+│   │   └── jupyter-server >=1.8,<3 (circular dependency aborted here)
+│   ├── packaging * (circular dependency aborted here)
+│   ├── setuptools >=41.1.0 
+│   ├── tornado >=6.2.0 (circular dependency aborted here)
+│   └── traitlets * (circular dependency aborted here)
+├── nbconvert *
+│   ├── beautifulsoup4 * 
+│   │   ├── soupsieve >=1.6.1 
+│   │   └── typing-extensions >=4.0.0 
+│   ├── bleach !=5.0.0 
+│   │   ├── tinycss2 >=1.1.0,<1.5 
+│   │   │   └── webencodings >=0.4 
+│   │   └── webencodings * (circular dependency aborted here)
+│   ├── defusedxml * 
+│   ├── jinja2 >=3.0 
+│   │   └── markupsafe >=2.0 
+│   ├── jupyter-core >=4.7 
+│   │   ├── platformdirs >=2.5 
+│   │   └── traitlets >=5.3 
+│   ├── jupyterlab-pygments * 
+│   ├── markupsafe >=2.0 (circular dependency aborted here)
+│   ├── mistune >=2.0.3,<4 
+│   ├── nbclient >=0.5.0 
+│   │   ├── jupyter-client >=6.1.12 
+│   │   │   ├── jupyter-core >=5.1 (circular dependency aborted here)
+│   │   │   ├── python-dateutil >=2.8.2 
+│   │   │   │   └── six >=1.5 
+│   │   │   ├── pyzmq >=25.0 
+│   │   │   │   └── cffi * 
+│   │   │   │       └── pycparser * 
+│   │   │   ├── tornado >=6.4.1 
+│   │   │   └── traitlets >=5.3 (circular dependency aborted here)
+│   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   │   ├── nbformat >=5.1 
+│   │   │   ├── fastjsonschema >=2.15 
+│   │   │   ├── jsonschema >=2.6 
+│   │   │   │   ├── attrs >=22.2.0 
+│   │   │   │   ├── fqdn * 
+│   │   │   │   ├── idna * 
+│   │   │   │   ├── isoduration * 
+│   │   │   │   │   └── arrow >=0.15.0 
+│   │   │   │   │       ├── python-dateutil >=2.7.0 (circular dependency aborted here)
+│   │   │   │   │       └── tzdata * 
+│   │   │   │   ├── jsonpointer >1.13 
+│   │   │   │   ├── jsonschema-specifications >=2023.3.6 
+│   │   │   │   │   └── referencing >=0.31.0 
+│   │   │   │   │       ├── attrs >=22.2.0 (circular dependency aborted here)
+│   │   │   │   │       ├── rpds-py >=0.7.0 
+│   │   │   │   │       └── typing-extensions >=4.4.0 (circular dependency aborted here)
+│   │   │   │   ├── referencing >=0.28.4 (circular dependency aborted here)
+│   │   │   │   ├── rfc3339-validator * 
+│   │   │   │   │   └── six * (circular dependency aborted here)
+│   │   │   │   ├── rfc3986-validator >0.1.0 
+│   │   │   │   ├── rfc3987-syntax >=1.1.0 
+│   │   │   │   │   └── lark >=1.2.2 
+│   │   │   │   ├── rpds-py >=0.7.1 (circular dependency aborted here)
+│   │   │   │   ├── uri-template * 
+│   │   │   │   └── webcolors >=24.6.0 
+│   │   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+│   │   │   └── traitlets >=5.1 (circular dependency aborted here)
+│   │   └── traitlets >=5.4 (circular dependency aborted here)
+│   ├── nbformat >=5.7 (circular dependency aborted here)
+│   ├── packaging * 
+│   ├── pandocfilters >=1.4.1 
+│   ├── pygments >=2.4.1 
+│   └── traitlets >=5.1 (circular dependency aborted here)
+└── notebook *
+    ├── jupyter-server >=2.4.0,<3 
+    │   ├── anyio >=3.1.0 
+    │   │   ├── idna >=2.8 
+    │   │   └── sniffio >=1.1 
+    │   ├── argon2-cffi >=21.1 
+    │   │   └── argon2-cffi-bindings * 
+    │   │       ├── cffi >=1.0.1 
+    │   │       │   └── pycparser * 
+    │   │       └── cffi >=2.0.0b1 (circular dependency aborted here)
+    │   ├── jinja2 >=3.0.3 
+    │   │   └── markupsafe >=2.0 
+    │   ├── jupyter-client >=7.4.4 
+    │   │   ├── jupyter-core >=5.1 
+    │   │   │   ├── platformdirs >=2.5 
+    │   │   │   └── traitlets >=5.3 
+    │   │   ├── python-dateutil >=2.8.2 
+    │   │   │   └── six >=1.5 
+    │   │   ├── pyzmq >=25.0 
+    │   │   │   └── cffi * (circular dependency aborted here)
+    │   │   ├── tornado >=6.4.1 
+    │   │   └── traitlets >=5.3 (circular dependency aborted here)
+    │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+    │   ├── jupyter-events >=0.11.0 
+    │   │   ├── jsonschema >=4.18.0 
+    │   │   │   ├── attrs >=22.2.0 
+    │   │   │   ├── fqdn * 
+    │   │   │   ├── idna * (circular dependency aborted here)
+    │   │   │   ├── isoduration * 
+    │   │   │   │   └── arrow >=0.15.0 
+    │   │   │   │       ├── python-dateutil >=2.7.0 (circular dependency aborted here)
+    │   │   │   │       └── tzdata * 
+    │   │   │   ├── jsonpointer >1.13 
+    │   │   │   ├── jsonschema-specifications >=2023.3.6 
+    │   │   │   │   └── referencing >=0.31.0 
+    │   │   │   │       ├── attrs >=22.2.0 (circular dependency aborted here)
+    │   │   │   │       ├── rpds-py >=0.7.0 
+    │   │   │   │       └── typing-extensions >=4.4.0 
+    │   │   │   ├── referencing >=0.28.4 (circular dependency aborted here)
+    │   │   │   ├── rfc3339-validator * 
+    │   │   │   │   └── six * (circular dependency aborted here)
+    │   │   │   ├── rfc3986-validator >0.1.0 
+    │   │   │   ├── rfc3987-syntax >=1.1.0 
+    │   │   │   │   └── lark >=1.2.2 
+    │   │   │   ├── rpds-py >=0.7.1 (circular dependency aborted here)
+    │   │   │   ├── uri-template * 
+    │   │   │   └── webcolors >=24.6.0 
+    │   │   ├── packaging * 
+    │   │   ├── python-json-logger >=2.0.4 
+    │   │   ├── pyyaml >=5.3 
+    │   │   ├── referencing * (circular dependency aborted here)
+    │   │   ├── rfc3339-validator * (circular dependency aborted here)
+    │   │   ├── rfc3986-validator >=0.1.1 (circular dependency aborted here)
+    │   │   └── traitlets >=5.3 (circular dependency aborted here)
+    │   ├── jupyter-server-terminals >=0.4.4 
+    │   │   ├── pywinpty >=2.0.3 
+    │   │   └── terminado >=0.8.3 
+    │   │       ├── ptyprocess * 
+    │   │       ├── pywinpty >=1.1.0 (circular dependency aborted here)
+    │   │       └── tornado >=6.1.0 (circular dependency aborted here)
+    │   ├── nbconvert >=6.4.4 
+    │   │   ├── beautifulsoup4 * 
+    │   │   │   ├── soupsieve >=1.6.1 
+    │   │   │   └── typing-extensions >=4.0.0 (circular dependency aborted here)
+    │   │   ├── bleach !=5.0.0 
+    │   │   │   ├── tinycss2 >=1.1.0,<1.5 
+    │   │   │   │   └── webencodings >=0.4 
+    │   │   │   └── webencodings * (circular dependency aborted here)
+    │   │   ├── defusedxml * 
+    │   │   ├── jinja2 >=3.0 (circular dependency aborted here)
+    │   │   ├── jupyter-core >=4.7 (circular dependency aborted here)
+    │   │   ├── jupyterlab-pygments * 
+    │   │   ├── markupsafe >=2.0 (circular dependency aborted here)
+    │   │   ├── mistune >=2.0.3,<4 
+    │   │   ├── nbclient >=0.5.0 
+    │   │   │   ├── jupyter-client >=6.1.12 (circular dependency aborted here)
+    │   │   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+    │   │   │   ├── nbformat >=5.1 
+    │   │   │   │   ├── fastjsonschema >=2.15 
+    │   │   │   │   ├── jsonschema >=2.6 (circular dependency aborted here)
+    │   │   │   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+    │   │   │   │   └── traitlets >=5.1 (circular dependency aborted here)
+    │   │   │   └── traitlets >=5.4 (circular dependency aborted here)
+    │   │   ├── nbformat >=5.7 (circular dependency aborted here)
+    │   │   ├── packaging * (circular dependency aborted here)
+    │   │   ├── pandocfilters >=1.4.1 
+    │   │   ├── pygments >=2.4.1 
+    │   │   └── traitlets >=5.1 (circular dependency aborted here)
+    │   ├── nbformat >=5.3.0 (circular dependency aborted here)
+    │   ├── overrides >=5.0 
+    │   ├── packaging >=22.0 (circular dependency aborted here)
+    │   ├── prometheus-client >=0.9 
+    │   ├── pywinpty >=2.0.1 (circular dependency aborted here)
+    │   ├── pyzmq >=24 (circular dependency aborted here)
+    │   ├── send2trash >=1.8.2 
+    │   ├── terminado >=0.8.3 (circular dependency aborted here)
+    │   ├── tornado >=6.2.0 (circular dependency aborted here)
+    │   ├── traitlets >=5.6.0 (circular dependency aborted here)
+    │   └── websocket-client >=1.7 
+    ├── jupyterlab >=4.5.0rc0,<4.6 
+    │   ├── async-lru >=1.0.0 
+    │   ├── httpx >=0.25.0,<1 
+    │   │   ├── anyio * (circular dependency aborted here)
+    │   │   ├── certifi * 
+    │   │   ├── httpcore ==1.* 
+    │   │   │   ├── certifi * (circular dependency aborted here)
+    │   │   │   └── h11 >=0.16 
+    │   │   └── idna * (circular dependency aborted here)
+    │   ├── ipykernel >=6.5.0,<6.30.0 || >6.30.0 
+    │   │   ├── appnope >=0.1.2 
+    │   │   ├── comm >=0.1.1 
+    │   │   ├── debugpy >=1.6.5 
+    │   │   ├── ipython >=7.23.1 
+    │   │   │   ├── colorama * 
+    │   │   │   ├── decorator * 
+    │   │   │   ├── jedi >=0.16 
+    │   │   │   │   └── parso >=0.8.4,<0.9.0 
+    │   │   │   ├── matplotlib-inline * 
+    │   │   │   │   └── traitlets * (circular dependency aborted here)
+    │   │   │   ├── pexpect >4.3 
+    │   │   │   │   └── ptyprocess >=0.5 (circular dependency aborted here)
+    │   │   │   ├── prompt-toolkit >=3.0.41,<3.1.0 
+    │   │   │   │   └── wcwidth * 
+    │   │   │   ├── pygments >=2.4.0 (circular dependency aborted here)
+    │   │   │   ├── stack-data * 
+    │   │   │   │   ├── asttokens >=2.1.0 
+    │   │   │   │   ├── executing >=1.2.0 
+    │   │   │   │   └── pure-eval * 
+    │   │   │   ├── traitlets >=5.13.0 (circular dependency aborted here)
+    │   │   │   └── typing-extensions >=4.6 (circular dependency aborted here)
+    │   │   ├── jupyter-client >=8.0.0 (circular dependency aborted here)
+    │   │   ├── jupyter-core >=4.12,<5.0.dev0 || >=5.1.dev0 (circular dependency aborted here)
+    │   │   ├── matplotlib-inline >=0.1 (circular dependency aborted here)
+    │   │   ├── nest-asyncio >=1.4 
+    │   │   ├── packaging >=22 (circular dependency aborted here)
+    │   │   ├── psutil >=5.7 
+    │   │   ├── pyzmq >=25 (circular dependency aborted here)
+    │   │   ├── tornado >=6.2 (circular dependency aborted here)
+    │   │   └── traitlets >=5.4.0 (circular dependency aborted here)
+    │   ├── jinja2 >=3.0.3 (circular dependency aborted here)
+    │   ├── jupyter-core * (circular dependency aborted here)
+    │   ├── jupyter-lsp >=2.0.0 
+    │   │   └── jupyter-server >=1.1.2 (circular dependency aborted here)
+    │   ├── jupyter-server >=2.4.0,<3 (circular dependency aborted here)
+    │   ├── jupyterlab-server >=2.28.0,<3 
+    │   │   ├── babel >=2.10 
+    │   │   ├── jinja2 >=3.0.3 (circular dependency aborted here)
+    │   │   ├── json5 >=0.9.0 
+    │   │   ├── jsonschema >=4.18.0 (circular dependency aborted here)
+    │   │   ├── jupyter-server >=1.21,<3 (circular dependency aborted here)
+    │   │   ├── packaging >=21.3 (circular dependency aborted here)
+    │   │   └── requests >=2.31 
+    │   │       ├── certifi >=2023.5.7 (circular dependency aborted here)
+    │   │       ├── charset-normalizer >=2,<4 
+    │   │       ├── idna >=2.5,<4 (circular dependency aborted here)
+    │   │       └── urllib3 >=1.26,<3 
+    │   ├── notebook-shim >=0.2 
+    │   │   └── jupyter-server >=1.8,<3 (circular dependency aborted here)
+    │   ├── packaging * (circular dependency aborted here)
+    │   ├── setuptools >=41.1.0 
+    │   ├── tornado >=6.2.0 (circular dependency aborted here)
+    │   └── traitlets * (circular dependency aborted here)
+    ├── jupyterlab-server >=2.28.0,<3 (circular dependency aborted here)
+    ├── notebook-shim >=0.2,<0.3 (circular dependency aborted here)
+    └── tornado >=6.2.0 (circular dependency aborted here)
+jupyter-black 0.3.4 A simple extension for Jupyter Notebook and Jupyter Lab to beautify Python code automatically using Black. Fork of dnanhkhoa/nb_black.
+├── black >=21
+│   ├── click >=8.0.0 
+│   │   └── colorama * 
+│   ├── mypy-extensions >=0.4.3 
+│   ├── packaging >=22.0 
+│   ├── pathspec >=1.0.0 
+│   ├── platformdirs >=2 
+│   └── pytokens >=0.4.0,<0.5.0 
+├── ipython >=7
+│   ├── colorama * 
+│   ├── decorator * 
+│   ├── jedi >=0.16 
+│   │   └── parso >=0.8.4,<0.9.0 
+│   ├── matplotlib-inline * 
+│   │   └── traitlets * 
+│   ├── pexpect >4.3 
+│   │   └── ptyprocess >=0.5 
+│   ├── prompt-toolkit >=3.0.41,<3.1.0 
+│   │   └── wcwidth * 
+│   ├── pygments >=2.4.0 
+│   ├── stack-data * 
+│   │   ├── asttokens >=2.1.0 
+│   │   ├── executing >=1.2.0 
+│   │   └── pure-eval * 
+│   ├── traitlets >=5.13.0 (circular dependency aborted here)
+│   └── typing-extensions >=4.6 
+└── tokenize-rt >=4
+loguru 0.7.3 Python logging made (stupidly) simple
+├── colorama >=0.3.4
+└── win32-setctime >=1.0.0
+markdown 3.10 Python implementation of John Gruber's Markdown.
+mypy 1.7.1 Optional static typing for Python
+├── mypy-extensions >=1.0.0
+└── typing-extensions >=4.1.0
+numpy 1.26.4 Fundamental package for array computing in Python
+openpyxl 3.1.5 A Python library to read/write Excel 2010 xlsx/xlsm files
+└── et-xmlfile *
+pandas 2.3.3 Powerful data structures for data analysis, time series, and statistics
+├── numpy >=1.26.0
+├── numpy >=1.23.2
+├── python-dateutil >=2.8.2
+│   └── six >=1.5 
+├── pytz >=2020.1
+└── tzdata >=2022.7
+passlib 1.7.4 comprehensive password hashing framework supporting over 30 schemes
+pdfminer-six 20251107 PDF parser and analyzer
+├── charset-normalizer >=2.0.0
+└── cryptography >=36.0.0
+    └── cffi >=2.0.0 
+        └── pycparser * 
+pg8000 1.31.5 PostgreSQL interface library
+├── python-dateutil >=2.8.2
+│   └── six >=1.5 
+└── scramp >=1.4.5
+    └── asn1crypto >=1.5.1 
+pillow 12.1.1 Python Imaging Library (fork)
+pre-commit 3.8.0 A framework for managing and maintaining multi-language pre-commit hooks.
+├── cfgv >=2.0.0
+├── identify >=1.0.0
+├── nodeenv >=0.11.1
+├── pyyaml >=5.1
+└── virtualenv >=20.10.0
+    ├── distlib >=0.3.7,<1 
+    ├── filelock >=3.20.1,<4 
+    └── platformdirs >=3.9.1,<5 
+prompt-toolkit 3.0.52 Library for building powerful interactive command lines in Python
+└── wcwidth *
+psycopg 3.3.2 PostgreSQL database adapter for Python
+├── psycopg-binary 3.3.2
+├── psycopg-pool *
+│   └── typing-extensions >=4.6 
+├── typing-extensions >=4.6
+└── tzdata *
+psycopg2-binary 2.9.11 psycopg2 - Python-PostgreSQL Database Adapter
+pydantic 2.8.2 Data validation using Python type hints
+├── annotated-types >=0.4.0
+├── email-validator >=2.0.0
+│   ├── dnspython >=2.0.0 
+│   └── idna >=2.0.0 
+├── pydantic-core 2.20.1
+│   └── typing-extensions >=4.6.0,<4.7.0 || >4.7.0 
+├── typing-extensions >=4.12.2
+└── typing-extensions >=4.6.1
+pydub 0.25.1 Manipulate audio with an simple and easy high level interface
+pygments 2.20.0 Pygments is a syntax highlighting package written in Python.
+pyjwt 2.12.1 JSON Web Token implementation in Python
+pylint 2.17.7 python code static checker
+├── astroid >=2.15.8,<=2.17.0.dev0
+│   ├── lazy-object-proxy >=1.4.0 
+│   └── wrapt >=1.14,<2 
+├── colorama >=0.4.5
+├── dill >=0.3.6
+├── isort >=4.2.5,<6
+├── mccabe >=0.6,<0.8
+├── platformdirs >=2.2.0
+└── tomlkit >=0.10.1
+pypandoc 1.16.2 Thin wrapper for pandoc.
+pypandoc-binary 1.16.2 Thin wrapper for pandoc.
+pypdf 6.9.2 A pure-python PDF library capable of splitting, merging, cropping, and transforming PDF files
+pyshorteners 1.0.1 A Python lib to wrap and consume the most used shorteners APIs
+└── requests *
+    ├── certifi >=2023.5.7 
+    ├── charset-normalizer >=2,<4 
+    ├── idna >=2.5,<4 
+    └── urllib3 >=1.26,<3 
+python-dateutil 2.9.0.post0 Extensions to the standard Python datetime module
+└── six >=1.5
+python-decouple 3.8 Strict separation of settings from code.
+python-docx 0.8.11 Create and update Microsoft Word .docx files.
+└── lxml >=2.3.2
+python-dotenv 1.2.1 Read key-value pairs from a .env file and set them as environment variables
+python-jose 3.5.0 JOSE implementation in Python
+├── ecdsa !=0.15
+│   └── six >=1.9.0 
+├── pyasn1 >=0.5.0
+└── rsa >=4.0,<4.1.1 || >4.1.1,<4.4 || >4.4,<5.0
+    └── pyasn1 >=0.1.3 
+python-multipart 0.0.22 A streaming multipart parser for Python
+python-pptx 0.6.23 Generate and manipulate Open XML PowerPoint (.pptx) files
+├── lxml >=3.1.0
+├── pillow >=3.3.2
+└── xlsxwriter >=0.5.7
+pytz 2025.2 World timezone definitions, modern and historical
+pyyaml 6.0.3 YAML parser and emitter for Python
+rapidfuzz 3.14.3 rapid fuzzy string matching
+redis 5.3.1 Python client for Redis database and key-value store
+├── async-timeout >=4.0.3
+└── pyjwt >=2.9.0
+requests 2.33.1 Python HTTP for Humans.
+├── certifi >=2023.5.7
+├── charset-normalizer >=2,<4
+├── idna >=2.5,<4
+└── urllib3 >=1.26,<3
+ruff 0.6.9 An extremely fast Python linter and code formatter, written in Rust.
+setuptools 78.1.1 Easily download, build, install, upgrade, and uninstall Python packages
+six 1.17.0 Python 2 and 3 compatibility utilities
+sqlalchemy 2.0.45 Database Abstraction Library
+├── greenlet >=1
+└── typing-extensions >=4.6.0
+sqlalchemy-utils 0.42.0 Various utility functions for SQLAlchemy.
+└── sqlalchemy >=1.4
+    ├── greenlet >=1 
+    └── typing-extensions >=4.6.0 
+starlette 0.49.1 The little ASGI library that shines.
+├── anyio >=3.6.2,<5
+│   ├── idna >=2.8 
+│   └── sniffio >=1.1 
+└── typing-extensions >=4.10.0
+tenacity 8.5.0 Retry code until it succeeds
+tiktoken 0.7.0 tiktoken is a fast BPE tokeniser for use with OpenAI's models
+├── regex >=2022.1.18
+└── requests >=2.26.0
+    ├── certifi >=2023.5.7 
+    ├── charset-normalizer >=2,<4 
+    ├── idna >=2.5,<4 
+    └── urllib3 >=1.26,<3 
+tornado 6.5.5 Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed.
+tqdm 4.67.1 Fast, Extensible Progress Meter
+└── colorama *
+tree-sitter 0.21.3 Python bindings for the Tree-Sitter parsing library
+tree-sitter-languages 1.10.2 Binary Python wheels for all tree sitter languages.
+└── tree-sitter *
+types-requests 2.32.4.20250913 Typing stubs for requests
+└── urllib3 >=2
+ujson 5.12.0 Ultra fast JSON encoder and decoder for Python
+urllib3 2.6.3 HTTP library with thread-safe connection pooling, file post, and more.
+uvicorn 0.23.2 The lightning-fast ASGI server.
+├── click >=7.0
+│   └── colorama * 
+├── colorama >=0.4
+├── h11 >=0.8
+├── httptools >=0.5.0
+├── python-dotenv >=0.13
+├── pyyaml >=5.1
+├── uvloop >=0.14.0,<0.15.0 || >0.15.0,<0.15.1 || >0.15.1
+├── watchfiles >=0.13
+│   └── anyio >=3.0.0 
+│       ├── idna >=2.8 
+│       └── sniffio >=1.1 
+└── websockets >=10.4
+uvloop 0.22.1 Fast implementation of asyncio event loop on top of libuv
+wcwidth 0.2.14 Measures the displayed width of unicode strings in a terminal
+websockets 15.0.1 An implementation of the WebSocket Protocol (RFC 6455 & 7692)
+wheel 0.46.2 Command line tool for manipulating wheel files
+└── packaging >=24.0
+whitenoise 6.11.0 Radically simplified static file serving for WSGI applications
+xmltodict 0.13.0 Makes working with XML feel like you are working with JSON
+
+lmandali@USRALLMANDALI1 MINGW64 ~/Documents/GIT/cwis-genai/app (feature-cwis-52952-trivy-fixes)
+$ poetry update
+Updating dependencies
+Resolving dependencies... (49.3s)
+
+Package operations: 4 installs, 112 updates, 2 removals
+
+  - Removing exceptiongroup (1.3.1)
+  - Removing nest-asyncio (1.6.0)
+  - Updating attrs (25.4.0 -> 26.1.0)
+  - Updating rpds-py (0.30.0 -> 2026.6.3)
+  - Updating typing-extensions (4.15.0 -> 4.16.0)
+  - Updating pycparser (2.23 -> 3.0)
+  - Updating cffi (2.0.0 -> 2.1.0)
+  - Updating platformdirs (4.5.1 -> 4.11.0)
+  - Updating tzdata (2025.2 -> 2026.3)
+  - Updating traitlets (5.14.3 -> 5.15.1)
+  - Updating jsonschema (4.25.1 -> 4.26.0)
+  - Updating idna (3.11 -> 3.18)
+  - Updating soupsieve (2.8 -> 2.9.1)
+  - Updating tinycss2 (1.4.0 -> 1.5.1)
+  - Updating jupyter-client (8.7.0 -> 8.9.1)
+  - Updating pywinpty (3.0.2 -> 3.0.5)
+  - Updating jsonpointer (3.0.0 -> 3.1.1)
+  - Updating asttokens (3.0.1 -> 3.0.2)
+  - Updating bleach (6.3.0 -> 6.4.0)
+  - Updating beautifulsoup4 (4.14.3 -> 4.15.0)
+  - Updating mistune (3.1.4 -> 3.3.4)
+  - Updating packaging (25.0 -> 26.2)
+  - Updating parso (0.8.5 -> 0.8.7)
+  - Updating nbclient (0.10.2 -> 0.11.0)
+  - Updating python-json-logger (4.0.0 -> 4.1.0)
+  - Updating wcwidth (0.2.14 -> 0.8.2)
+  - Updating certifi (2025.11.12 -> 2026.7.22)
+  - Updating decorator (5.2.1 -> 5.3.1)
+  - Updating jedi (0.19.2 -> 0.20.0)
+  - Updating jupyter-events (0.12.0 -> 0.12.1)
+  - Updating jupyter-server-terminals (0.5.3 -> 0.5.4)
+  - Updating matplotlib-inline (0.2.1 -> 0.2.2)
+  - Updating nbconvert (7.17.0 -> 7.17.1)
+  - Updating prometheus-client (0.23.1 -> 0.25.0)
+  - Updating send2trash (1.8.3 -> 2.1.0)
+  - Updating charset-normalizer (3.4.4 -> 3.4.9)
+  - Updating babel (2.17.0 -> 2.18.0)
+  - Updating ipython (8.37.0 -> 8.39.0)
+  - Updating json5 (0.12.1 -> 0.15.0)
+  - Installing nest-asyncio2 (1.7.2)
+  - Updating psutil (7.1.3 -> 7.2.2)
+  - Updating requests (2.33.1 -> 2.34.2)
+  - Updating debugpy (1.8.17 -> 1.8.21)
+  - Updating annotated-types (0.7.0 -> 0.8.0): Installing...
+  - Updating annotated-types (0.7.0 -> 0.8.0)
+  - Updating asgiref (3.11.0 -> 3.12.1)
+  - Updating filelock (3.20.3 -> 3.32.0)
+  - Updating ipykernel (7.1.0 -> 7.3.0)
+  - Updating jmespath (1.0.1 -> 1.1.0)
+  - Installing jupyter-builder (1.1.1)
+  - Updating jupyter-lsp (2.3.0 -> 2.3.1)
+  - Updating sqlparse (0.5.4 -> 0.5.5)
+  - Updating async-lru (2.0.5 -> 2.3.0)
+  - Updating botocore (1.42.6 -> 1.43.55)
+  - Updating click (8.3.1 -> 8.4.2)
+  - Updating django (5.2.12 -> 5.2.16)
+  - Updating greenlet (3.3.0 -> 3.5.4)
+  - Updating jsbeautifier (1.15.4 -> 2.0.3)
+  - Updating jupyterlab (4.5.0 -> 4.6.2)
+  - Updating lxml (6.0.2 -> 6.1.1)
+  - Updating markdown-it-py (4.0.0 -> 4.2.0)
+  - Updating multidict (6.7.0 -> 6.7.1)
+  - Updating pathspec (1.0.4 -> 1.1.1)
+  - Updating distlib (0.4.0 -> 0.4.3)
+  - Updating propcache (0.4.1 -> 0.5.2)
+  - Updating pyasn1 (0.6.3 -> 0.6.4)
+  - Installing python-discovery (1.5.0)
+  - Updating pytz (2025.2 -> 2026.2)
+  - Updating aiohappyeyeballs (2.6.1 -> 2.7.1)
+  - Updating cssbeautifier (1.15.4 -> 2.0.3): Installing...
+  - Updating cssbeautifier (1.15.4 -> 2.0.3)
+  - Updating django-stubs-ext (5.2.8 -> 6.0.7)
+  - Updating fastapi (0.124.2 -> 0.124.4)
+  - Updating httptools (0.7.1 -> 0.8.0)
+  - Updating jsonpickle (4.1.1 -> 4.1.2)
+  - Updating identify (2.6.15 -> 2.6.19)
+  - Updating nodeenv (1.9.1 -> 1.10.0)
+  - Updating dill (0.4.0 -> 0.4.1)
+  - Updating notebook (7.5.0 -> 7.6.1)
+  - Updating kombu (5.6.1 -> 5.6.2)
+  - Updating black (26.3.1 -> 26.5.1)
+  - Updating pillow (12.1.1 -> 12.3.0)
+  - Updating psycopg-binary (3.3.2 -> 3.3.4)
+  - Updating psycopg-pool (3.3.0 -> 3.3.1)
+  - Updating pyjwt (2.12.1 -> 2.13.0)
+  - Updating python-dotenv (1.2.1 -> 1.2.2)
+  - Updating pywin32 (311 -> 312)
+  - Updating regex (2025.11.3 -> 2026.7.19)
+  - Updating rich (14.2.0 -> 15.0.0)
+  - Updating s3transfer (0.16.0 -> 0.19.2)
+  - Updating scramp (1.4.6 -> 1.4.13)
+  - Updating sqlalchemy (2.0.45 -> 2.0.51)
+  - Updating stevedore (5.6.0 -> 5.9.0)
+  - Updating tomlkit (0.13.3 -> 0.15.1)
+  - Updating tqdm (4.67.1 -> 4.69.1)
+  - Updating types-pytz (2025.2.0.20251108 -> 2026.2.0.20260518)
+  - Updating types-pyyaml (6.0.12.20250915 -> 6.0.12.20260724)
+  - Updating tzlocal (5.3.1 -> 5.4.4)
+  - Installing uvloop (0.22.1): Failed
+
+PEP517 build of a dependency failed
+
+Backend subprocess exited when trying to invoke get_requires_for_build_wheel
+
+    | Command '['C:\\Users\\lmandali\\AppData\\Local\\Temp\\tmpd_049ib7\\.venv\\Scripts\\python.exe', 'C:\\Users\\lmandali\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\pyproject_hooks\\_in_process\\_in_process.py', 'get_requires_for_build_wheel', 'C:\\Users\\lmandali\\AppData\\Local\\Temp\\tmpvdp636ag']' returned non-zero exit status 1.
+    | 
+    | Traceback (most recent call last):
+    |   File "C:\Users\lmandali\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\pyproject_hooks\_in_process\_in_process.py", line 389, in <module>
+    |     main()
+    |   File "C:\Users\lmandali\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\pyproject_hooks\_in_process\_in_process.py", line 373, in main
+    |     json_out["return_val"] = hook(**hook_input["kwargs"])
+    |                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\lmandali\AppData\Local\Python\pythoncore-3.14-64\Lib\site-packages\pyproject_hooks\_in_process\_in_process.py", line 143, in get_requires_for_build_wheel
+    |     return hook(config_settings)
+    |            ^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\lmandali\AppData\Local\Temp\tmpd_049ib7\.venv\Lib\site-packages\setuptools\build_meta.py", line 333, in get_requires_for_build_wheel
+    |     return self._get_build_requires(config_settings, requirements=[])
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\Users\lmandali\AppData\Local\Temp\tmpd_049ib7\.venv\Lib\site-packages\setuptools\build_meta.py", line 301, in _get_build_requires
+    |     self.run_setup()
+    |   File "C:\Users\lmandali\AppData\Local\Temp\tmpd_049ib7\.venv\Lib\site-packages\setuptools\build_meta.py", line 317, in run_setup
+    |     exec(code, locals())
+    |   File "<string>", line 8, in <module>
+    | RuntimeError: uvloop does not support Windows at the moment
+
+Note: This error originates from the build backend, and is likely not a problem with poetry but one of the following issues with uvloop (0.22.1)
+
+  - not supporting PEP 517 builds
+  - not specifying PEP 517 build requirements correctly
+  - the build requirements are incompatible with your operating system or Python version
+  - the build requirements are missing system dependencies (eg: compilers, libraries, headers).
+
+You can verify this by running pip wheel --no-cache-dir --use-pep517 "uvloop (==0.22.1)".
+
+  - Updating virtualenv (20.36.1 -> 21.7.0)
+  - Updating watchfiles (1.1.1 -> 1.2.0)
+  - Updating websockets (15.0.1 -> 16.1.1)
+  - Updating yarl (1.22.0 -> 1.24.5)
+
+lmandali@USRALLMANDALI1 MINGW64 ~/Documents/GIT/cwis-genai/app (feature-cwis-52952-trivy-fixes)
+$ poetry debug resolve
+Resolving dependencies... (32.0s)
+
+Resolution results:
+
+attrs                     26.1.0           
+rpds-py                   2026.6.3         
+typing-extensions         4.16.0           
+pycparser                 3.0              
+referencing               0.37.0           
+six                       1.17.0           
+cffi                      2.1.0            
+jsonschema-specifications 2025.9.1         
+platformdirs              4.11.0           
+python-dateutil           2.9.0.post0      
+traitlets                 5.15.1           
+tzdata                    2026.3           
+arrow                     1.4.0            
+fastjsonschema            2.21.2           
+jsonschema                4.26.0           
+jupyter-core              5.9.1            
+lark                      1.3.1            
+pyzmq                     27.1.0           
+tornado                   6.5.5            
+webencodings              0.5.1            
+fqdn                      1.5.1            
+idna                      3.18             
+isoduration               20.11.0          
+jsonpointer               3.1.1            
+jupyter-client            8.9.1            
+markupsafe                3.0.3            
+nbformat                  5.10.4           
+ptyprocess                0.7.0            
+pywinpty                  3.0.5            
+rfc3339-validator         0.1.4            
+rfc3986-validator         0.1.1            
+rfc3987-syntax            1.1.0            
+soupsieve                 2.9.1            
+tinycss2                  1.5.1            
+uri-template              1.3.0            
+webcolors                 25.10.0          
+argon2-cffi-bindings      25.1.0           
+asttokens                 3.0.2            
+beautifulsoup4            4.15.0           
+bleach                    6.4.0            
+defusedxml                0.7.1            
+executing                 2.2.1            
+jinja2                    3.1.6            
+jupyterlab-pygments       0.3.0            
+mistune                   3.3.4            
+nbclient                  0.11.0           
+packaging                 26.2             
+pandocfilters             1.5.1            
+parso                     0.8.7            
+pure-eval                 0.2.3            
+pygments                  2.20.0           
+python-json-logger        4.1.0            
+pyyaml                    6.0.3            
+sniffio                   1.3.1            
+terminado                 0.18.1           
+wcwidth                   0.8.2            
+anyio                     3.7.1            
+argon2-cffi               25.1.0           
+certifi                   2026.7.22        
+charset-normalizer        3.4.9            
+colorama                  0.4.6            
+decorator                 5.3.1            
+h11                       0.16.0           
+jedi                      0.20.0           
+jupyter-events            0.12.1           
+jupyter-server-terminals  0.5.4            
+matplotlib-inline         0.2.2            
+nbconvert                 7.17.1           
+overrides                 7.7.0            
+pexpect                   4.9.0            
+prometheus-client         0.25.0           
+prompt-toolkit            3.0.52           
+send2trash                2.1.0            
+stack-data                0.6.3            
+urllib3                   2.6.3            
+websocket-client          1.9.0            
+appnope                   0.1.4            
+babel                     2.18.0           
+comm                      0.2.3            
+debugpy                   1.8.21           
+httpcore                  1.0.9            
+ipython                   8.39.0           
+json5                     0.15.0           
+jupyter-server            2.20.0           
+nest-asyncio2             1.7.2            
+psutil                    7.2.2            
+requests                  2.34.2           
+annotated-types           0.8.0            
+asgiref                   3.12.1           
+async-lru                 2.3.0            
+dnspython                 2.8.0            
+editorconfig              0.17.1           
+filelock                  3.32.0           
+httpx                     0.28.1           
+ipykernel                 7.3.0            
+jmespath                  1.1.0            
+jupyter-builder           1.1.1            
+jupyter-lsp               2.3.1            
+jupyterlab-server         2.28.0           
+mdurl                     0.1.2            
+notebook-shim             0.2.4            
+pydantic-core             2.20.1           
+sqlparse                  0.5.5            
+vine                      5.1.0            
+amqp                      5.3.1            
+annotated-doc             0.0.4            
+asn1crypto                1.5.1            
+botocore                  1.43.55          
+click                     8.4.2            
+distlib                   0.4.3            
+django                    5.2.16           
+email-validator           2.3.0            
+frozenlist                1.8.0            
+greenlet                  3.5.4            
+jsbeautifier              2.0.3            
+jupyterlab                4.6.2            
+jupyterlab-widgets        3.0.16           
+lazy-object-proxy         1.12.0           
+lxml                      6.1.1            
+markdown-it-py            4.2.0            
+multidict                 6.7.1            
+mypy-extensions           1.1.0            
+numpy                     1.26.4           
+pathspec                  1.1.1            
+propcache                 0.5.2            
+pyasn1                    0.6.4            
+pydantic                  2.8.2            
+python-discovery          1.5.0            
+pytokens                  0.4.1            
+pytz                      2026.2           
+starlette                 0.49.1           
+widgetsnbextension        4.0.15           
+wrapt                     1.17.3           
+aiohappyeyeballs          2.7.1            
+aiosignal                 1.4.0            
+appscript                 1.4.0            
+astroid                   2.15.8           
+async-timeout             5.0.1            
+billiard                  4.2.4            
+black                     26.5.1           
+cfgv                      3.5.0            
+click-didyoumean          0.3.1            
+click-plugins             1.1.1.2          
+click-repl                0.3.0            
+cryptography              46.0.6           
+cssbeautifier             2.0.3            
+dill                      0.4.1            
+django-stubs-ext          6.0.7            
+ecdsa                     0.19.2           
+et-xmlfile                2.0.0            
+fastapi                   0.124.4          
+httptools                 0.8.0            
+identify                  2.6.19           
+ipywidgets                8.1.8            
+isort                     5.13.2           
+jsonpickle                4.1.2            
+jupyter-console           6.6.3            
+kombu                     5.6.2            
+mccabe                    0.7.0            
+mypy                      1.7.1            
+nodeenv                   1.10.0           
+notebook                  7.6.1            
+oauthlib                  3.3.1            
+pandas                    2.3.3            
+pillow                    12.3.0           
+psycopg-binary            3.3.4            
+psycopg-pool              3.3.1            
+pyjwt                     2.13.0           
+python-dotenv             1.2.2            
+pywin32                   312              
+regex                     2026.7.19        
+rich                      15.0.0           
+rsa                       4.9.1            
+s3transfer                0.19.2           
+scramp                    1.4.13           
+sqlalchemy                2.0.51           
+stevedore                 5.9.0            
+tokenize-rt               6.2.0            
+tomlkit                   0.15.1           
+tqdm                      4.69.1           
+tree-sitter               0.21.3           
+types-pytz                2026.2.0.20260518
+types-pyyaml              6.0.12.20260724  
+tzlocal                   5.4.4            
+uvloop                    0.22.1           
+virtualenv                21.7.0           
+watchfiles                1.2.0            
+websockets                16.1.1           
+win32-setctime            1.2.0            
+xlsxwriter                3.2.9            
+yarl                      1.24.5           
+ai-server-sdk             0.0.17           
+aiofiles                  25.1.0           
+aiohttp                   3.14.3           
+bandit                    1.9.4            
+bcrypt                    4.3.0            
+boto3                     1.43.55          
+celery                    5.6.3            
+chardet                   7.4.3            
+dj-database-url           2.3.0            
+django-stubs              4.2.7            
+djlint                    1.42.3           
+docx2pdf                  0.1.8            
+fastapi-sso               0.19.0           
+fuzzywuzzy                0.18.0           
+gunicorn                  23.0.0           
+jupyter                   1.1.1            
+jupyter-black             0.3.4            
+loguru                    0.7.3            
+markdown                  3.10.2           
+openpyxl                  3.1.5            
+passlib                   1.7.4            
+pdfminer-six              20251107         
+pg8000                    1.31.5           
+pre-commit                3.8.0            
+psycopg                   3.3.4            
+psycopg2-binary           2.9.12           
+pydub                     0.25.1           
+pylint                    2.17.7           
+pypandoc                  1.17             
+pypandoc-binary           1.17             
+pypdf                     6.14.2           
+pyshorteners              1.0.1            
+python-decouple           3.8              
+python-docx               0.8.11           
+python-jose               3.5.0            
+python-multipart          0.0.22           
+python-pptx               0.6.23           
+rapidfuzz                 3.14.5           
+redis                     5.3.1            
+ruff                      0.6.9            
+setuptools                78.1.1           
+sqlalchemy-utils          0.42.1           
+tenacity                  8.5.0            
+tiktoken                  0.7.0            
+tree-sitter-languages     1.10.2           
+types-requests            2.33.0.20260712  
+ujson                     5.13.0           
+uvicorn                   0.23.2           
+wheel                     0.46.2           
+whitenoise                6.12.0           
+xmltodict                 0.13.0     
