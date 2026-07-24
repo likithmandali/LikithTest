@@ -1,10 +1,3 @@
-npm audit fix
-
-added 3 packages, removed 1 package, changed 8 packages, and audited 387 packages in 6s
-
-88 packages are looking for funding
-  run `npm fund` for details
-
 # npm audit report
 
 brace-expansion  <=5.0.7
@@ -21,6 +14,11 @@ node_modules/brace-expansion
       commit-and-tag-version  *
       Depends on vulnerable versions of dotgitignore
       node_modules/commit-and-tag-version
+
+4 high severity vulnerabilities
+
+Some issues need review, and may require choosing
+a different dependency.
 
 4 high severity vulnerabilities
 
