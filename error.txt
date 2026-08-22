@@ -1,14 +1,392 @@
-yarn install
-yarn install v1.22.22
-error SyntaxError: Unknown token: { line: 2495, col: 22, type: 'COMMA', value: undefined } 2495:22 in C:\Users\lmandali\Documents\GIT\backup\cwis-genai\app\ui\client\yarn.lock
-    at Parser.unexpected (C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:64026:11)
-    at Parser.parse (C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:64157:14)
-    at Parser.parse (C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:64131:26)
-    at Parser.parse (C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:64131:26)
-    at parse (C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:64231:21)
-    at module.exports.exports.default (C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:63793:96)
-    at Lockfile.<anonymous> (C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:3068:63)
-    at Generator.next (<anonymous>)
-    at step (C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:310:30)
-    at C:\Users\lmandali\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:321:13
-info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
+[ec2-user@ip-10-64-34-253 ~]$ oc describe mcp
+Name:         master
+Namespace:
+Labels:       machineconfiguration.openshift.io/mco-built-in=
+              operator.machineconfiguration.openshift.io/required-for-upgrade=
+              pools.operator.machineconfiguration.openshift.io/master=
+Annotations:  <none>
+API Version:  machineconfiguration.openshift.io/v1
+Kind:         MachineConfigPool
+Metadata:
+  Creation Timestamp:  2024-04-01T15:46:35Z
+  Generation:          559234
+  Resource Version:    1811074191
+  UID:                 d85dc4a7-3115-4306-8184-dc2142a36988
+Spec:
+  Configuration:
+    Name:  rendered-master-f5a3a191aaf475510032cd81e9c2eb4e
+    Source:
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         00-master
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         00-override-master-generated-crio-default-container-runtime
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         00-override-master-generated-crio-default-ulimits
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         01-master-container-runtime
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         01-master-kubelet
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         50-master-auto-sizing-disabled
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         97-master-generated-kubelet
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         98-master-generated-kubelet
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         99-master-disable-algif-aead
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         99-master-generated-kubelet
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         99-master-generated-registries
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         99-master-ssh
+  Machine Config Selector:
+    Match Labels:
+      machineconfiguration.openshift.io/role:  master
+  Node Selector:
+    Match Labels:
+      node-role.kubernetes.io/master:
+  Paused:                              false
+Status:
+  Cert Expirys:
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2034-03-30T15:34:26Z
+    Subject:  CN=admin-kubeconfig-signer,OU=openshift
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-09-19T10:58:18Z
+    Subject:  CN=openshift-kube-controller-manager-operator_csr-signer-signer@1784631497
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-09-04T10:58:23Z
+    Subject:  CN=kube-csr-signer_@1785927503
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-09-19T10:58:31Z
+    Subject:  CN=kube-csr-signer_@1787223511
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-10-19T10:58:30Z
+    Subject:  CN=openshift-kube-controller-manager-operator_csr-signer-signer@1787223510
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-11-06T15:34:51Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1762443290
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2027-08-09T03:20:20Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1786245619
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2027-07-10T03:20:02Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1783653602
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2027-05-11T03:19:45Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1778469585
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2027-06-10T03:19:59Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1781061599
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-09-18T15:42:18Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-control-plane-signer@1784562137
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-10-18T15:42:18Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-control-plane-signer@1787154138
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2034-03-30T15:34:28Z
+    Subject:  CN=kubelet-bootstrap-kubeconfig-signer,OU=openshift
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-11-06T15:46:50Z
+    Subject:  CN=openshift-kube-apiserver-operator_node-system-admin-signer@1762444010
+  Conditions:
+    Last Transition Time:  2025-12-10T23:49:59Z
+    Message:
+    Reason:
+    Status:                False
+    Type:                  RenderDegraded
+    Last Transition Time:  2026-05-11T04:13:08Z
+    Message:
+    Reason:
+    Status:                False
+    Type:                  PinnedImageSetsDegraded
+    Last Transition Time:  2026-08-22T00:22:28Z
+    Message:
+    Reason:
+    Status:                False
+    Type:                  Updated
+    Last Transition Time:  2026-08-22T00:22:28Z
+    Message:               All nodes are updating to MachineConfig rendered-master-f5a3a191aaf475510032cd81e9c2eb4e
+    Reason:
+    Status:                True
+    Type:                  Updating
+    Last Transition Time:  2026-08-22T01:22:34Z
+    Message:               Node ip-10-64-34-146.ec2.internal is reporting: "failed to drain node: ip-10-64-34-146.ec2.internal after 1 hour. Please see machine-config-controller logs for more information"
+    Reason:                1 nodes are reporting degraded status on sync
+    Status:                True
+    Type:                  NodeDegraded
+    Last Transition Time:  2026-08-22T01:22:34Z
+    Message:               Node ip-10-64-34-146.ec2.internal is reporting: "failed to drain node: ip-10-64-34-146.ec2.internal after 1 hour. Please see machine-config-controller logs for more information"
+    Reason:
+    Status:                True
+    Type:                  Degraded
+  Configuration:
+    Name:  rendered-master-061ed9f4af3a1177ff6e9d94e4bdeb4c
+    Source:
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                00-master
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                00-override-master-generated-crio-default-container-runtime
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                01-master-container-runtime
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                01-master-kubelet
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                97-master-generated-kubelet
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                98-master-generated-kubelet
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                99-master-disable-algif-aead
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                99-master-generated-kubelet
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                99-master-generated-registries
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                99-master-ssh
+  Degraded Machine Count:  1
+  Machine Count:           3
+  Observed Generation:     559234
+  Pool Synchronizers Status:
+    Available Machine Count:    2
+    Machine Count:              3
+    Pool Synchronizer Type:     PinnedImageSets
+    Ready Machine Count:        0
+    Unavailable Machine Count:  1
+    Updated Machine Count:      3
+  Ready Machine Count:          0
+  Unavailable Machine Count:    1
+  Updated Machine Count:        0
+Events:                         <none>
+
+
+Name:         worker
+Namespace:
+Labels:       machineconfiguration.openshift.io/mco-built-in=
+              pools.operator.machineconfiguration.openshift.io/worker=
+Annotations:  <none>
+API Version:  machineconfiguration.openshift.io/v1
+Kind:         MachineConfigPool
+Metadata:
+  Creation Timestamp:  2024-04-01T15:46:35Z
+  Generation:          706349
+  Resource Version:    1811083314
+  UID:                 984f8103-e4a2-44de-abfe-6b7486167c43
+Spec:
+  Configuration:
+    Name:  rendered-worker-1b3f775e49f5a76abd671591aa141552
+    Source:
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         00-override-worker-generated-crio-default-container-runtime
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         00-override-worker-generated-crio-default-ulimits
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         00-worker
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         01-worker-container-runtime
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         01-worker-kubelet
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         50-worker-auto-sizing-disabled
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         97-worker-generated-kubelet
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         98-worker-generated-kubelet
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         99-worker-generated-kubelet
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         99-worker-generated-registries
+      API Version:  machineconfiguration.openshift.io/v1
+      Kind:         MachineConfig
+      Name:         99-worker-ssh
+  Machine Config Selector:
+    Match Labels:
+      machineconfiguration.openshift.io/role:  worker
+  Node Selector:
+    Match Labels:
+      node-role.kubernetes.io/worker:
+  Paused:                              false
+Status:
+  Cert Expirys:
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2034-03-30T15:34:26Z
+    Subject:  CN=admin-kubeconfig-signer,OU=openshift
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-09-19T10:58:18Z
+    Subject:  CN=openshift-kube-controller-manager-operator_csr-signer-signer@1784631497
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-09-04T10:58:23Z
+    Subject:  CN=kube-csr-signer_@1785927503
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-09-19T10:58:31Z
+    Subject:  CN=kube-csr-signer_@1787223511
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-10-19T10:58:30Z
+    Subject:  CN=openshift-kube-controller-manager-operator_csr-signer-signer@1787223510
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-11-06T15:34:51Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1762443290
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2027-08-09T03:20:20Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1786245619
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2027-07-10T03:20:02Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1783653602
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2027-05-11T03:19:45Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1778469585
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2027-06-10T03:19:59Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-apiserver-to-kubelet-signer@1781061599
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-09-18T15:42:18Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-control-plane-signer@1784562137
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-10-18T15:42:18Z
+    Subject:  CN=openshift-kube-apiserver-operator_kube-control-plane-signer@1787154138
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2034-03-30T15:34:28Z
+    Subject:  CN=kubelet-bootstrap-kubeconfig-signer,OU=openshift
+    Bundle:   KubeAPIServerServingCAData
+    Expiry:   2026-11-06T15:46:50Z
+    Subject:  CN=openshift-kube-apiserver-operator_node-system-admin-signer@1762444010
+  Conditions:
+    Last Transition Time:  2026-05-11T04:13:08Z
+    Message:
+    Reason:
+    Status:                False
+    Type:                  PinnedImageSetsDegraded
+    Last Transition Time:  2026-08-05T18:02:03Z
+    Message:
+    Reason:
+    Status:                False
+    Type:                  RenderDegraded
+    Last Transition Time:  2026-08-22T00:22:22Z
+    Message:
+    Reason:
+    Status:                False
+    Type:                  Updated
+    Last Transition Time:  2026-08-22T00:22:22Z
+    Message:               All nodes are updating to MachineConfig rendered-worker-1b3f775e49f5a76abd671591aa141552
+    Reason:
+    Status:                True
+    Type:                  Updating
+    Last Transition Time:  2026-08-22T01:33:08Z
+    Message:               Node ip-10-64-34-142.ec2.internal is reporting: "failed to drain node: ip-10-64-34-142.ec2.internal after 1 hour. Please see machine-config-controller logs for more information"
+    Reason:                1 nodes are reporting degraded status on sync
+    Status:                True
+    Type:                  NodeDegraded
+    Last Transition Time:  2026-08-22T01:33:08Z
+    Message:               Node ip-10-64-34-142.ec2.internal is reporting: "failed to drain node: ip-10-64-34-142.ec2.internal after 1 hour. Please see machine-config-controller logs for more information"
+    Reason:
+    Status:                True
+    Type:                  Degraded
+  Configuration:
+    Name:  rendered-worker-7956d7fc9e4f3380b8ce4d2ac94e2c9c
+    Source:
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                00-override-worker-generated-crio-default-container-runtime
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                00-worker
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                01-worker-container-runtime
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                01-worker-kubelet
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                97-worker-generated-kubelet
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                98-worker-generated-kubelet
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                99-worker-generated-kubelet
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                99-worker-generated-registries
+      API Version:         machineconfiguration.openshift.io/v1
+      Kind:                MachineConfig
+      Name:                99-worker-ssh
+  Degraded Machine Count:  1
+  Machine Count:           8
+  Observed Generation:     706349
+  Pool Synchronizers Status:
+    Available Machine Count:    7
+    Machine Count:              8
+    Pool Synchronizer Type:     PinnedImageSets
+    Ready Machine Count:        2
+    Unavailable Machine Count:  1
+    Updated Machine Count:      8
+  Ready Machine Count:          2
+  Unavailable Machine Count:    1
+  Updated Machine Count:        2
+Events:                         <none>
+[ec2-user@ip-10-64-34-253 ~]$ oc get csv -n openshift-logging
+NAME                                 DISPLAY                     VERSION                REPLACES                             PHASE
+cluster-logging.v6.3.4               Red Hat OpenShift Logging   6.3.4                  cluster-logging.v6.2.11              Succeeded
+devworkspace-operator.v0.43.0        DevWorkspace Operator       0.43.0                 devworkspace-operator.v0.42.0        Succeeded
+external-secrets-operator.v0.11.0    External Secrets Operator   0.11.0                 external-secrets-operator.v0.10.7    Succeeded
+openshift-gitops-operator.v1.21.3    Red Hat OpenShift GitOps    1.21.3                 openshift-gitops-operator.v1.21.2    Succeeded
+runtime-fabric-operator.v3.0.277     Runtime Fabric Operator     3.0.277                runtime-fabric-operator.v3.0.102     Succeeded
+web-terminal.v1.9.0-0.1708477317.p   Web Terminal                1.9.0+0.1708477317.p   web-terminal.v1.8.0-0.1708477299.p   Succeeded
+[ec2-user@ip-10-64-34-253 ~]$ oc get subscription -n openshift-logging
+NAME              PACKAGE           SOURCE             CHANNEL
+cluster-logging   cluster-logging   redhat-operators   stable-6.1
+[ec2-user@ip-10-64-34-253 ~]$ oc get installplan -n openshift-logging
+NAME            CSV                       APPROVAL    APPROVED
+install-6scwn   cluster-logging.v6.1.9    Automatic   true
+install-gp4l9   cluster-logging.v6.1.3    Manual      true
+install-nmh7j   cluster-logging.v6.1.8    Manual      true
+install-rn2q9   cluster-logging.v6.2.11   Automatic   true
+install-scmdv   cluster-logging.v6.3.4    Automatic   true
+[ec2-user@ip-10-64-34-253 ~]$ oc get nodes -o custom-columns=NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion
+NAME                           KUBELET
+ip-10-64-34-132.ec2.internal   v1.32.13
+ip-10-64-34-133.ec2.internal   v1.32.13
+ip-10-64-34-134.ec2.internal   v1.32.13
+ip-10-64-34-142.ec2.internal   v1.32.13
+ip-10-64-34-144.ec2.internal   v1.33.13
+ip-10-64-34-145.ec2.internal   v1.32.13
+ip-10-64-34-146.ec2.internal   v1.32.13
+ip-10-64-34-150.ec2.internal   v1.32.13
+ip-10-64-34-151.ec2.internal   v1.33.13
+ip-10-64-34-152.ec2.internal   v1.32.13
+ip-10-64-34-153.ec2.internal   v1.32.13
+[ec2-user@ip-10-64-34-253 ~]$
