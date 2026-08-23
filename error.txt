@@ -1,52 +1,9 @@
-[ec2-user@ip-10-64-34-253 ~]$ oc describe pod dynakube-oneagent-dsw22 -n dynatrace | tail -50
-      /mnt/volume_storage_mount from osagent-storage (rw)
-      /var/lib/dynatrace/secrets/tokens/tenant-token from connection-info-secret (ro,path="tenant-token")
-      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-zznkg (ro)
-Conditions:
-  Type                        Status
-  PodReadyToStartContainers   False
-  Initialized                 True
-  Ready                       False
-  ContainersReady             False
-  PodScheduled                True
-Volumes:
-  host-root:
-    Type:          HostPath (bare host directory volume)
-    Path:          /
-    HostPathType:
-  connection-info-secret:
-    Type:        Secret (a volume populated by a Secret)
-    SecretName:  dynakube-oneagent-tenant-secret
-    Optional:    false
-  osagent-storage:
-    Type:              CSI (a Container Storage Interface (CSI) volume source)
-    Driver:            csi.oneagent.dynatrace.com
-    FSType:
-    ReadOnly:          false
-    VolumeAttributes:      dynakube=dynakube
-                           mode=host
-  active-gate-ca:
-    Type:        Secret (a volume populated by a Secret)
-    SecretName:  dynakube-activegate-tls-secret
-    Optional:    false
-  kube-api-access-zznkg:
-    Type:                    Projected (a volume that contains injected data from multiple sources)
-    TokenExpirationSeconds:  3607
-    ConfigMapName:           kube-root-ca.crt
-    Optional:                false
-    DownwardAPI:             true
-    ConfigMapName:           openshift-service-ca.crt
-    Optional:                false
-QoS Class:                   Burstable
-Node-Selectors:              <none>
-Tolerations:                 node-role.kubernetes.io/control-plane:NoSchedule op=Exists
-                             node-role.kubernetes.io/master:NoSchedule op=Exists
-                             node.kubernetes.io/disk-pressure:NoSchedule op=Exists
-                             node.kubernetes.io/memory-pressure:NoSchedule op=Exists
-                             node.kubernetes.io/network-unavailable:NoSchedule op=Exists
-                             node.kubernetes.io/not-ready:NoExecute op=Exists
-                             node.kubernetes.io/pid-pressure:NoSchedule op=Exists
-                             node.kubernetes.io/unreachable:NoExecute op=Exists
-                             node.kubernetes.io/unschedulable:NoSchedule op=Exists
-Events:                      <none>
-[ec2-user@ip-10-64-34-253 ~]$
+oc get pods -n dynatrace -o wide |grep -E 'dynakube-oneagent|10-64-34-146'
+dynakube-oneagent-4d5v9   0/1     Completed   3          65d   10.64.34.133   ip-10-64-34-133.ec2.internal   <none>           <none>
+dynakube-oneagent-b55s8   0/1     Completed   1          18d   10.64.34.132   ip-10-64-34-132.ec2.internal   <none>           <none>
+dynakube-oneagent-fpl2x   0/1     Completed   3          65d   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
+dynakube-oneagent-g42fj   0/1     Completed   3          65d   10.64.34.152   ip-10-64-34-152.ec2.internal   <none>           <none>
+dynakube-oneagent-gnfpt   0/1     Completed   3          65d   10.64.34.153   ip-10-64-34-153.ec2.internal   <none>           <none>
+dynakube-oneagent-mtk9w   0/1     Completed   0          16d   10.64.34.145   ip-10-64-34-145.ec2.internal   <none>           <none>
+dynakube-oneagent-qbkrw   0/1     Completed   3          65d   10.64.34.150   ip-10-64-34-150.ec2.internal   <none>           <none>
+dynakube-oneagent-v6rxq   0/1     Completed   3          65d   10.64.34.134   ip-10-64-34-134.ec2.internal   <none>           <none>
