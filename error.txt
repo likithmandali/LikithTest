@@ -1,51 +1,10 @@
-oc get pods -A --field-selector spec.nodeName=ip-10-64-34-146.ec2.internal -o wide
-NAMESPACE                                NAME                                                      READY   STATUS      RESTARTS        AGE     IP             NODE                           NOMINATED NODE   READINESS GATES
-csi-secrets-store                        csi-secrets-store-driver-secrets-store-csi-driver-rw4m5   3/3     Running     33              2y91d   10.128.0.14    ip-10-64-34-146.ec2.internal   <none>           <none>
-dynatrace                                dynakube-oneagent-dsw22                                   0/1     Completed   3               64d     10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-cluster-csi-drivers            aws-ebs-csi-driver-node-zk8j6                             3/3     Running     0               3h45m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-cluster-node-tuning-operator   tuned-n88sg                                               1/1     Running     0               3h45m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-dns                            dns-default-n9fcq                                         2/2     Running     0               3h34m   10.128.0.55    ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-dns                            node-resolver-tx5hx                                       1/1     Running     0               3h37m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-etcd                           etcd-ip-10-64-34-146.ec2.internal                         5/5     Running     0               4h8m    10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-image-registry                 node-ca-8kl8m                                             1/1     Running     0               3h46m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-kube-apiserver                 kube-apiserver-ip-10-64-34-146.ec2.internal               5/5     Running     0               4h3m    10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-kube-controller-manager        kube-controller-manager-ip-10-64-34-146.ec2.internal      4/4     Running     0               3h55m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-kube-scheduler                 openshift-kube-scheduler-ip-10-64-34-146.ec2.internal     3/3     Running     0               3h55m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-logging                        logging-5fvz2                                             1/1     Running     0               7d10h   10.128.0.53    ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-machine-config-operator        kube-rbac-proxy-crio-ip-10-64-34-146.ec2.internal         1/1     Running     1               15d     10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-machine-config-operator        machine-config-daemon-p2rdw                               2/2     Running     0               3h28m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-machine-config-operator        machine-config-server-78lqc                               1/1     Running     0               3h27m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-monitoring                     node-exporter-qjfx5                                       2/2     Running     0               3h45m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-multus                         multus-additional-cni-plugins-rl9p6                       1/1     Running     0               3h36m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-multus                         multus-pbf8b                                              1/1     Running     1 (3h32m ago)   3h36m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-multus                         network-metrics-daemon-j96nv                              2/2     Running     0               3h36m   10.128.0.51    ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-network-diagnostics            network-check-target-9f6mt                                1/1     Running     0               3h35m   10.128.0.54    ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-network-node-identity          network-node-identity-k4c9b                               2/2     Running     0               3h36m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-network-operator               iptables-alerter-hslh8                                    1/1     Running     0               3h36m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-ovn-kubernetes                 ovnkube-node-62vmv                                        8/8     Running     0               3h32m   10.64.34.146   ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-security                       audit-exporter-qg4vs                                      1/1     Running     0               11d     10.128.0.60    ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-security                       splunkforwarder-ds-zxz4x                                  1/1     Running     0               3h14m   10.128.0.11    ip-10-64-34-146.ec2.internal   <none>           <none>
-openshift-validation-webhook             validation-webhook-6ldrq                                  1/1     Running     0               4d22h   10.128.0.52    ip-10-64-34-146.ec2.internal   <none>           <none>
-[ec2-user@ip-10-64-34-253 ~]$ oc get pods -A --field-selector spec.nodeName=ip-10-64-34-142.ec2.internal -o wide
-NAMESPACE                                NAME                                                      READY   STATUS      RESTARTS        AGE     IP             NODE                           NOMINATED NODE   READINESS GATES
-csi-secrets-store                        csi-secrets-store-driver-secrets-store-csi-driver-7pz52   3/3     Running     27              372d    10.128.17.3    ip-10-64-34-142.ec2.internal   <none>           <none>
-csi-secrets-store                        csi-secrets-store-provider-aws-ktgfb                      1/1     Running     9               372d    10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-dynatrace                                dynakube-oneagent-fpl2x                                   0/1     Completed   3               64d     10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-cluster-csi-drivers            aws-ebs-csi-driver-node-24556                             3/3     Running     0               3h47m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-cluster-node-tuning-operator   tuned-s9kdj                                               1/1     Running     0               3h46m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-dns                            dns-default-268gx                                         2/2     Running     0               3h35m   10.128.17.7    ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-dns                            node-resolver-fmlr5                                       1/1     Running     0               3h38m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-image-registry                 node-ca-bnmts                                             1/1     Running     0               3h47m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-ingress-canary                 ingress-canary-tcmhq                                      1/1     Running     0               3h47m   10.128.17.58   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-insights                       insights-runtime-extractor-q5rdg                          3/3     Running     0               3h47m   10.128.17.59   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-logging                        logging-8869k                                             1/1     Running     0               7d10h   10.128.17.28   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-machine-config-operator        machine-config-daemon-gbhv8                               2/2     Running     0               3h29m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-monitoring                     node-exporter-2dfpc                                       2/2     Running     0               3h46m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-multus                         multus-additional-cni-plugins-fhftw                       1/1     Running     0               3h36m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-multus                         multus-msfhb                                              1/1     Running     1 (3h32m ago)   3h37m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-multus                         network-metrics-daemon-mrxvq                              2/2     Running     0               3h37m   10.128.17.4    ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-network-diagnostics            network-check-target-8bqvh                                1/1     Running     0               3h37m   10.128.17.6    ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-network-operator               iptables-alerter-8sxcf                                    1/1     Running     0               3h37m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-ovn-kubernetes                 ovnkube-node-b5xbn                                        8/8     Running     0               3h32m   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-openshift-security                       splunkforwarder-ds-cbsn2                                  1/1     Running     0               3h15m   10.128.17.10   ip-10-64-34-142.ec2.internal   <none>           <none>
-[ec2-user@ip-10-64-34-253 ~]$
+You don't need to send anything else yet:
+
+oc get pdb -A -o custom-columns='NAMESPACE:.metadata.namespace,NAME:.metadata.name,MIN:.spec.minAvailable,MAX:.spec.maxUnavailable,ALLOWED:.status.disruptionsAllowed,CURRENT:.status.currentHealthy,DESIRED:.status.desiredHealthy'
+oc get pods -n openshift-machine-config-operator | grep machine-config-controller
+
+Then, using the pod name from the second command:
+
+oc logs -n openshift-machine-config-operator <POD_NAME> --since=2h | grep -E '10-64-34-146|10-64-34-142|failed to drain|evict|eviction|PDB'
+
+Once we see the MCO log, I can tell you exactly what is preventing the two nodes from draining and whether we should modify a PDB, move a workload, or take another approach.
