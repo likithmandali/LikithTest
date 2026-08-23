@@ -1,88 +1,52 @@
-Skip to content
-likithmandali
-LikithTest
-Repository navigation
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security and quality
-Insights
-Settings
-Files
-Go to file
-t
-T
-CWIS-47930 Trivy Report.xlsx
-README.md
-Terminal Saved Output
-deploy.sh
-error.txt
-files.zip
-output.txt
-output2.txt
-package-lock.json
-package.json
-poetry.lock
-pyproject.toml
-test.py
-yarn.lock
-LikithTest
-/
-error.txt
-in
-master
-
-Edit
-
-Preview
-Indent mode
-
-Spaces
-Indent size
-
-2
-Line wrap mode
-
-Soft wrap
-Editing error.txt file contents
-  1
-  2
-  3
-  4
-  5
-  6
-  7
-  8
-  9
- 10
- 11
- 12
- 13
- 14
- 15
- 16
- 17
- 18
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-dsw22 -n dynatrace -o yaml > /tmp/dynatrace-pod.yaml
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-dsw22 -n dynatrace \
-  -o custom-columns='NAME:.metadata.name,STATUS:.status.phase,DELETING:.metadata.deletionTimestamp,OWNER:.metadata.ownerReferences[0].kind/metadata.ownerReferences[0].name'
-NAME                      STATUS      DELETING               OWNER
-dynakube-oneagent-dsw22   Succeeded   2026-08-07T19:24:11Z   <none>
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-dsw22 -n dynatrace \
-  -o jsonpath='{.metadata.finalizers}'
-echo
-
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-dsw22 -n dynatrace \
-  -o jsonpath='{.metadata.deletionTimestamp}'
-2026-08-07T19:24:11Z[ec2-user@oc get pod dynakube-oneagent-dsw22 -n dynatrace \dsw22 -n dynatrace \
-  -o jsonpath='{range .metadata.finalizers[*]}{.}{"\n"}{end}'
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-dsw22 -n dynatrace \
-  -o jsonpath='{range .metadata.ownerReferences[*]}{.kind}{" "}{.name}{" controller="}{.controller}{"\n"}{end}'
-DaemonSet dynakube-oneagent controller=true
+[ec2-user@ip-10-64-34-253 ~]$ oc describe pod dynakube-oneagent-dsw22 -n dynatrace | tail -50
+      /mnt/volume_storage_mount from osagent-storage (rw)
+      /var/lib/dynatrace/secrets/tokens/tenant-token from connection-info-secret (ro,path="tenant-token")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-zznkg (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False
+  Initialized                 True
+  Ready                       False
+  ContainersReady             False
+  PodScheduled                True
+Volumes:
+  host-root:
+    Type:          HostPath (bare host directory volume)
+    Path:          /
+    HostPathType:
+  connection-info-secret:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  dynakube-oneagent-tenant-secret
+    Optional:    false
+  osagent-storage:
+    Type:              CSI (a Container Storage Interface (CSI) volume source)
+    Driver:            csi.oneagent.dynatrace.com
+    FSType:
+    ReadOnly:          false
+    VolumeAttributes:      dynakube=dynakube
+                           mode=host
+  active-gate-ca:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  dynakube-activegate-tls-secret
+    Optional:    false
+  kube-api-access-zznkg:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+    ConfigMapName:           openshift-service-ca.crt
+    Optional:                false
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node-role.kubernetes.io/control-plane:NoSchedule op=Exists
+                             node-role.kubernetes.io/master:NoSchedule op=Exists
+                             node.kubernetes.io/disk-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/memory-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/network-unavailable:NoSchedule op=Exists
+                             node.kubernetes.io/not-ready:NoExecute op=Exists
+                             node.kubernetes.io/pid-pressure:NoSchedule op=Exists
+                             node.kubernetes.io/unreachable:NoExecute op=Exists
+                             node.kubernetes.io/unschedulable:NoSchedule op=Exists
+Events:                      <none>
 [ec2-user@ip-10-64-34-253 ~]$
-
-Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
- 
