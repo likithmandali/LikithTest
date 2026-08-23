@@ -1,9 +1,17 @@
-oc get pods -n dynatrace -o wide |grep -E 'dynakube-oneagent|10-64-34-146'
-dynakube-oneagent-4d5v9   0/1     Completed   3          65d   10.64.34.133   ip-10-64-34-133.ec2.internal   <none>           <none>
-dynakube-oneagent-b55s8   0/1     Completed   1          18d   10.64.34.132   ip-10-64-34-132.ec2.internal   <none>           <none>
-dynakube-oneagent-fpl2x   0/1     Completed   3          65d   10.64.34.142   ip-10-64-34-142.ec2.internal   <none>           <none>
-dynakube-oneagent-g42fj   0/1     Completed   3          65d   10.64.34.152   ip-10-64-34-152.ec2.internal   <none>           <none>
-dynakube-oneagent-gnfpt   0/1     Completed   3          65d   10.64.34.153   ip-10-64-34-153.ec2.internal   <none>           <none>
-dynakube-oneagent-mtk9w   0/1     Completed   0          16d   10.64.34.145   ip-10-64-34-145.ec2.internal   <none>           <none>
-dynakube-oneagent-qbkrw   0/1     Completed   3          65d   10.64.34.150   ip-10-64-34-150.ec2.internal   <none>           <none>
-dynakube-oneagent-v6rxq   0/1     Completed   3          65d   10.64.34.134   ip-10-64-34-134.ec2.internal   <none>           <none>
+Before deleting anything else, confirm fpl2x has the same characteristics:
+
+oc get pod dynakube-oneagent-fpl2x -n dynatrace \
+  -o custom-columns='NAME:.metadata.name,STATUS:.status.phase,DELETING:.metadata.deletionTimestamp,OWNER:.metadata.ownerReferences[0].kind/metadata.ownerReferences[0].name'
+
+Then:
+
+oc get pod dynakube-oneagent-fpl2x -n dynatrace \
+  -o jsonpath='{.metadata.finalizers}'
+echo
+
+And:
+
+oc get pod dynakube-oneagent-fpl2x -n dynatrace \
+  -o jsonpath='{range .metadata.ownerReferences[*]}{.kind}{" "}{.name}{" controller="}{.controller}{"\n"}{end}'
+
+I expect you'll see something very similar to the master:
