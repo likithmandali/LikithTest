@@ -1,3 +1,71 @@
+Skip to content
+likithmandali
+LikithTest
+Repository navigation
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security and quality
+Insights
+Settings
+Files
+Go to file
+t
+T
+CWIS-47930 Trivy Report.xlsx
+README.md
+Terminal Saved Output
+deploy.sh
+error.txt
+files.zip
+output.txt
+output2.txt
+package-lock.json
+package.json
+poetry.lock
+pyproject.toml
+test.py
+yarn.lock
+LikithTest
+/
+error.txt
+in
+master
+
+Edit
+
+Preview
+Indent mode
+
+Spaces
+Indent size
+
+2
+Line wrap mode
+
+Soft wrap
+Editing error.txt file contents
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
 [ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-dsw22 -n dynatrace -o yaml > /tmp/dynatrace-pod.yaml
 [ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-dsw22 -n dynatrace \
   -o custom-columns='NAME:.metadata.name,STATUS:.status.phase,DELETING:.metadata.deletionTimestamp,OWNER:.metadata.ownerReferences[0].kind/metadata.ownerReferences[0].name'
@@ -15,3 +83,6 @@ echo
   -o jsonpath='{range .metadata.ownerReferences[*]}{.kind}{" "}{.name}{" controller="}{.controller}{"\n"}{end}'
 DaemonSet dynakube-oneagent controller=true
 [ec2-user@ip-10-64-34-253 ~]$
+
+Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
+ 
