@@ -1,21 +1,71 @@
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-fpl2x -n dynatrace \
-  -o custom-columns='NAME:.metadata.name,STATUS:.status.phase,DELETING:.metadata.deletionTimestamp,OWNER:.metadata.ownerReferences[0].kind/metadata.ownerReferences[0].name'
-NAME                      STATUS      DELETING               OWNER
-dynakube-oneagent-fpl2x   Succeeded   2026-08-07T19:24:11Z   <none>
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-fpl2x -n dynatrace \
-  -o jsonpath='{.metadata.finalizers}'
-echo
+Check whether worker 142 starts updating
 
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-fpl2x -n dynatrace \
-  -o jsonpath='{range .metadata.ownerReferences[*]}{.kind}{" "}{.name}{" controller="}{.controller}{"\n"}{end}'
-DaemonSet dynakube-oneagent controller=true
-[ec2-user@ip-10-64-34-253 ~]$ oc delete pod dynakube-oneagent-fpl2x -n dynatrace --grace-period=0 --force
-Warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
-pod "dynakube-oneagent-fpl2x" force deleted from dynatrace namespace
-[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-fpl2x -n dynatrace
-Error from server (NotFound): pods "dynakube-oneagent-fpl2x" not found
-[ec2-user@ip-10-64-34-253 ~]$ oc get mcp master worker
-NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
-master   rendered-master-061ed9f4af3a1177ff6e9d94e4bdeb4c   False     True       False      3              1                   1                     0                      2y144d
-worker   rendered-worker-7956d7fc9e4f3380b8ce4d2ac94e2c9c   False     True       True       8              2                   2                     1                      2y144d
-[ec2-user@ip-10-64-34-253 ~]$
+Run:
+
+oc get node ip-10-64-34-142.ec2.internal \
+  -o custom-columns='NAME:.metadata.name,STATUS:.status.conditions[-1].type,KUBELET:.status.nodeInfo.kubeletVersion,CURRENT:.metadata.annotations.machineconfiguration\.openshift\.io/currentConfig,DESIRED:.metadata.annotations.machineconfiguration\.openshift\.io/desiredConfig'
+
+The important transition will be kubelet:
+
+v1.32.13
+   ↓
+MCO drains/reboots
+   ↓
+v1.33.13
+
+Do the same for master 146:
+
+oc get nodes \
+  ip-10-64-34-146.ec2.internal \
+  ip-10-64-34-142.ec2.internal \
+  -o custom-columns='NAME:.metadata.name,READY:.status.conditions[-1].status,KUBELET:.status.nodeInfo.kubeletVersion'
+If worker stays degraded after ~10 minutes
+
+Run:
+
+oc describe mcp worker | tail -35
+
+and:
+
+oc logs -n openshift-machine-config-operator \
+  machine-config-controller-54669995cd-2rnkn \
+  --since=15m | \
+  grep -E -i '10-64-34-142|drain|evict|failed|error|dynakube'
+
+That will show whether 142 has moved past the Dynatrace problem or found another blocker.
+
+I would also check all the remaining Dynatrace pods
+
+Your previous output showed stale Completed OneAgent pods on several nodes:
+
+132
+133
+134
+145
+150
+152
+153
+
+Given that both 146 and 142 had exactly the same Aug 7 deletion timestamp, there's a realistic chance the remaining pods are also stale and could block each node as MCO reaches it.
+
+Don't mass-delete them yet. First inventory them with:
+
+oc get pods -n dynatrace \
+  -l app.kubernetes.io/component=oneagent \
+  -o custom-columns='NAME:.metadata.name,PHASE:.status.phase,NODE:.spec.nodeName,DELETING:.metadata.deletionTimestamp'
+
+If that label doesn't return them, use:
+
+for p in $(oc get pods -n dynatrace -o name | grep dynakube-oneagent); do
+  oc get -n dynatrace "$p" \
+    -o custom-columns='NAME:.metadata.name,PHASE:.status.phase,NODE:.spec.nodeName,DELETING:.metadata.deletionTimestamp' \
+    --no-headers
+done
+
+If you discover that all those Completed pods have:
+
+DELETING = 2026-08-07T19:24:11Z
+
+then we have a broader Dynatrace OneAgent/CSI stale pod cleanup problem, rather than two isolated pods. In that case, I'd address the Dynatrace issue before allowing MCO to get stuck node-by-node.
+
+For now, though, don't force-delete anything else. The fact that master DEGRADED has already changed from True → False is exactly the recovery signal we wanted. Let MCO retry 142 and send me oc get mcp master worker again in about 5–10 minutes if the worker doesn't clear.
