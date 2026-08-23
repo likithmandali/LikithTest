@@ -1,17 +1,21 @@
-Before deleting anything else, confirm fpl2x has the same characteristics:
-
-oc get pod dynakube-oneagent-fpl2x -n dynatrace \
+[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-fpl2x -n dynatrace \
   -o custom-columns='NAME:.metadata.name,STATUS:.status.phase,DELETING:.metadata.deletionTimestamp,OWNER:.metadata.ownerReferences[0].kind/metadata.ownerReferences[0].name'
-
-Then:
-
-oc get pod dynakube-oneagent-fpl2x -n dynatrace \
+NAME                      STATUS      DELETING               OWNER
+dynakube-oneagent-fpl2x   Succeeded   2026-08-07T19:24:11Z   <none>
+[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-fpl2x -n dynatrace \
   -o jsonpath='{.metadata.finalizers}'
 echo
 
-And:
-
-oc get pod dynakube-oneagent-fpl2x -n dynatrace \
+[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-fpl2x -n dynatrace \
   -o jsonpath='{range .metadata.ownerReferences[*]}{.kind}{" "}{.name}{" controller="}{.controller}{"\n"}{end}'
-
-I expect you'll see something very similar to the master:
+DaemonSet dynakube-oneagent controller=true
+[ec2-user@ip-10-64-34-253 ~]$ oc delete pod dynakube-oneagent-fpl2x -n dynatrace --grace-period=0 --force
+Warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue to run on the cluster indefinitely.
+pod "dynakube-oneagent-fpl2x" force deleted from dynatrace namespace
+[ec2-user@ip-10-64-34-253 ~]$ oc get pod dynakube-oneagent-fpl2x -n dynatrace
+Error from server (NotFound): pods "dynakube-oneagent-fpl2x" not found
+[ec2-user@ip-10-64-34-253 ~]$ oc get mcp master worker
+NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+master   rendered-master-061ed9f4af3a1177ff6e9d94e4bdeb4c   False     True       False      3              1                   1                     0                      2y144d
+worker   rendered-worker-7956d7fc9e4f3380b8ce4d2ac94e2c9c   False     True       True       8              2                   2                     1                      2y144d
+[ec2-user@ip-10-64-34-253 ~]$
