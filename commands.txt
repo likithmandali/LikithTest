@@ -1,1 +1,98 @@
+First check the kubelet versions again:
 
+oc get nodes \
+  -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
+
+You should probably see:
+
+2 nodes   v1.33.13
+7 nodes   v1.32.13
+
+plus any other nodes already upgraded depending on how far MCO has progressed.
+
+Then check:
+
+oc get mcp master worker
+
+If the worker MCP is still UPDATING=True, MCO is working through those remaining nodes one at a time.
+
+The likely next blocker
+
+The remaining stale pods are:
+
+dynakube-oneagent-4d5v9   -> 133
+dynakube-oneagent-b55s8   -> 132
+dynakube-oneagent-g42fj   -> 152
+dynakube-oneagent-gnfpt   -> 153
+dynakube-oneagent-mtk9w   -> 145
+dynakube-oneagent-qbkrw   -> 150
+dynakube-oneagent-v6rxq   -> 134
+
+All seven were already in Succeeded with the same old deletion timestamp.
+
+And your MCO log had already moved on to trying to evict dynakube-oneagent-qbkrw on another worker.
+
+So if you have not yet cleaned up those remaining seven stale pod objects, I would do that now.
+
+Because we've already confirmed they are stale and terminating, use:
+
+for p in $(oc get pods -n dynatrace -o name | grep dynakube-oneagent); do
+  echo "Force deleting stale $p"
+  oc delete -n dynatrace "$p" --grace-period=0 --force
+done
+
+Then verify:
+
+oc get pods -n dynatrace -o wide | grep dynakube-oneagent
+
+Ideally none of the old 65-day/16-day pods remain.
+
+Then watch the upgrade
+watch -n 15 'oc get mcp master worker'
+
+and in another terminal:
+
+watch -n 15 "oc get nodes -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'"
+
+You should see more nodes transition:
+
+v1.32.13 -> v1.33.13
+
+As that happens, the kube-apiserver warning should decrease from:
+
+7 nodes
+
+to:
+
+6
+5
+4
+...
+0
+About the other console warnings
+
+The authentication and openshift-apiserver degradation:
+
+1 of 3 requested instances unavailable
+
+is something I'd expect to clear once the control-plane rollout fully settles. I would not touch OAuth/API pods manually yet.
+
+The OLM warning is also not blocking this 4.20 upgrade. The screenshot explicitly says:
+
+blocking minor version upgrades to 4.21.0 or higher
+
+because Logging 6.3.4 supports up to OCP 4.20. That becomes something to fix before 4.21, not right now.
+
+The machine-config operator still showing 4.19.40 is also consistent with the MachineConfig pools not being fully completed yet.
+
+Check CLI rather than trusting the console banner
+
+After cleaning up the remaining stale Dynatrace pods, run:
+
+oc get clusterversion
+oc get mcp master worker
+oc get co authentication openshift-apiserver kube-apiserver machine-config
+oc get nodes \
+  -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
+
+Paste those four outputs. Those will tell us much more accurately than the web-console page whether the upgrade is actively progressing or has hit another blocker.
