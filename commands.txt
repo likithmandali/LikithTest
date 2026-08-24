@@ -96,3 +96,11 @@ oc get nodes \
   -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
 
 Paste those four outputs. Those will tell us much more accurately than the web-console page whether the upgrade is actively progressing or has hit another blocker.
+
+
+
+
+for p in $(oc get pods -n dynatrace -o name | grep dynakube-oneagent); do
+  echo "Deleting stale pod $p"
+  oc delete -n dynatrace "$p" --grace-period=0 --force
+done
