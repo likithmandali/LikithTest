@@ -1,0 +1,448 @@
+03/04/2026
+
+CWE
+
+HIGH
+
+/cwis-genai-cwis-uat/app/ui/client/src/auth.tsx:22
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - Multiple protection layers: isValidRedirectUrl() prevents external redirects, origin validation ensures same-origin only, protocol validation blocks dangerous schemes, explicit open redirect prevention design.
+
+03/04/2026
+
+CWE
+
+HIGH
+
+/cwis-genai-cwis-uat/app/ui/client/src/components/ActivityStatusDropDown/index.tsx:486
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web   Page (Basic XSS)
+
+False Positive - Conditional rendering with isValidRedirectUrl() validation,   additional new URL() validation, proper security attributes (target="_blank" rel="noreferrer"), controlled data source from backend APIs. In review for correction.
+   The code implements proper URL validation before any href assignment
+   Only validated, safe URLs can reach the href attribute
+   The security functions specifically prevent XSS through malicious URLs
+   Multiple layers of validation ensure malicious URLs cannot be used
+   The static analysis tool didn't recognize the comprehensive security controls   in place
+
+03/04/2026
+
+CWE
+
+HIGH
+
+/cwis-genai-cwis-uat/app/ui/client/src/pages/CaseCopilotGenerator/index.tsx:447
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - isValidImageUrl() validates base64 format, blocks malicious   protocols. Conditional rendering protects against XSS.
+
+03/04/2026
+
+CWE
+
+HIGH
+
+/cwis-genai-cwis-uat/app/ui/client/src/pages/ActivityHistoryTable/index.tsx:73
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - Double URL validation with isValidDownloadUrl() blocks   dangerous protocols, validates domains. new URL() constructor provides   additional validation. Multiple security barriers prevent malicious URLs.review for correction
+
+03/04/2026
+
+CWE
+
+HIGH
+
+/cwis-genai-cwis-uat/app/ui/client/src/components/InstanceGenerator/index.tsx:3636
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - isValidImageUrl() validates base64 format, blocks malicious protocols. Conditional rendering protects against XSS.
+
+03/04/2026
+
+CWE
+
+HIGH
+
+/cwis-genai-cwis-uat/app/ui/client/src/components/DownloadButton/index.tsx:109
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - Comprehensive validation chain: isValidDownloadUrl()   validates protocols/domains, new URL() constructor validates format,   programmatic element creation with controlled href assignment.
+
+12/03/2025
+
+CWE
+
+HIGH
+
+client/src/auth.tsx:22
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web   Page (Basic XSS)
+
+False Positive - Multiple protection layers: isValidRedirectUrl() prevents   external redirects, origin validation ensures same-origin only, protocol   validation blocks dangerous schemes, explicit open redirect prevention   design.
+
+12/03/2025
+
+CWE
+
+HIGH
+
+client/src/pages/CaseCopilotGenerator/index.tsx:447
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web   Page (Basic XSS)
+
+False Positive - isValidImageUrl() validates base64 format, blocks malicious   protocols. Conditional rendering protects against XSS.
+
+12/03/2025
+
+CWE
+
+HIGH
+
+client/src/pages/ActivityHistoryTable/index.tsx:73
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web   Page (Basic XSS)
+
+False Positive - Double URL validation with isValidDownloadUrl() blocks   dangerous protocols, validates domains. new URL() constructor provides   additional validation. Multiple security barriers prevent malicious   URLs.review for correction
+
+12/03/2025
+
+CWE
+
+HIGH
+
+client/src/components/DownloadButton/index.tsx:109
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web   Page (Basic XSS)
+
+False Positive - Comprehensive validation chain: isValidDownloadUrl()   validates protocols/domains, new URL() constructor validates format,   programmatic element creation with controlled href assignment.
+
+12/03/2025
+
+CWE
+
+HIGH
+
+client/src/components/ActivityStatusDropDown/index.tsx:486
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web   Page (Basic XSS)
+
+False Positive - Conditional rendering with isValidRedirectUrl() validation,   additional new URL() validation, proper security attributes   (target="_blank" rel="noreferrer"), controlled data   source from backend APIs.In review for correction.
+   The code implements proper URL validation before any href assignment
+   Only validated, safe URLs can reach the href attribute
+   The security functions specifically prevent XSS through malicious URLs
+   Multiple layers of validation ensure malicious URLs cannot be used
+   The static analysis tool didn't recognize the comprehensive security controls   in place
+
+12/03/2025
+
+CWE
+
+HIGH
+
+/cwis-genai-main/app/ui/client/src/components/InstanceGenerator/index.tsx:3636
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web   Page (Basic XSS)
+
+False Positive - isValidImageUrl() validates   base64 format, blocks malicious protocols. Conditional rendering protects   against XSS.
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/pages/CaseCopilotGenerator/index.tsx:434
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - isValidImageUrl() validates base64 format, blocks malicious protocols. Conditional rendering protects against XSS.
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/pages/ActivityHistoryTable/index.tsx:70
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - Double URL validation with isValidDownloadUrl() blocks dangerous protocols, validates domains. new URL() constructor provides additional validation. Multiple security barriers prevent malicious URLs.review for correction
+
+ 
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/components/DownloadButton/index.tsx:84
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - Comprehensive validation chain: isValidDownloadUrl() validates protocols/domains, new URL() constructor validates format, programmatic element creation with controlled href assignment.
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/components/DownloadButton/index.tsx:87
+
+CWE-117
+
+Improper Output Neutralization for Logs
+
+Fixed - Log forging protection implemented with proper sanitization. PR Merge inprogress
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/components/ActivityStatusDropDown/index.tsx:486
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - Conditional rendering with isValidRedirectUrl() validation, additional new URL() validation, proper security attributes (target="_blank" rel="noreferrer"), controlled data source from backend APIs.In review for correction.
+The code implements proper URL validation before any href assignment
+Only validated, safe URLs can reach the href attribute
+The security functions specifically prevent XSS through malicious URLs
+Multiple layers of validation ensure malicious URLs cannot be used
+The static analysis tool didn't recognize the comprehensive security controls in place
+
+ 
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/auth.tsx:15
+
+CWE-117
+
+Improper Output Neutralization for Logs
+
+Fixed - Log forging protection implemented with proper sanitization.
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/auth.tsx:18
+
+CWE-80
+
+Improper Neutralization of Script-Related HTML Tags in a Web Page (Basic XSS)
+
+False Positive - Multiple protection layers: isValidRedirectUrl() prevents external redirects, origin validation ensures same-origin only, protocol validation blocks dangerous schemes, explicit open redirect prevention design.
+
+ 
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/auth.tsx:18
+
+CWE-601
+
+URL Redirection to Untrusted Site (Open Redirect)
+
+False Positive - Multiple protection layers: isValidRedirectUrl() prevents external redirects, origin validation ensures same-origin only, protocol validation blocks dangerous schemes, explicit open redirect prevention design.
+
+ 
+
+CWE
+
+MEDIUM
+
+client/src/auth.tsx:21
+
+CWE-117
+
+Improper Output Neutralization for Logs
+
+Fixed - Log sanitization implemented. PR Merge in progress
+
+ 
+
+^High vulnerabilities listed in Veracode table above are recurring same from previous 09/24 scan and identified as false positive in 12/03 scan.
+Veracode Findings – Python
+Scan Date
+
+Type
+
+Severity
+
+Target
+
+ID
+
+Title
+
+Rationale
+
+03/04/2026
+
+CWE
+
+HIGH
+
+cwis-genai-cwis-uat/app/services/orchestrator/helper/aws_embeddings.py:321
+
+CWE-259
+
+Use of Hard-coded Password
+
+False Positive -  mis interpretation of the Enum as harcoding
+
+
+03/04/2026
+
+CWE
+
+High
+
+cwis-genai-cwis-uat/app/services/orchestrator/helper/aws_embeddings.py:322
+
+CWE-259
+
+Use of Hard-coded Password
+
+False Positive -  mis interpretation of the Enum as harcoding
+
+
+12/03/2025
+
+CWE
+
+HIGH
+
+target-repo/app/services/orchestrator/helper/aws_embeddings.py:321
+
+CWE-259
+
+Use of Hard-coded Password
+
+False Positive -  mis interpretation of the Enum as harcoding
+
+
+12/03/2025
+
+CWE
+
+HIGH
+
+target-repo/app/services/orchestrator/helper/aws_embeddings.py:322
+
+CWE-259
+
+Use of Hard-coded Password
+
+False Positive - mis interpretation of the Enum as harcoding
+
+
+ 
+
+CWE
+
+MEDIUM
+
+target-repo/app/services/orchestrator/helper/aws_embeddings.py:307
+
+CWE-259
+
+Use of Hard-coded Password
+
+False Positive -  mis interpretation of the Enum as harcoding
+
+
+ 
+
+CWE
+
+MEDIUM
+
+target-repo/app/services/orchestrator/helper/aws_embeddings.py:308
+
+CWE-259
+
+Use of Hard-coded Password
+
+False Positive - mis interpretation of the Enum as harcoding
+
+
+ 
+
+CWE
+
+MEDIUM
+
+target-repo/terraform/cwisrosa-d/lambda/lambda_code/dhhs-cwisrosa-d-knowledgebasecreate-dev/lambda_function.py:297
+
+CWE-532
+
+Improper Output Neutralization for Logs
+
+Minimal risk as data comes from trusted AWS Bedrock API responses, not user input. Sanitization added defensively.
+
+^High vulnerabilities listed in Veracode table above are recurring same from previous 09/24 scan and identified as false positive in 12/03 scan.
+Known Exceptions communicated to PSO team
+Below 1, 2, 3 - have been communicated to Das, Debasish (Contractor) and Mazhar, Umair (Contractor) - email on 8/13/2025, with the following note for each (See Reference #1):
+
+KSV118 – Default security context configured: In a ROSA (Red Hat OpenShift Service on AWS) environment, this is not an applicable security risk
+ROSA automatically assigns a random non-root UID and GID at runtime to containers, regardless of the securityContext in the YAML. Red Hat’s guidance explicitly recommends not setting a fixed UID/GID in deployment manifests, as the platform enforces the correct values automatically. The current Kustomize code’s lack of explicit settings does not weaken security in ROSA. The ROSA infrastructure and its enforced SCCs override any less-restrictive defaults in application code. Therefore, this is false alarms from a scanning perspective and are already mitigated by platform controls in PATH NC infrastructure.  (Ref: Chapter 12. Managing security context constraints | Authentication and authorization | Red Hat OpenShift Service on AWS | 4 | Red Hat Documentation )
+
+KSV014 – Root file system is not read-only: In a ROSA (Red Hat OpenShift Service on AWS) environment, this is not an applicable security risk
+While Kustomize does not set securityContext.readOnlyRootFilesystem to true, ROSA’s enforced pod security and restricted SCCs (Security Context Constraints) control filesystem access at the platform level. The container’s effective permissions are already limited by the SCC, and setting this flag manually is optional, not mandatory, in ROSA-managed workloads. The ROSA infrastructure and its enforced SCCs override any less-restrictive defaults in application code. Therefore, this is false alarms from a scanning perspective and are already mitigated by platform controls in PATH NC infrastructure. (Ref: Chapter 12. Managing security context constraints | Authentication and authorization | Red Hat OpenShift Service on AWS | 4 | Red Hat Documentation ) 
+
+DS-002 - Image user should not be 'root': Root privilege is a FALSE alarm as ROSA auto-generates UID & GID, which the Kustomize should not set manually as best practice. This is addressed under PATH NC infrastructure already. (Ref: A Guide to OpenShift and UIDs)
