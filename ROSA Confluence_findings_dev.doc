@@ -1,0 +1,603 @@
+DEV ROSA Cluster Upgrade – Observations, Issues and Resolutions
+
+| Item                              | Details                                                                                                                         |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| **Environment**                   | DEV                                                                                                                             |
+| **Platform**                      | Red Hat OpenShift Service on AWS (ROSA)                                                                                         |
+| **Upgrade**                       | OpenShift `4.19.40` → `4.20.33`                                                                                                 |
+| **Upgrade Type**                  | Minor version upgrade                                                                                                           |
+| **Primary Issue**                 | Machine Config Pools became degraded because nodes could not complete drain operations                                          |
+| **Primary Root Cause Identified** | Stale Dynatrace OneAgent DaemonSet pods stuck in deletion/termination state                                                     |
+| **Additional Observations**       | Authentication/OpenShift API degradation, kubelet version skew during rollout, OLM upgradeability warning for OpenShift Logging |
+| **Overall Status**                | Upgrade progressing after remediation; final cluster health validation required after all MCP/node updates complete             |
+
+
+2. Executive Summary
+
+During the DEV ROSA upgrade from OpenShift 4.19.40 to 4.20.33, the upgrade became stalled while the Machine Config Operator (MCO) attempted to update control-plane and worker nodes.
+
+Both the master and worker MachineConfigPools entered a Degraded state because MCO was unable to drain specific nodes within its one-hour drain timeout.
+
+Initial affected nodes were:
+
+Master:
+ip-10-64-34-146.ec2.internal
+
+Worker:
+ip-10-64-34-142.ec2.internal
+
+Investigation of the MCO logs identified stale Dynatrace OneAgent pods as the drain blocker. The affected Dynatrace pods were in Succeeded/Completed state but had been stuck with a deletion timestamp since:
+
+2026-08-07T19:24:11Z
+
+For example:
+
+dynakube-oneagent-dsw22
+dynakube-oneagent-fpl2x
+
+The pods were owned by:
+
+DaemonSet/dynakube-oneagent
+
+and did not contain finalizers.
+
+MCO repeatedly attempted to evict the stale pods and eventually timed out waiting for their termination. Force-removing the already-terminating stale pod objects allowed the affected nodes to continue their MachineConfig update.
+
+Following remediation, both initially affected nodes successfully advanced from kubelet v1.32.13 to v1.33.13.
+
+Further investigation identified the same stale Dynatrace pod condition across additional nodes, indicating a broader Dynatrace OneAgent/CSI cleanup issue rather than isolated node failures.
+
+3. Initial Upgrade Symptoms
+
+The OpenShift console showed the cluster continuing to report:
+
+This cluster is updating from 4.19.40 to 4.20.33
+
+Several ClusterOperators displayed degraded or cannot-update conditions.
+
+Cluster Operator	Observed Status	Observation
+| Cluster Operator             | Observed Status | Observation                                                 |
+| ---------------------------- | --------------- | ----------------------------------------------------------- |
+| `authentication`             | Degraded        | 1 of 3 requested API/OAuth instances unavailable            |
+| `openshift-apiserver`        | Degraded        | 1 of 3 requested instances unavailable                      |
+| `kube-apiserver`             | Cannot update   | Multiple nodes still running an older kubelet minor version |
+| `machine-config`             | Cannot update   | One or more MachineConfigPools degraded                     |
+| `operator-lifecycle-manager` | Cannot update   | Logging 6.3.4 prevents upgrade to OCP 4.21 or later         |
+| Other upgraded operators     | Available       | Already reporting 4.20.33                                   |
+
+
+The primary issue preventing the node rollout from completing was the MachineConfigPool degradation.
+
+4. Issue 1 – Master MachineConfigPool Drain Failure
+Observation
+
+The master MCP reported:
+
+Updated:    False
+Updating:   True
+Degraded:   True
+
+The detailed condition showed:
+
+Node ip-10-64-34-146.ec2.internal is reporting:
+"failed to drain node: ip-10-64-34-146.ec2.internal after 1 hour.
+Please see machine-config-controller logs for more information"
+
+The master pool consisted of:
+
+Machine Count:            3
+Degraded Machine Count:   1
+Unavailable Machine Count: 1
+Investigation
+
+Workloads on the affected master were inspected:
+
+oc get pods -A \
+  --field-selector spec.nodeName=ip-10-64-34-146.ec2.internal \
+  -o wide
+
+The control-plane components themselves were running:
+
+etcd
+kube-apiserver
+kube-controller-manager
+kube-scheduler
+
+A Dynatrace pod was also identified:
+
+dynatrace/dynakube-oneagent-dsw22
+STATUS: Completed
+
+MCO logs showed repeated attempts to evict this pod and subsequent timeout while waiting for the pod to terminate.
+
+Root Cause
+
+Inspection showed:
+
+Pod:       dynakube-oneagent-dsw22
+Phase:     Succeeded
+Deleting:  2026-08-07T19:24:11Z
+Owner:     DaemonSet/dynakube-oneagent
+Finalizer: None
+
+The pod had therefore already been marked for deletion for an extended period but remained present.
+
+The pod also used the Dynatrace CSI driver:
+
+Driver: csi.oneagent.dynatrace.com
+mode=host
+
+MCO could not complete the node drain because it continued waiting for this stale pod to terminate.
+
+Resolution
+
+A normal pod deletion was attempted first but the pod remained stuck.
+
+The already-terminating stale pod was subsequently force removed:
+
+oc delete pod dynakube-oneagent-dsw22 \
+  -n dynatrace \
+  --grace-period=0 \
+  --force
+
+Verification:
+
+oc get pod dynakube-oneagent-dsw22 -n dynatrace
+
+Result:
+
+Error from server (NotFound)
+Result
+
+After removing the stale Dynatrace pod:
+
+master DEGRADED: True → False
+
+and node:
+
+ip-10-64-34-146.ec2.internal
+
+successfully progressed from:
+
+kubelet v1.32.13
+
+to:
+
+kubelet v1.33.13
+
+This confirmed that the stale Dynatrace pod was blocking the MCO drain/update process.
+
+5. Issue 2 – Worker MachineConfigPool Drain Failure
+Observation
+
+The worker MCP independently reported:
+
+Node ip-10-64-34-142.ec2.internal is reporting:
+"failed to drain node: ip-10-64-34-142.ec2.internal after 1 hour"
+
+Initial worker status included:
+
+Machine Count:           8
+Degraded Machine Count:  1
+Updated Machine Count:   2
+Investigation
+
+Pods on the affected worker were inspected:
+
+oc get pods -A \
+  --field-selector spec.nodeName=ip-10-64-34-142.ec2.internal \
+  -o wide
+
+Another stale Dynatrace pod was identified:
+
+dynakube-oneagent-fpl2x
+0/1
+Completed
+
+Inspection showed exactly the same condition as the master:
+
+Phase:     Succeeded
+Deleting:  2026-08-07T19:24:11Z
+Finalizer: None
+Owner:     DaemonSet/dynakube-oneagent
+
+MCO logs confirmed the drain controller was attempting to evict:
+
+dynatrace/dynakube-oneagent-fpl2x
+
+and the drain eventually exceeded the one-hour timeout.
+
+Resolution
+
+The stale pod was force removed:
+
+oc delete pod dynakube-oneagent-fpl2x \
+  -n dynatrace \
+  --grace-period=0 \
+  --force
+
+Verification returned:
+
+Error from server (NotFound):
+pods "dynakube-oneagent-fpl2x" not found
+Result
+
+Worker:
+
+ip-10-64-34-142.ec2.internal
+
+subsequently progressed to:
+
+kubelet v1.33.13
+
+confirming the same Dynatrace stale-pod condition was affecting the worker rollout.
+
+6. Issue 3 – Cluster-Wide Stale Dynatrace OneAgent Pods
+
+Further investigation identified that the problem was not limited to the two initially degraded nodes.
+
+The following Dynatrace pods were also found in Succeeded state with the same deletion timestamp:
+
+dynakube-oneagent-4d5v9  -> ip-10-64-34-133
+dynakube-oneagent-b55s8  -> ip-10-64-34-132
+dynakube-oneagent-g42fj  -> ip-10-64-34-152
+dynakube-oneagent-gnfpt  -> ip-10-64-34-153
+dynakube-oneagent-mtk9w  -> ip-10-64-34-145
+dynakube-oneagent-qbkrw  -> ip-10-64-34-150
+dynakube-oneagent-v6rxq  -> ip-10-64-34-134
+
+All reported:
+
+Phase:    Succeeded
+Deleting: 2026-08-07T19:24:11Z
+
+This is an important observation because MCO processes nodes incrementally. As MCO reached another node, the stale Dynatrace pod on that node could cause another drain timeout.
+
+For example, MCO subsequently attempted:
+
+evicting pod dynatrace/dynakube-oneagent-qbkrw
+Resolution approach
+
+After confirming that remaining affected pods had the same characteristics—Succeeded, already deleting, DaemonSet-owned, and no finalizers—the stale pod objects could be cleaned up to prevent repeated one-hour drain failures.
+
+This should be limited specifically to the confirmed stale/terminating Dynatrace pods and not used as a general cleanup of healthy Dynatrace workloads.
+
+7. Issue 4 – Kubelet Version Skew During Upgrade
+
+Initially:
+
+9 nodes -> v1.32.13
+2 nodes -> v1.33.13
+
+The OpenShift console reported:
+
+KubeletMinorVersionUpgradeable:
+Kubelet minor versions on 9 nodes will not be supported
+in the next OpenShift minor version upgrade.
+
+After clearing the stale Dynatrace pods on 146 and 142, the count decreased from:
+
+9 → 7
+
+Later node status showed:
+
+v1.33.13:
+142
+144
+146
+151
+
+v1.32.13:
+132
+133
+134
+145
+150
+152
+153
+
+This demonstrated that the kubelet warning was largely a symptom of the incomplete MachineConfig/node rollout, rather than something requiring manual kubelet installation.
+
+Resolution
+
+No manual kubelet upgrade was performed.
+
+The correct approach was to allow MCO to update each node normally after removing the drain blocker.
+
+Expected final state:
+
+All nodes -> v1.33.13
+8. Issue 5 – Authentication and OpenShift API Server Degraded
+
+During the upgrade, the console reported:
+
+authentication
+APIServerDeploymentDegraded:
+1 of 3 requested instances are unavailable
+
+and:
+
+OAuthServerDeploymentDegraded:
+1 of 3 requested instances are unavailable
+
+openshift-apiserver similarly reported:
+
+1 of 3 requested instances are unavailable
+Observation
+
+Several control-plane PodDisruptionBudgets showed:
+
+ALLOWED DISRUPTIONS = 0
+
+including:
+
+openshift-apiserver-pdb
+etcd-guard-pdb
+kube-apiserver-guard-pdb
+kube-controller-manager-guard-pdb
+openshift-kube-scheduler-guard-pdb
+oauth-apiserver-pdb
+Decision
+
+The OpenShift-managed PDBs were not modified.
+
+Because the control plane was already partially degraded, bypassing PDB protection or force-draining a master could have reduced control-plane availability further.
+
+Investigation instead focused on the actual MCO drain logs, which identified the Dynatrace pods as the concrete drain blocker.
+
+Follow-up
+
+After MCP completion, validate:
+
+oc get co authentication openshift-apiserver kube-apiserver
+
+Expected:
+
+AVAILABLE=True
+PROGRESSING=False
+DEGRADED=False
+
+If degradation remains after the MCP/node rollout finishes, investigate these operators separately.
+
+9. Issue 6 – OpenShift Logging / OLM Warning
+
+The console displayed:
+
+operator-lifecycle-manager
+Cannot update
+
+with:
+
+ClusterServiceVersions blocking minor version upgrades
+to 4.21.0 or higher:
+
+maximum supported OCP version for
+openshift-logging/cluster-logging.v6.3.4 is 4.20
+
+Installed Logging Operator:
+
+cluster-logging.v6.3.4
+Phase: Succeeded
+
+Subscription:
+
+NAME              PACKAGE           SOURCE             CHANNEL
+cluster-logging   cluster-logging   redhat-operators   stable-6.1
+Assessment
+
+This message does not block the current 4.19 → 4.20 upgrade.
+
+It indicates that:
+
+4.19 → 4.20    Supported
+4.20 → 4.21+   Blocked by current Logging CSV compatibility
+Resolution
+
+No change was made to the Logging Operator during the ongoing 4.20 upgrade.
+
+The Logging subscription/operator compatibility should be reviewed after 4.20.33 is fully stable and before any future 4.21 upgrade.
+
+10. Root Cause Summary
+Primary root cause
+
+The ROSA upgrade stalled because Dynatrace OneAgent DaemonSet pods were stuck in a stale deletion state.
+
+The affected objects had:
+
+Status:             Succeeded/Completed
+Deletion Timestamp: 2026-08-07T19:24:11Z
+Finalizers:         None
+Owner:              DaemonSet/dynakube-oneagent
+CSI Driver:         csi.oneagent.dynatrace.com
+
+During the OpenShift upgrade, MCO attempted to drain nodes. The drain process attempted to evict these stale pods but could not observe their termination, eventually reaching the MCO one-hour drain timeout.
+
+This resulted in:
+
+Node drain failure
+        ↓
+NodeDegraded=True
+        ↓
+MCP Degraded=True
+        ↓
+Machine Config rollout stalled
+        ↓
+Nodes remained on kubelet v1.32.13
+        ↓
+Cluster upgrade remained incomplete
+
+Removal of the stale pod objects allowed affected nodes to resume updating.
+
+11. Actions Taken
+| Action                                         | Result                                                                        |
+| ---------------------------------------------- | ----------------------------------------------------------------------------- |
+| Reviewed `oc describe mcp`                     | Identified master `146` and worker `142` drain failures                       |
+| Reviewed workloads on affected nodes           | Identified stale Dynatrace OneAgent pods                                      |
+| Reviewed PDBs                                  | Several control-plane PDBs had zero disruptions; left unchanged               |
+| Reviewed MCO controller logs                   | Confirmed MCO was repeatedly waiting on Dynatrace pod eviction/termination    |
+| Inspected Dynatrace pod metadata               | Confirmed `Succeeded`, old deletion timestamp, DaemonSet owner, no finalizers |
+| Attempted normal pod deletion                  | Pod remained stuck                                                            |
+| Force-deleted stale `dynakube-oneagent-dsw22`  | Master drain resumed                                                          |
+| Force-deleted stale `dynakube-oneagent-fpl2x`  | Worker `142` subsequently updated                                             |
+| Verified kubelet versions                      | `142` and `146` advanced from `v1.32.13` → `v1.33.13`                         |
+| Investigated remaining Dynatrace pods          | Found same stale condition across seven additional nodes                      |
+| Left control-plane PDBs unchanged              | Avoided unnecessary control-plane availability risk                           |
+| Left Logging Operator unchanged during upgrade | OLM warning applies to future 4.21 upgrade                                    |
+
+12. Current/Last Observed DEV Status
+
+At the last captured point:
+
+Master:
+UPDATED=False
+UPDATING=True
+DEGRADED=True
+Machine Count=3
+Ready Machine Count=1
+Updated Machine Count=1
+Degraded Machine Count=1
+Worker:
+UPDATED=False
+UPDATING=True
+DEGRADED=True
+Machine Count=8
+Ready Machine Count=3
+Updated Machine Count=3
+Degraded Machine Count=1
+
+Node kubelet versions:
+
+v1.33.13:
+ip-10-64-34-142
+ip-10-64-34-144
+ip-10-64-34-146
+ip-10-64-34-151
+
+v1.32.13:
+ip-10-64-34-132
+ip-10-64-34-133
+ip-10-64-34-134
+ip-10-64-34-145
+ip-10-64-34-150
+ip-10-64-34-152
+ip-10-64-34-153
+
+Therefore, 4 of 11 nodes had reached the newer kubelet version and 7 remained to be updated at the last observation.
+
+This corresponded with the OpenShift console warning changing from 9 nodes → 7 nodes, demonstrating upgrade progress.
+
+13. Validation / Exit Criteria
+
+The DEV upgrade should not be considered fully completed until all of the following are satisfied.
+
+oc get clusterversion
+
+Expected:
+
+VERSION    AVAILABLE   PROGRESSING
+4.20.33    True        False
+
+Check MCPs:
+
+oc get mcp master worker
+
+Expected:
+
+NAME     UPDATED   UPDATING   DEGRADED
+master   True      False      False
+worker   True      False      False
+
+Expected counts:
+
+master:
+Ready = 3
+Updated = 3
+Degraded = 0
+
+worker:
+Ready = 8
+Updated = 8
+Degraded = 0
+
+Verify kubelets:
+
+oc get nodes \
+  -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
+
+Expected:
+
+All nodes: v1.33.13
+
+Finally:
+
+oc get co
+
+Confirm that no operator related to the current upgrade remains unexpectedly:
+
+AVAILABLE=False
+DEGRADED=True
+PROGRESSING=True
+14. Follow-Up / Preventive Actions
+
+Dynatrace requires a separate follow-up investigation. Multiple OneAgent pods across different nodes had exactly the same 2026-08-07T19:24:11Z deletion timestamp and remained present for more than two weeks. This indicates a broader lifecycle/cleanup problem.
+
+The following should be reviewed before the next DEV maintenance window:
+
+Dynatrace Operator version and compatibility with the installed OpenShift releases.
+Dynatrace CSI driver health and logs.
+Why dynakube-oneagent DaemonSet pods remained after receiving a deletion timestamp.
+Whether this condition exists in QA/PROD before their OpenShift upgrades.
+OpenShift Logging Operator compatibility/subscription should be corrected before a future 4.20 → 4.21 upgrade.
+Add a pre-upgrade check for pods stuck in Terminating for an extended period.
+
+A useful pre-upgrade check is:
+
+oc get pods -A \
+  -o custom-columns='NAMESPACE:.metadata.namespace,NAME:.metadata.name,PHASE:.status.phase,NODE:.spec.nodeName,DELETING:.metadata.deletionTimestamp' \
+  | grep -v '<none>'
+
+This can identify workloads already marked for deletion before MCO begins draining nodes.
+
+15. Lessons Learned
+
+The main operational takeaway is that MCP Degraded during an OpenShift upgrade should be investigated from the MCO drain error before modifying PDBs or manually manipulating nodes.
+
+In this incident, several control-plane PDBs initially appeared suspicious because ALLOWED DISRUPTIONS=0, but they were functioning as intended. The MCO logs exposed the actual blocker: stale Dynatrace pods.
+
+Similarly, the kubelet version warning was not an independent kubelet problem. It reflected nodes that MCO had not yet been able to update.
+
+The remediation sequence that proved effective was:
+
+MCP Degraded
+      ↓
+Identify affected node
+      ↓
+Inspect MCO drain logs
+      ↓
+Identify non-terminating Dynatrace pod
+      ↓
+Verify:
+  Succeeded
+  already deleting
+  no finalizer
+  DaemonSet-owned
+      ↓
+Remove stale pod object
+      ↓
+Allow MCO to retry automatically
+      ↓
+Node updates/reboots
+      ↓
+Kubelet 1.32.13 → 1.33.13
+      ↓
+MCP progresses
+
+No manual kubelet upgrade, PDB bypass, MCP patch, or manual master drain was required.
+
+DEV incident status
+
+Current classification: Remediation in progress / upgrade progressing.
+
+Confirmed primary issue: stale Dynatrace OneAgent pods preventing MCO node drains.
+
+Immediate next objective: allow all remaining nodes to reach v1.33.13, both MCPs to become Updated=True / Updating=False / Degraded=False, and then perform final ClusterOperator and ClusterVersion validation.
