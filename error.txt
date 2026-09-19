@@ -1,37 +1,117 @@
-[ec2-user@ip-10-64-46-133 ~]$ oc -n openshift-user-workload-monitoring \ get cm user-workload-monitoring-config -o yaml
-flags cannot be placed before plugin name: -n
-[ec2-user@ip-10-64-46-133 ~]$ oc get cm user-workload-monitoring-config -o yaml -n openshift-user-workload-monitoring
-apiVersion: v1
-data:
-  config.yaml: |
-    alertmanager:
-      enabled: true
-      enableAlertmanagerConfig: true
-    prometheus:
-      externalLabels:
-        cluster: pathnc-pp
-        env: uat
-kind: ConfigMap
-metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"v1","data":{"config.yaml":"alertmanager:\n  enabled: true\n  enableAlertmanagerConfig: true\nprometheus:\n  externalLabels:\n    cluster: pathnc-pp\n    env: uat\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"user-workload-monitoring-config","namespace":"openshift-user-workload-monitoring"}}
-  creationTimestamp: "2024-11-13T17:03:32Z"
-  labels:
-    app.kubernetes.io/managed-by: cluster-monitoring-operator
-    app.kubernetes.io/part-of: openshift-monitoring
-  name: user-workload-monitoring-config
-  namespace: openshift-user-workload-monitoring
-  resourceVersion: "912554160"
-  uid: 69fbebf4-0c88-487b-a776-764145bed92e
+[ec2-user@ip-10-64-46-133 ~]$ oc get pods -n openshift-user-workload-monitoring
+NAME                                   READY   STATUS              RESTARTS   AGE
+alertmanager-user-workload-0           6/6     Running             0          7d2h
+alertmanager-user-workload-1           6/6     Running             0          7d2h
+prometheus-operator-6ccfc6448f-pphwg   2/2     Running             0          7d3h
+prometheus-user-workload-0             6/6     Running             0          7d2h
+prometheus-user-workload-1             6/6     Running             0          7d2h
+thanos-ruler-user-workload-0           4/4     Running             0          7d2h
+thanos-ruler-user-workload-1           0/4     ContainerCreating   0          3s
+[ec2-user@ip-10-64-46-133 ~]$ oc get cm user-workload-monitoring-config \
+  -n openshift-user-workload-monitoring \
+  -o jsonpath='{.data.config\.yaml}'; echo
+alertmanager:
+  enabled: true
+  enableAlertmanagerConfig: true
+prometheus:
+  externalLabels:
+    cluster_name: pathnc-pp
+    env: uat
+
 [ec2-user@ip-10-64-46-133 ~]$ oc get co monitoring
 NAME         VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
 monitoring   4.19.45   True        False         False      674d
+[ec2-user@ip-10-64-46-133 ~]$ oc get co monitoring -o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  reason="}{.reason}{"  message="}{.message}{"\n"}{end}'
+Available=True  reason=RollOutDone  message=Successfully rolled out the stack.
+Degraded=False  reason=  message=
+Progressing=False  reason=  message=
+Upgradeable=True  reason=  message=
+[ec2-user@ip-10-64-46-133 ~]$ oc get co
+NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+authentication                             4.19.45   True        False         False      71d
+baremetal                                  4.19.45   True        False         False      674d
+cloud-controller-manager                   4.19.45   True        False         False      674d
+cloud-credential                           4.19.45   True        False         False      674d
+cluster-autoscaler                         4.19.45   True        False         False      674d
+config-operator                            4.19.45   True        False         False      674d
+console                                    4.19.45   True        False         False      2m25s
+control-plane-machine-set                  4.19.45   True        False         False      674d
+csi-snapshot-controller                    4.19.45   True        False         False      674d
+dns                                        4.19.45   True        False         False      674d
+etcd                                       4.19.45   True        False         False      674d
+image-registry                             4.19.45   True        False         False      674d
+ingress                                    4.19.45   True        False         False      7d3h
+insights                                   4.19.45   True        False         False      674d
+kube-apiserver                             4.19.45   True        False         False      674d
+kube-controller-manager                    4.19.45   True        False         False      674d
+kube-scheduler                             4.19.45   True        False         False      674d
+kube-storage-version-migrator              4.19.45   True        False         False      7d2h
+machine-api                                4.19.45   True        False         False      674d
+machine-approver                           4.19.45   True        False         False      674d
+machine-config                             4.19.45   True        False         False      529d
+marketplace                                4.19.45   True        False         False      674d
+monitoring                                 4.19.45   True        False         False      674d
+network                                    4.19.45   True        False         False      674d
+node-tuning                                4.19.45   True        False         False      7d2h
+olm                                        4.19.45   True        False         False      7d3h
+openshift-apiserver                        4.19.45   True        False         False      206d
+openshift-controller-manager               4.19.45   True        False         False      674d
+openshift-samples                          4.19.45   True        False         False      387d
+operator-lifecycle-manager                 4.19.45   True        False         False      674d
+operator-lifecycle-manager-catalog         4.19.45   True        False         False      674d
+operator-lifecycle-manager-packageserver   4.19.45   True        False         False      582d
+service-ca                                 4.19.45   True        False         False      674d
+storage                                    4.19.45   True        False         False      674d
+[ec2-user@ip-10-64-46-133 ~]$ oc get co -o json | jq -r '
+.items[] |
+.metadata.name as $name |
+.status.conditions[] |
+select(.type=="Upgradeable" and .status=="False") |
+"\($name): \(.reason) - \(.message)"
+> ^C
+[ec2-user@ip-10-64-46-133 ~]$ oc get co -o json | jq -r '
+.items[] |
+.metadata.name as $name |
+.status.conditions[] |
+select(.type=="Upgradeable" and .status=="False") |
+"\($name): \(.reason) - \(.message)"
+'
 [ec2-user@ip-10-64-46-133 ~]$ oc get clusterversion
 NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
 version   4.19.45   True        False         7d2h    Cluster version is 4.19.45
-[ec2-user@ip-10-64-46-133 ~]$ oc get mcp
-NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
-master   rendered-master-06261025a13ba55ab11565e19316cb05   True      False      False      3              3                   3                     0                      674d
-worker   rendered-worker-583cab4dae5fa8e821e3d14d1db004b6   True      False      False      7              7                   7                     0                      674d
-[ec2-user@ip-10-64-46-133 ~]$
+[ec2-user@ip-10-64-46-133 ~]$ oc adm upgrade
+Cluster version is 4.19.45
+
+Updates:
+
+VERSION IMAGE
+4.19.46 quay.io/openshift-release-dev/ocp-release@sha256:7c2a7b3f4b11fb7b217f196d8f4e6a3385beb7c15275b941a27249263c60a3bc
+4.20.37 quay.io/openshift-release-dev/ocp-release@sha256:d8d5978e31ff54deb3e0b46d881aba8df4fcceaa9299b947ec38a5e9205834a3
+4.20.38 quay.io/openshift-release-dev/ocp-release@sha256:3f0d4394db6d0248681f0cb1ca1f724d3a9030cd8fe39d24d9a6b6bd1e08c410
+[ec2-user@ip-10-64-46-133 ~]$ oc get clusterversion version \
+  -o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  "}{.reason}{"  "}{.message}{"\n"}{end}'
+RetrievedUpdates=True
+ImplicitlyEnabledCapabilities=False  AsExpected  Capabilities match configured spec
+ReleaseAccepted=True  PayloadLoaded  Payload loaded version="4.19.45" image="quay.io/openshift-release-dev/ocp-release@sha256:86fdebc072e8bc8c6caf035fe7117db670caad3cb05a7cad7a3bd1faee79d51d" architecture="amd64"
+Available=True    Done applying 4.19.45
+Failing=True  ClusterOperatorNotAvailable  Cluster operator console is not available
+Progressing=False  ClusterOperatorNotAvailable  Error while reconciling 4.19.45: the cluster operator console is not available
+[ec2-user@ip-10-64-46-133 ~]$ oc get co monitoring
+NAME         VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+monitoring   4.19.45   True        False         False      674d
+[ec2-user@ip-10-64-46-133 ~]$ oc get co -o json | jq -r '
+.items[] |
+.metadata.name as $name |
+.status.conditions[] |
+select(.type=="Upgradeable" and .status=="False") |
+"\($name): \(.reason) - \(.message)"
+'
+[ec2-user@ip-10-64-46-133 ~]$ oc adm upgrade
+Cluster version is 4.19.45
+
+Updates:
+
+VERSION IMAGE
+4.19.46 quay.io/openshift-release-dev/ocp-release@sha256:7c2a7b3f4b11fb7b217f196d8f4e6a3385beb7c15275b941a27249263c60a3bc
+4.20.37 quay.io/openshift-release-dev/ocp-release@sha256:d8d5978e31ff54deb3e0b46d881aba8df4fcceaa9299b947ec38a5e9205834a3
+4.20.38 quay.io/openshift-release-dev/ocp-release@sha256:3f0d4394db6d0248681f0cb1ca1f724d3a9030cd8fe39d24d9a6b6bd1e08c410
