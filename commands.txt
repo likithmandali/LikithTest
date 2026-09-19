@@ -1,106 +1,176 @@
-First check the kubelet versions again:
+Fix it
 
-oc get nodes \
-  -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
+First back it up:
 
-You should probably see:
+oc get cm user-workload-monitoring-config \
+  -n openshift-user-workload-monitoring \
+  -o yaml > /tmp/user-workload-monitoring-config-backup.yaml
 
-2 nodes   v1.33.13
-7 nodes   v1.32.13
+Verify:
 
-plus any other nodes already upgraded depending on how far MCO has progressed.
+cat /tmp/user-workload-monitoring-config-backup.yaml
+
+Then edit:
+
+oc edit cm user-workload-monitoring-config \
+  -n openshift-user-workload-monitoring
+
+Change only this:
+
+externalLabels:
+  cluster: pathnc-pp
+  env: uat
+
+to something like:
+
+externalLabels:
+  cluster_name: pathnc-pp
+  env: uat
+
+So the resulting configuration should be:
+
+apiVersion: v1
+data:
+  config.yaml: |
+    alertmanager:
+      enabled: true
+      enableAlertmanagerConfig: true
+    prometheus:
+      externalLabels:
+        cluster_name: pathnc-pp
+        env: uat
+kind: ConfigMap
+
+You don't need to touch the metadata.
+
+One thing to check before renaming
+
+If your organization sends these metrics to an external Thanos/Prometheus/Grafana system and queries rely on:
+
+cluster="pathnc-pp"
+
+renaming it to cluster_name will affect those queries.
+
+If that's the case, we should examine how your monitoring data is being consumed before changing the label. If it's simply being used as an identifying label locally, cluster_name is a reasonable replacement.
+
+Red Hat's documentation explicitly recommends unique custom keys for external labels.
+
+After saving, expect pod recreation
+
+This part is important: don't be alarmed if monitoring pods restart.
+
+Red Hat documents that saving user-workload-monitoring-config causes affected User Workload Monitoring pods to be automatically redeployed.
+
+Watch:
+
+oc get pods -n openshift-user-workload-monitoring -w
+
+Wait until everything settles.
+
+Then:
+
+oc get pods -n openshift-user-workload-monitoring
+
+You should have the Prometheus/Thanos/operator pods back in Running and ready.
+
+Then verify the configuration
+
+Run:
+
+oc get cm user-workload-monitoring-config \
+  -n openshift-user-workload-monitoring \
+  -o jsonpath='{.data.config\.yaml}'; echo
+
+Expected:
+
+alertmanager:
+  enabled: true
+  enableAlertmanagerConfig: true
+prometheus:
+  externalLabels:
+    cluster_name: pathnc-pp
+    env: uat
 
 Then check:
 
-oc get mcp master worker
+oc get co monitoring
 
-If the worker MCP is still UPDATING=True, MCO is working through those remaining nodes one at a time.
+and more importantly:
 
-The likely next blocker
+oc get co monitoring -o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  reason="}{.reason}{"  message="}{.message}{"\n"}{end}'
 
-The remaining stale pods are:
+Look specifically for:
 
-dynakube-oneagent-4d5v9   -> 133
-dynakube-oneagent-b55s8   -> 132
-dynakube-oneagent-g42fj   -> 152
-dynakube-oneagent-gnfpt   -> 153
-dynakube-oneagent-mtk9w   -> 145
-dynakube-oneagent-qbkrw   -> 150
-dynakube-oneagent-v6rxq   -> 134
+Available=True
+Progressing=False
+Degraded=False
+Upgradeable=True
+Also check all operators for upgrade blockers
 
-All seven were already in Succeeded with the same old deletion timestamp.
+I'd run:
 
-And your MCO log had already moved on to trying to evict dynakube-oneagent-qbkrw on another worker.
+oc get co
 
-So if you have not yet cleaned up those remaining seven stale pod objects, I would do that now.
+and:
 
-Because we've already confirmed they are stale and terminating, use:
+oc get co -o json | jq -r '
+.items[] |
+.metadata.name as $name |
+.status.conditions[] |
+select(.type=="Upgradeable" and .status=="False") |
+"\($name): \(.reason) - \(.message)"
+'
 
-for p in $(oc get pods -n dynatrace -o name | grep dynakube-oneagent); do
-  echo "Force deleting stale $p"
-  oc delete -n dynatrace "$p" --grace-period=0 --force
-done
+Ideally that second command returns nothing.
 
-Then verify:
+If it does return something, that's your next 4.20 blocker.
 
-oc get pods -n dynatrace -o wide | grep dynakube-oneagent
-
-Ideally none of the old 65-day/16-day pods remain.
-
-Then watch the upgrade
-watch -n 15 'oc get mcp master worker'
-
-and in another terminal:
-
-watch -n 15 "oc get nodes -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'"
-
-You should see more nodes transition:
-
-v1.32.13 -> v1.33.13
-
-As that happens, the kube-apiserver warning should decrease from:
-
-7 nodes
-
-to:
-
-6
-5
-4
-...
-0
-About the other console warnings
-
-The authentication and openshift-apiserver degradation:
-
-1 of 3 requested instances unavailable
-
-is something I'd expect to clear once the control-plane rollout fully settles. I would not touch OAuth/API pods manually yet.
-
-The OLM warning is also not blocking this 4.20 upgrade. The screenshot explicitly says:
-
-blocking minor version upgrades to 4.21.0 or higher
-
-because Logging 6.3.4 supports up to OCP 4.20. That becomes something to fix before 4.21, not right now.
-
-The machine-config operator still showing 4.19.40 is also consistent with the MachineConfig pools not being fully completed yet.
-
-Check CLI rather than trusting the console banner
-
-After cleaning up the remaining stale Dynatrace pods, run:
-
+Finally check the upgrade
 oc get clusterversion
-oc get mcp master worker
-oc get co authentication openshift-apiserver kube-apiserver machine-config
-oc get nodes \
-  -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
 
-Paste those four outputs. Those will tell us much more accurately than the web-console page whether the upgrade is actively progressing or has hit another blocker.
+Then:
 
+oc adm upgrade
 
+The 4.20.x target should become available/recommended once CVO reevaluates the cluster.
 
+You can also inspect:
 
-for p in $(oc get pods -n dynatrace -o name | grep dynakube-oneagent); do
-  echo "Deleting stale pod $p"
-  oc delete -n dynatrace "$p" --grace-period=0 --force
-done
+oc get clusterversion version \
+  -o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  "}{.reason}{"  "}{.message}{"\n"}{end}'
+About your first command error
+
+This:
+
+oc -n openshift-user-workload-monitoring \ get cm ...
+
+failed because there's a space after \.
+
+A backslash means continue the command onto the next line. Use either:
+
+oc -n openshift-user-workload-monitoring \
+get cm user-workload-monitoring-config -o yaml
+
+or simply:
+
+oc get cm user-workload-monitoring-config \
+  -n openshift-user-workload-monitoring \
+  -o yaml
+
+Your second command was perfectly fine.
+
+So at this point, I would make just the cluster → cluster_name change, wait for monitoring to reconcile, and then send me these three outputs:
+
+oc get co monitoring
+
+oc get co -o json | jq -r '
+.items[] |
+.metadata.name as $name |
+.status.conditions[] |
+select(.type=="Upgradeable" and .status=="False") |
+"\($name): \(.reason) - \(.message)"
+'
+
+oc adm upgrade
+
+From those, we can determine whether 4.20 is completely clear to proceed or whether there is another pre-upgrade blocker before you start it.
