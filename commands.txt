@@ -1,176 +1,136 @@
-Fix it
+Give the CVO a few minutes to reconcile. Then run:
 
-First back it up:
+watch -n 10 'oc get clusterversion; echo; oc get co console'
 
-oc get cm user-workload-monitoring-config \
-  -n openshift-user-workload-monitoring \
-  -o yaml > /tmp/user-workload-monitoring-config-backup.yaml
+What we want is:
 
-Verify:
+version   4.19.45   True   False
 
-cat /tmp/user-workload-monitoring-config-backup.yaml
-
-Then edit:
-
-oc edit cm user-workload-monitoring-config \
-  -n openshift-user-workload-monitoring
-
-Change only this:
-
-externalLabels:
-  cluster: pathnc-pp
-  env: uat
-
-to something like:
-
-externalLabels:
-  cluster_name: pathnc-pp
-  env: uat
-
-So the resulting configuration should be:
-
-apiVersion: v1
-data:
-  config.yaml: |
-    alertmanager:
-      enabled: true
-      enableAlertmanagerConfig: true
-    prometheus:
-      externalLabels:
-        cluster_name: pathnc-pp
-        env: uat
-kind: ConfigMap
-
-You don't need to touch the metadata.
-
-One thing to check before renaming
-
-If your organization sends these metrics to an external Thanos/Prometheus/Grafana system and queries rely on:
-
-cluster="pathnc-pp"
-
-renaming it to cluster_name will affect those queries.
-
-If that's the case, we should examine how your monitoring data is being consumed before changing the label. If it's simply being used as an identifying label locally, cluster_name is a reasonable replacement.
-
-Red Hat's documentation explicitly recommends unique custom keys for external labels.
-
-After saving, expect pod recreation
-
-This part is important: don't be alarmed if monitoring pods restart.
-
-Red Hat documents that saving user-workload-monitoring-config causes affected User Workload Monitoring pods to be automatically redeployed.
-
-Watch:
-
-oc get pods -n openshift-user-workload-monitoring -w
-
-Wait until everything settles.
-
-Then:
-
-oc get pods -n openshift-user-workload-monitoring
-
-You should have the Prometheus/Thanos/operator pods back in Running and ready.
-
-Then verify the configuration
-
-Run:
-
-oc get cm user-workload-monitoring-config \
-  -n openshift-user-workload-monitoring \
-  -o jsonpath='{.data.config\.yaml}'; echo
-
-Expected:
-
-alertmanager:
-  enabled: true
-  enableAlertmanagerConfig: true
-prometheus:
-  externalLabels:
-    cluster_name: pathnc-pp
-    env: uat
-
-Then check:
-
-oc get co monitoring
-
-and more importantly:
-
-oc get co monitoring -o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  reason="}{.reason}{"  message="}{.message}{"\n"}{end}'
-
-Look specifically for:
-
-Available=True
-Progressing=False
-Degraded=False
-Upgradeable=True
-Also check all operators for upgrade blockers
-
-I'd run:
-
-oc get co
-
-and:
-
-oc get co -o json | jq -r '
-.items[] |
-.metadata.name as $name |
-.status.conditions[] |
-select(.type=="Upgradeable" and .status=="False") |
-"\($name): \(.reason) - \(.message)"
-'
-
-Ideally that second command returns nothing.
-
-If it does return something, that's your next 4.20 blocker.
-
-Finally check the upgrade
-oc get clusterversion
-
-Then:
-
-oc adm upgrade
-
-The 4.20.x target should become available/recommended once CVO reevaluates the cluster.
-
-You can also inspect:
+and then specifically:
 
 oc get clusterversion version \
   -o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  "}{.reason}{"  "}{.message}{"\n"}{end}'
-About your first command error
 
-This:
+We want:
 
-oc -n openshift-user-workload-monitoring \ get cm ...
+Available=True
+Failing=False
+Progressing=False
 
-failed because there's a space after \.
+If Failing flips to False, you're in a much cleaner state for starting 4.20.
 
-A backslash means continue the command onto the next line. Use either:
+If Failing=True remains after ~5–10 minutes
 
-oc -n openshift-user-workload-monitoring \
-get cm user-workload-monitoring-config -o yaml
+Then investigate the console operator rather than touching monitoring again:
 
-or simply:
+oc get co console -o yaml
 
-oc get cm user-workload-monitoring-config \
-  -n openshift-user-workload-monitoring \
-  -o yaml
+More targeted:
 
-Your second command was perfectly fine.
+oc get co console \
+  -o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  reason="}{.reason}{"  message="}{.message}{"\n"}{end}'
 
-So at this point, I would make just the cluster → cluster_name change, wait for monitoring to reconcile, and then send me these three outputs:
+Then:
 
-oc get co monitoring
+oc get pods -n openshift-console
+oc get pods -n openshift-console-operator
 
-oc get co -o json | jq -r '
-.items[] |
-.metadata.name as $name |
-.status.conditions[] |
-select(.type=="Upgradeable" and .status=="False") |
-"\($name): \(.reason) - \(.message)"
-'
+And:
 
-oc adm upgrade
+oc logs -n openshift-console-operator \
+  deployment/console-operator --tail=100
 
-From those, we can determine whether 4.20 is completely clear to proceed or whether there is another pre-upgrade blocker before you start it.
+Also check:
+
+oc get route console -n openshift-console
+
+I would not delete the console pods yet. Right now the operator reports healthy, so give CVO time to catch up.
+
+Red Hat's upgrade documentation specifically uses ClusterOperatorNotAvailable/Failing=True as an example condition to resolve when reviewing upgrade readiness. It also discourages forcing an update past safety guards.
+
+About the Thanos pod
+
+You had:
+
+thanos-ruler-user-workload-1
+0/4  ContainerCreating  3s
+
+That's completely unsurprising at 3 seconds old after changing user-workload-monitoring-config. Check it again:
+
+oc get pods -n openshift-user-workload-monitoring
+
+I'd want:
+
+thanos-ruler-user-workload-0   4/4 Running
+thanos-ruler-user-workload-1   4/4 Running
+
+before proceeding.
+
+Then do one final pre-upgrade check
+
+Once CVO has Failing=False, run:
+
+oc adm upgrade recommend
+
+and:
+
+oc get co
+oc get mcp
+
+Your desired pre-upgrade state is essentially:
+
+ClusterVersion
+  Available=True
+  Progressing=False
+  Failing=False
+
+ClusterOperators
+  Available=True
+  Progressing=False
+  Degraded=False
+
+Monitoring
+  Upgradeable=True
+
+MCP master
+  UPDATED=True
+  UPDATING=False
+  DEGRADED=False
+
+MCP worker
+  UPDATED=True
+  UPDATING=False
+  DEGRADED=False
+
+Red Hat also recommends checking OLM-installed Operators for compatibility with the target release before a minor-version update. Given the Operators on this cluster, I would run:
+
+oc get csv -A
+oc get subscriptions -A
+oc get installplan -A
+
+before kicking off 4.20.
+
+One other important point
+
+You have three offered versions:
+
+4.19.46
+4.20.37
+4.20.38
+
+You do not automatically need to install 4.19.46 before going to 4.20. The update graph is explicitly offering direct update targets from your current 4.19.45, including 4.20.37 and 4.20.38.
+
+I wouldn't manually use --force or try to construct an update path. Red Hat notes that forcing bypasses cluster-side guards and precondition checks.
+
+So right now: monitoring problem solved → wait for CVO Failing=False → verify Thanos 4/4 → check OLM operators → then proceed with the offered 4.20 update.
+
+Send me the output of:
+
+oc get clusterversion version \
+-o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  "}{.reason}{"  "}{.message}{"\n"}{end}'
+
+oc get pods -n openshift-user-workload-monitoring
+
+oc get csv -A
+
+and I'll check the final upgrade readiness before you click the 4.20 update.
