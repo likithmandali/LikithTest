@@ -1,19 +1,37 @@
-[ec2-user@ip-10-64-34-253 ~]$ oc get nodes \
-  -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
-NAME                           KUBELET
-ip-10-64-34-132.ec2.internal   v1.32.13
-ip-10-64-34-133.ec2.internal   v1.32.13
-ip-10-64-34-134.ec2.internal   v1.32.13
-ip-10-64-34-142.ec2.internal   v1.33.13
-ip-10-64-34-144.ec2.internal   v1.33.13
-ip-10-64-34-145.ec2.internal   v1.32.13
-ip-10-64-34-146.ec2.internal   v1.33.13
-ip-10-64-34-150.ec2.internal   v1.32.13
-ip-10-64-34-151.ec2.internal   v1.33.13
-ip-10-64-34-152.ec2.internal   v1.32.13
-ip-10-64-34-153.ec2.internal   v1.32.13
-[ec2-user@ip-10-64-34-253 ~]$ oc get mcp master worker
+[ec2-user@ip-10-64-46-133 ~]$ oc -n openshift-user-workload-monitoring \ get cm user-workload-monitoring-config -o yaml
+flags cannot be placed before plugin name: -n
+[ec2-user@ip-10-64-46-133 ~]$ oc get cm user-workload-monitoring-config -o yaml -n openshift-user-workload-monitoring
+apiVersion: v1
+data:
+  config.yaml: |
+    alertmanager:
+      enabled: true
+      enableAlertmanagerConfig: true
+    prometheus:
+      externalLabels:
+        cluster: pathnc-pp
+        env: uat
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","data":{"config.yaml":"alertmanager:\n  enabled: true\n  enableAlertmanagerConfig: true\nprometheus:\n  externalLabels:\n    cluster: pathnc-pp\n    env: uat\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"user-workload-monitoring-config","namespace":"openshift-user-workload-monitoring"}}
+  creationTimestamp: "2024-11-13T17:03:32Z"
+  labels:
+    app.kubernetes.io/managed-by: cluster-monitoring-operator
+    app.kubernetes.io/part-of: openshift-monitoring
+  name: user-workload-monitoring-config
+  namespace: openshift-user-workload-monitoring
+  resourceVersion: "912554160"
+  uid: 69fbebf4-0c88-487b-a776-764145bed92e
+[ec2-user@ip-10-64-46-133 ~]$ oc get co monitoring
+NAME         VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+monitoring   4.19.45   True        False         False      674d
+[ec2-user@ip-10-64-46-133 ~]$ oc get clusterversion
+NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
+version   4.19.45   True        False         7d2h    Cluster version is 4.19.45
+[ec2-user@ip-10-64-46-133 ~]$ oc get mcp
 NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
-master   rendered-master-061ed9f4af3a1177ff6e9d94e4bdeb4c   False     True       True       3              1                   1                     1                      2y144d
-worker   rendered-worker-7956d7fc9e4f3380b8ce4d2ac94e2c9c   False     True       True       8              3                   3                     1                      2y144d
-[ec2-user@ip-10-64-34-253 ~]$
+master   rendered-master-06261025a13ba55ab11565e19316cb05   True      False      False      3              3                   3                     0                      674d
+worker   rendered-worker-583cab4dae5fa8e821e3d14d1db004b6   True      False      False      7              7                   7                     0                      674d
+[ec2-user@ip-10-64-46-133 ~]$
