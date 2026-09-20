@@ -394,3 +394,85 @@ Local
 {"service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags":"dhhs:operation-owner=xia-feng,red-hat-clustertype=rosa,red-hat-managed=true,dhhs:compliance=pii-hipaa,dhhs:cost-center=cgg2,dhhs:environment=uat,dhhs:application-name=comp-aws-general,dhhs:business-owner=rob-morrell,dhhs:division=division-of-social-services","service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval":"10","service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout":"4","service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-internal":"true","service.beta.kubernetes.io/aws-load-balancer-type":"nlb","traffic-policy.network.alpha.openshift.io/local-with-fallback":""}
 [ec2-user@ip-10-64-46-133 ~]$
 
+
+
+
+
+
+
+[ec2-user@ip-10-64-46-133 ~]$ dig console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
+
+; <<>> DiG 9.18.28 <<>> console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 13291
+;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com. IN A
+
+;; ANSWER SECTION:
+console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com. 60 IN A 10.64.46.249
+console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com. 60 IN A 10.64.46.206
+
+;; Query time: 0 msec
+;; SERVER: 10.64.46.2#53(10.64.46.2) (UDP)
+;; WHEN: Sun Sep 20 01:12:39 UTC 2026
+;; MSG SIZE  rcvd: 127
+
+[ec2-user@ip-10-64-46-133 ~]$ dig apps.pathnc-pp.7ap4.p1.openshiftapps.com
+
+; <<>> DiG 9.18.28 <<>> apps.pathnc-pp.7ap4.p1.openshiftapps.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 42929
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;apps.pathnc-pp.7ap4.p1.openshiftapps.com. IN A
+
+;; AUTHORITY SECTION:
+pathnc-pp.7ap4.p1.openshiftapps.com. 900 IN SOA ns-1536.awsdns-00.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+
+;; Query time: 0 msec
+;; SERVER: 10.64.46.2#53(10.64.46.2) (UDP)
+;; WHEN: Sun Sep 20 01:12:47 UTC 2026
+;; MSG SIZE  rcvd: 153
+
+[ec2-user@ip-10-64-46-133 ~]$ CONSOLE=console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
+[ec2-user@ip-10-64-46-133 ~]$ vi test.sh
+[ec2-user@ip-10-64-46-133 ~]$ vi test_lb.sh
+[ec2-user@ip-10-64-46-133 ~]$ sh test_lb.sh
+===== 10.64.46.206 =====
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+===== 10.64.46.249 =====
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
+[ec2-user@ip-10-64-46-133 ~]$ oc get nodes -l node-role.kubernetes.io/infra \
+  -L topology.kubernetes.io/zone -o wide
+NAME                           STATUS   ROLES          AGE    VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                                                KERNEL-VERSION                  CONTAINER-RUNTIME                             ZONE
+ip-10-64-46-132.ec2.internal   Ready    infra,worker   675d   v1.32.13   10.64.46.132   <none>        Red Hat Enterprise Linux CoreOS 9.6.20260821-0 (Plow)   5.14.0-570.135.1.el9_6.x86_64   cri-o://1.32.13-11.rhaos4.19.git089e95c.el9   us-east-1b
+ip-10-64-46-149.ec2.internal   Ready    infra,worker   675d   v1.32.13   10.64.46.149   <none>        Red Hat Enterprise Linux CoreOS 9.6.20260821-0 (Plow)   5.14.0-570.135.1.el9_6.x86_64   cri-o://1.32.13-11.rhaos4.19.git089e95c.el9   us-east-1b
+[ec2-user@ip-10-64-46-133 ~]$
+
