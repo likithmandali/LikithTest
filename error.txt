@@ -1,478 +1,82 @@
-[ec2-user@ip-10-64-46-133 ~]$ LB=a3a36129ce4854c2182e6c92e5518e76-56ee27fd0d510153.elb.us-east-1.amazonaws.com
-[ec2-user@ip-10-64-46-133 ~]$ dig +short $LB
-10.64.46.152
-[ec2-user@ip-10-64-46-133 ~]$ CONSOLE=console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
-[ec2-user@ip-10-64-46-133 ~]$ dig +short $CONSOLE
-10.64.46.206
-10.64.46.249
-[ec2-user@ip-10-64-46-133 ~]$ vi test.sh
-[ec2-user@ip-10-64-46-133 ~]$ vi test.sh
-[ec2-user@ip-10-64-46-133 ~]$ sh test.sh
-===== Sat Sep 19 02:57:55 UTC 2026 =====
-===== Sat Sep 19 02:57:57 UTC 2026 =====
-===== Sat Sep 19 02:57:59 UTC 2026 =====
-===== Sat Sep 19 02:58:01 UTC 2026 =====
-===== Sat Sep 19 02:58:03 UTC 2026 =====
-===== Sat Sep 19 02:58:05 UTC 2026 =====
-===== Sat Sep 19 02:58:07 UTC 2026 =====
-===== Sat Sep 19 02:58:09 UTC 2026 =====
-===== Sat Sep 19 02:58:11 UTC 2026 =====
-===== Sat Sep 19 02:58:13 UTC 2026 =====
-===== Sat Sep 19 02:58:15 UTC 2026 =====
-===== Sat Sep 19 02:58:17 UTC 2026 =====
-===== Sat Sep 19 02:58:19 UTC 2026 =====
-===== Sat Sep 19 02:58:21 UTC 2026 =====
-===== Sat Sep 19 02:58:23 UTC 2026 =====
-===== Sat Sep 19 02:58:25 UTC 2026 =====
-===== Sat Sep 19 02:58:27 UTC 2026 =====
-===== Sat Sep 19 02:58:29 UTC 2026 =====
-===== Sat Sep 19 02:58:31 UTC 2026 =====
-===== Sat Sep 19 02:58:33 UTC 2026 =====
-===== Sat Sep 19 02:58:35 UTC 2026 =====
-===== Sat Sep 19 02:58:37 UTC 2026 =====
-===== Sat Sep 19 02:58:39 UTC 2026 =====
-===== Sat Sep 19 02:58:41 UTC 2026 =====
-===== Sat Sep 19 02:58:43 UTC 2026 =====
-===== Sat Sep 19 02:58:45 UTC 2026 =====
-===== Sat Sep 19 02:58:47 UTC 2026 =====
-===== Sat Sep 19 02:58:49 UTC 2026 =====
-===== Sat Sep 19 02:58:51 UTC 2026 =====
-===== Sat Sep 19 02:58:53 UTC 2026 =====
-[ec2-user@ip-10-64-46-133 ~]$ dig +short $LB
-10.64.46.152
-[ec2-user@ip-10-64-46-133 ~]$ vi test_lb.sh
-[ec2-user@ip-10-64-46-133 ~]$ sh test_lb.sh
-===== Testing g.root-servers.net. =====
-===== Testing h.root-servers.net. =====
-===== Testing i.root-servers.net. =====
-===== Testing j.root-servers.net. =====
-===== Testing k.root-servers.net. =====
-===== Testing l.root-servers.net. =====
-===== Testing m.root-servers.net. =====
-===== Testing a.root-servers.net. =====
-===== Testing b.root-servers.net. =====
-===== Testing c.root-servers.net. =====
-===== Testing d.root-servers.net. =====
-===== Testing e.root-servers.net. =====
-===== Testing f.root-servers.net. =====
+[ec2-user@ip-10-64-46-133 ~]$ oc get clusterversion version \
+-o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  reason="}{.reason}{"  message="}{.message}{"\n"}{end}'
+RetrievedUpdates=True  reason=  message=
+ImplicitlyEnabledCapabilities=False  reason=AsExpected  message=Capabilities match configured spec
+ReleaseAccepted=True  reason=PayloadLoaded  message=Payload loaded version="4.20.38" image="quay.io/openshift-release-dev/ocp-release@sha256:3f0d4394db6d0248681f0cb1ca1f724d3a9030cd8fe39d24d9a6b6bd1e08c410" architecture="amd64"
+Available=True  reason=  message=Done applying 4.19.45
+Failing=False  reason=  message=
+Progressing=True  reason=ClusterOperatorsUpdating  message=Working towards 4.20.38: 142 of 962 done (14% complete), waiting on kube-controller-manager, kube-scheduler
+Upgradeable=False  reason=MultipleReasons  message=Cluster should not be upgraded between minor versions for multiple reasons: AdminAckRequired,KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade,UpdateInProgress
+* The admissionregistration.k8s.io/v1beta1 group version is deprecated in 4.19 and will be removed in 4.20. Any clients using the v1beta1 version of these resources must be updated to use the corresponding v1 version instead. See https://access.redhat.com/articles/7130599 for more information.
+* Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersionUpgradeable: Kubelet minor versions on 11 nodes will not be supported in the next OpenShift minor version upgrade.
+* An update is already in progress and the details are in the Progressing condition
+UpgradeableAdminAckRequired=False  reason=AdminAckRequired  message=The admissionregistration.k8s.io/v1beta1 group version is deprecated in 4.19 and will be removed in 4.20. Any clients using the v1beta1 version of these resources must be updated to use the corresponding v1 version instead. See https://access.redhat.com/articles/7130599 for more information.
+UpgradeableClusterOperators=False  reason=KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade  message=Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersionUpgradeable: Kubelet minor versions on 11 nodes will not be supported in the next OpenShift minor version upgrade.
+UpgradeableUpgradeInProgress=True  reason=UpdateInProgress  message=An update is already in progress and the details are in the Progressing condition
+[ec2-user@ip-10-64-46-133 ~]$ oc get co
+NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+authentication                             4.19.45   True        False         False      72d
+baremetal                                  4.19.45   True        False         False      675d
+cloud-controller-manager                   4.19.45   True        False         False      675d
+cloud-credential                           4.19.45   True        False         False      675d
+cluster-autoscaler                         4.19.45   True        False         False      675d
+config-operator                            4.20.38   True        False         False      675d
+console                                    4.19.45   False       False         False      60s     RouteHealthAvailable: failed to GET route (https://console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com): Get "https://console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+control-plane-machine-set                  4.19.45   True        False         False      675d
+csi-snapshot-controller                    4.19.45   True        False         False      675d
+dns                                        4.19.45   True        False         False      675d
+etcd                                       4.20.38   True        False         False      675d
+image-registry                             4.19.45   True        False         False      675d
+ingress                                    4.19.45   True        False         False      8d
+insights                                   4.19.45   True        False         False      675d
+kube-apiserver                             4.20.38   True        False         False      675d
+kube-controller-manager                    4.19.45   True        True          False      675d    NodeInstallerProgressing: 3 nodes are at revision 57; 0 nodes have achieved new revision 59
+kube-scheduler                             4.19.45   True        True          False      675d    NodeInstallerProgressing: 3 nodes are at revision 47; 0 nodes have achieved new revision 48
+kube-storage-version-migrator              4.19.45   True        False         False      8d
+machine-api                                4.19.45   True        False         False      675d
+machine-approver                           4.19.45   True        False         False      675d
+machine-config                             4.19.45   True        False         False      530d
+marketplace                                4.19.45   True        False         False      675d
+monitoring                                 4.19.45   True        False         False      675d
+network                                    4.19.45   True        False         False      675d
+node-tuning                                4.19.45   True        False         False      17m
+olm                                        4.19.45   True        False         False      8d
+openshift-apiserver                        4.19.45   True        False         False      207d
+openshift-controller-manager               4.19.45   True        False         False      675d
+openshift-samples                          4.19.45   True        False         False      388d
+operator-lifecycle-manager                 4.19.45   True        False         False      675d
+operator-lifecycle-manager-catalog         4.19.45   True        False         False      675d
+operator-lifecycle-manager-packageserver   4.19.45   True        False         False      583d
+service-ca                                 4.19.45   True        False         False      675d
+storage                                    4.19.45   True        False         False      675d
+[ec2-user@ip-10-64-46-133 ~]$ oc get mcp
+NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+master   rendered-master-06261025a13ba55ab11565e19316cb05   True      False      False      3              3                   3                     0                      675d
+worker   rendered-worker-583cab4dae5fa8e821e3d14d1db004b6   True      False      False      8              8                   8                     0                      675d
 [ec2-user@ip-10-64-46-133 ~]$ oc get nodes \
-  ip-10-64-46-132.ec2.internal \
-  ip-10-64-46-149.ec2.internal \
-  -L topology.kubernetes.io/zone \
-  -o wide
-NAME                           STATUS   ROLES          AGE    VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                                                KERNEL-VERSION                  CONTAINER-RUNTIME                             ZONE
-ip-10-64-46-132.ec2.internal   Ready    infra,worker   674d   v1.32.13   10.64.46.132   <none>        Red Hat Enterprise Linux CoreOS 9.6.20260821-0 (Plow)   5.14.0-570.135.1.el9_6.x86_64   cri-o://1.32.13-11.rhaos4.19.git089e95c.el9   us-east-1b
-ip-10-64-46-149.ec2.internal   Ready    infra,worker   674d   v1.32.13   10.64.46.149   <none>        Red Hat Enterprise Linux CoreOS 9.6.20260821-0 (Plow)   5.14.0-570.135.1.el9_6.x86_64   cri-o://1.32.13-11.rhaos4.19.git089e95c.el9   us-east-1b
-[ec2-user@ip-10-64-46-133 ~]$ oc get svc router-default \
-  -n openshift-ingress -o yaml
-apiVersion: v1
-kind: Service
-metadata:
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: dhhs:operation-owner=xia-feng,red-hat-clustertype=rosa,red-hat-managed=true,dhhs:compliance=pii-hipaa,dhhs:cost-center=cgg2,dhhs:environment=uat,dhhs:application-name=comp-aws-general,dhhs:business-owner=rob-morrell,dhhs:division=division-of-social-services
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "2"
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "4"
-    service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "2"
-    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
-    service.beta.kubernetes.io/aws-load-balancer-type: nlb
-    traffic-policy.network.alpha.openshift.io/local-with-fallback: ""
-  creationTimestamp: "2024-11-13T16:41:08Z"
-  finalizers:
-  - service.kubernetes.io/load-balancer-cleanup
-  labels:
-    app: router
-    ingresscontroller.operator.openshift.io/owning-ingresscontroller: default
-    router: router-default
-  name: router-default
-  namespace: openshift-ingress
-  ownerReferences:
-  - apiVersion: apps/v1
-    controller: true
-    kind: Deployment
-    name: router-default
-    uid: bcc0b584-d425-4faa-aac7-b3ddbc6f2482
-  resourceVersion: "21131"
-  uid: 3a36129c-e485-4c21-82e6-c92e5518e76e
-spec:
-  allocateLoadBalancerNodePorts: true
-  clusterIP: 172.30.64.78
-  clusterIPs:
-  - 172.30.64.78
-  externalTrafficPolicy: Local
-  healthCheckNodePort: 30796
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
-  ports:
-  - name: http
-    nodePort: 31450
-    port: 80
-    protocol: TCP
-    targetPort: http
-  - name: https
-    nodePort: 31200
-    port: 443
-    protocol: TCP
-    targetPort: https
-  selector:
-    ingresscontroller.operator.openshift.io/deployment-ingresscontroller: default
-  sessionAffinity: None
-  type: LoadBalancer
-status:
-  loadBalancer:
-    ingress:
-    - hostname: a3a36129ce4854c2182e6c92e5518e76-56ee27fd0d510153.elb.us-east-1.amazonaws.com
-[ec2-user@ip-10-64-46-133 ~]$ ^[[200~oc get svc router-default -n openshift-ingress \
->   -o jsonpath='{.spec.externalTrafficPolicy}{"\n"}{.spec.healthCheckNodePort}{"\n"}{.metadata.annotations}{"\n"}'~
--bash: $'\E[200~oc': command not found
-[ec2-user@ip-10-64-46-133 ~]$ oc get svc router-default -n openshift-ingress \
-  -o jsonpath='{.spec.externalTrafficPolicy}{"\n"}{.spec.healthCheckNodePort}{"\n"}{.metadata.annotations}{"\n"}'
-Local
-30796
-{"service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags":"dhhs:operation-owner=xia-feng,red-hat-clustertype=rosa,red-hat-managed=true,dhhs:compliance=pii-hipaa,dhhs:cost-center=cgg2,dhhs:environment=uat,dhhs:application-name=comp-aws-general,dhhs:business-owner=rob-morrell,dhhs:division=division-of-social-services","service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval":"10","service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout":"4","service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-internal":"true","service.beta.kubernetes.io/aws-load-balancer-type":"nlb","traffic-policy.network.alpha.openshift.io/local-with-fallback":""}
-[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-load-balancers \
-  --region us-east-1 \
-  --query "LoadBalancers[?DNSName=='${LB}'].[LoadBalancerArn,DNSName,State.Code]" \
-  --output table
+-o custom-columns='NAME:.metadata.name,STATUS:.status.conditions[-1].type,KUBELET:.status.nodeInfo.kubeletVersion'
+NAME                           STATUS   KUBELET
+ip-10-64-46-132.ec2.internal   Ready    v1.32.13
+ip-10-64-46-135.ec2.internal   Ready    v1.32.13
+ip-10-64-46-136.ec2.internal   Ready    v1.32.13
+ip-10-64-46-137.ec2.internal   Ready    v1.32.13
+ip-10-64-46-141.ec2.internal   Ready    v1.32.13
+ip-10-64-46-145.ec2.internal   Ready    v1.32.13
+ip-10-64-46-149.ec2.internal   Ready    v1.32.13
+ip-10-64-46-150.ec2.internal   Ready    v1.32.13
+ip-10-64-46-151.ec2.internal   Ready    v1.32.13
+ip-10-64-46-154.ec2.internal   Ready    v1.32.13
+ip-10-64-46-157.ec2.internal   Ready    v1.32.13
+[ec2-user@ip-10-64-46-133 ~]$ oc adm upgrade
+info: An upgrade is in progress. Working towards 4.20.38: 142 of 962 done (14% complete), waiting on kube-controller-manager, kube-scheduler
 
+Upgradeable=False
 
-[ec2-user@ip-10-64-46-133 ~]$ oc get svc router-default -n openshift-ingress \
-  -o jsonpath='{.spec.externalTrafficPolicy}{"\n"}{.spec.healthCheckNodePort}{"\n"}{.metadata.annotations}{"\n"}'
-Local
-30796
-{"service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags":"dhhs:operation-owner=xia-feng,red-hat-clustertype=rosa,red-hat-managed=true,dhhs:compliance=pii-hipaa,dhhs:cost-center=cgg2,dhhs:environment=uat,dhhs:application-name=comp-aws-general,dhhs:business-owner=rob-morrell,dhhs:division=division-of-social-services","service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval":"10","service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout":"4","service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-internal":"true","service.beta.kubernetes.io/aws-load-balancer-type":"nlb","traffic-policy.network.alpha.openshift.io/local-with-fallback":""}
-[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-load-balancers \
-  --region us-east-1 \
-  --query "LoadBalancers[?DNSName=='${LB}'].[LoadBalancerArn,DNSName,State.Code]" \
-  --output table
+  Reason: MultipleReasons
+  Message: Cluster should not be upgraded between minor versions for multiple reasons: AdminAckRequired,KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade,UpdateInProgress
+* The admissionregistration.k8s.io/v1beta1 group version is deprecated in 4.19 and will be removed in 4.20. Any clients using the v1beta1 version of these resources must be updated to use the corresponding v1 version instead. See https://access.redhat.com/articles/7130599 for more information.
+* Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersionUpgradeable: Kubelet minor versions on 11 nodes will not be supported in the next OpenShift minor version upgrade.
+* An update is already in progress and the details are in the Progressing condition
 
-An error occurred (ExpiredToken) when calling the DescribeLoadBalancers operation: The security token included in the request is expired
-[ec2-user@ip-10-64-46-133 ~]$ vi ~/.aws/credentials
-[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-load-balancers \
-  --region us-east-1 \
-  --query "LoadBalancers[?DNSName=='${LB}'].[LoadBalancerArn,DNSName,State.Code]" \
-  --output table
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-|                                                                                                DescribeLoadBalancers                                                                                                |
-+-------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------+---------+
-|  arn:aws:elasticloadbalancing:us-east-1:774305615526:loadbalancer/net/a3a36129ce4854c2182e6c92e5518e76/56ee27fd0d510153 |  a3a36129ce4854c2182e6c92e5518e76-56ee27fd0d510153.elb.us-east-1.amazonaws.com  |  active |
-+-------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------+---------+
-[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-target-groups \
-  --load-balancer-arn <LOAD_BALANCER_ARN> \
-  --region us-east-1
--bash: LOAD_BALANCER_ARN: No such file or directory
-[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-target-groups \
-  --load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:774305615526:loadbalancer/net/a3a36129ce4854c2182e6c92e5518e76/56ee27fd0d510153 \
-  --region us-east-1
-{
-    "TargetGroups": [
-        {
-            "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:774305615526:targetgroup/k8s-openshif-routerde-853357192e/1079f3bc1ea75e87",
-            "TargetGroupName": "k8s-openshif-routerde-853357192e",
-            "Protocol": "TCP",
-            "Port": 31200,
-            "VpcId": "vpc-0eae7766be78abbe3",
-            "HealthCheckProtocol": "HTTP",
-            "HealthCheckPort": "30796",
-            "HealthCheckEnabled": true,
-            "HealthCheckIntervalSeconds": 10,
-            "HealthCheckTimeoutSeconds": 6,
-            "HealthyThresholdCount": 2,
-            "UnhealthyThresholdCount": 2,
-            "HealthCheckPath": "/healthz",
-            "Matcher": {
-                "HttpCode": "200-399"
-            },
-            "LoadBalancerArns": [
-                "arn:aws:elasticloadbalancing:us-east-1:774305615526:loadbalancer/net/a3a36129ce4854c2182e6c92e5518e76/56ee27fd0d510153"
-            ],
-            "TargetType": "instance",
-            "IpAddressType": "ipv4"
-        },
-        {
-            "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:774305615526:targetgroup/k8s-openshif-routerde-d0ac4e11ba/c8ddf16e326367ef",
-            "TargetGroupName": "k8s-openshif-routerde-d0ac4e11ba",
-            "Protocol": "TCP",
-            "Port": 31450,
-            "VpcId": "vpc-0eae7766be78abbe3",
-            "HealthCheckProtocol": "HTTP",
-            "HealthCheckPort": "30796",
-            "HealthCheckEnabled": true,
-            "HealthCheckIntervalSeconds": 10,
-            "HealthCheckTimeoutSeconds": 6,
-            "HealthyThresholdCount": 2,
-            "UnhealthyThresholdCount": 2,
-            "HealthCheckPath": "/healthz",
-            "Matcher": {
-                "HttpCode": "200-399"
-            },
-            "LoadBalancerArns": [
-                "arn:aws:elasticloadbalancing:us-east-1:774305615526:loadbalancer/net/a3a36129ce4854c2182e6c92e5518e76/56ee27fd0d510153"
-            ],
-            "TargetType": "instance",
-            "IpAddressType": "ipv4"
-        }
-    ]
-}
-[ec2-user@ip-10-64-46-133 ~]$ ^C
-[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-target-health \
-  --target-group-arn arn:aws:elasticloadbalancing:us-east-1:774305615526:targetgroup/k8s-openshif-routerde-d0ac4e11ba/c8ddf16e326367ef \
-  --region us-east-1 \
-  --output table
--------------------------------------------------------------------------------------------------------
-|                                        DescribeTargetHealth                                         |
-+-----------------------------------------------------------------------------------------------------+
-||                                     TargetHealthDescriptions                                      ||
-|+---------------------------------------------------------------------------------------------------+|
-||                                          HealthCheckPort                                          ||
-|+---------------------------------------------------------------------------------------------------+|
-||  30796                                                                                            ||
-|+---------------------------------------------------------------------------------------------------+|
-|||                                     AdministrativeOverride                                      |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                 Description                |               Reason                |    State     |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                                             Target                                              |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                 Id                                  |           Port            |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||  i-07cd600840c9c1d62                                                |  31450                    |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                          TargetHealth                                           |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-|||           Description           |                  Reason                   |       State       |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-|||  Health checks failed           |  Target.FailedHealthChecks                |  unhealthy        |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-||                                     TargetHealthDescriptions                                      ||
-|+---------------------------------------------------------------------------------------------------+|
-||                                          HealthCheckPort                                          ||
-|+---------------------------------------------------------------------------------------------------+|
-||  30796                                                                                            ||
-|+---------------------------------------------------------------------------------------------------+|
-|||                                     AdministrativeOverride                                      |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                 Description                |               Reason                |    State     |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                                             Target                                              |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                 Id                                  |           Port            |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||  i-02cf86e02e65ff356                                                |  31450                    |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                          TargetHealth                                           |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-|||           Description           |                  Reason                   |       State       |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-|||  Health checks failed           |  Target.FailedHealthChecks                |  unhealthy        |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-||                                     TargetHealthDescriptions                                      ||
-|+---------------------------------------------------------------------------------------------------+|
-||                                          HealthCheckPort                                          ||
-|+---------------------------------------------------------------------------------------------------+|
-||  30796                                                                                            ||
-|+---------------------------------------------------------------------------------------------------+|
-|||                                     AdministrativeOverride                                      |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                 Description                |               Reason                |    State     |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                                             Target                                              |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                 Id                                  |           Port            |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||  i-00f1f34491782c7cd                                                |  31450                    |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                          TargetHealth                                           |||
+No updates available. You may force an upgrade to a specific release image, but doing so may not be supported and result in downtime or data loss.
 [ec2-user@ip-10-64-46-133 ~]$
-[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-target-health \
-  --target-group-arn arn:aws:elasticloadbalancing:us-east-1:774305615526:targetgroup/k8s-openshif-routerde-853357192e/1079f3bc1ea75e87 \
-  --region us-east-1 \
-  --output table
--------------------------------------------------------------------------------------------------------
-|                                        DescribeTargetHealth                                         |
-+-----------------------------------------------------------------------------------------------------+
-||                                     TargetHealthDescriptions                                      ||
-|+---------------------------------------------------------------------------------------------------+|
-||                                          HealthCheckPort                                          ||
-|+---------------------------------------------------------------------------------------------------+|
-||  30796                                                                                            ||
-|+---------------------------------------------------------------------------------------------------+|
-|||                                     AdministrativeOverride                                      |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                 Description                |               Reason                |    State     |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                                             Target                                              |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                 Id                                  |           Port            |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||  i-0edfb984d22845bfa                                                |  31200                    |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                          TargetHealth                                           |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-|||           Description           |                  Reason                   |       State       |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-|||  Health checks failed           |  Target.FailedHealthChecks                |  unhealthy        |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-||                                     TargetHealthDescriptions                                      ||
-|+---------------------------------------------------------------------------------------------------+|
-||                                          HealthCheckPort                                          ||
-|+---------------------------------------------------------------------------------------------------+|
-||  30796                                                                                            ||
-|+---------------------------------------------------------------------------------------------------+|
-|||                                     AdministrativeOverride                                      |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                 Description                |               Reason                |    State     |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                                             Target                                              |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                 Id                                  |           Port            |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||  i-00f1f34491782c7cd                                                |  31200                    |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                          TargetHealth                                           |||
-||+-------------------------------------------+-----------------------------------------------------+||
-|||  State                                    |  healthy                                            |||
-||+-------------------------------------------+-----------------------------------------------------+||
-||                                     TargetHealthDescriptions                                      ||
-|+---------------------------------------------------------------------------------------------------+|
-||                                          HealthCheckPort                                          ||
-|+---------------------------------------------------------------------------------------------------+|
-||  30796                                                                                            ||
-|+---------------------------------------------------------------------------------------------------+|
-|||                                     AdministrativeOverride                                      |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                 Description                |               Reason                |    State     |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
-||+--------------------------------------------+-------------------------------------+--------------+||
-|||                                             Target                                              |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                 Id                                  |           Port            |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||  i-046dbae2e4ecc234a                                                |  31200                    |||
-||+---------------------------------------------------------------------+---------------------------+||
-|||                                          TargetHealth                                           |||
-||+---------------------------------+-------------------------------------------+-------------------+||
-|||           Description           |                  Reason                   |       State       |||
-[ec2-user@ip-10-64-46-133 ~]$
-
-
-
-
-
-
-[ec2-user@ip-10-64-46-133 ~]$ LB=a3a36129ce4854c2182e6c92e5518e76-56ee27fd0d510153.elb.us-east-1.amazonaws.com
-[ec2-user@ip-10-64-46-133 ~]$ CONSOLE=console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
-[ec2-user@ip-10-64-46-133 ~]$ dig +short $LB
-10.64.46.152
-[ec2-user@ip-10-64-46-133 ~]$ dig +short $CONSOLE
-10.64.46.249
-10.64.46.206
-[ec2-user@ip-10-64-46-133 ~]$ oc get nodes \
-  ip-10-64-46-132.ec2.internal \
-  ip-10-64-46-149.ec2.internal \
-  -L topology.kubernetes.io/zone -o wide
-NAME                           STATUS   ROLES          AGE    VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                                                KERNEL-VERSION                  CONTAINER-RUNTIME                             ZONE
-ip-10-64-46-132.ec2.internal   Ready    infra,worker   675d   v1.32.13   10.64.46.132   <none>        Red Hat Enterprise Linux CoreOS 9.6.20260821-0 (Plow)   5.14.0-570.135.1.el9_6.x86_64   cri-o://1.32.13-11.rhaos4.19.git089e95c.el9   us-east-1b
-ip-10-64-46-149.ec2.internal   Ready    infra,worker   675d   v1.32.13   10.64.46.149   <none>        Red Hat Enterprise Linux CoreOS 9.6.20260821-0 (Plow)   5.14.0-570.135.1.el9_6.x86_64   cri-o://1.32.13-11.rhaos4.19.git089e95c.el9   us-east-1b
-[ec2-user@ip-10-64-46-133 ~]$ oc get svc router-default -n openshift-ingress \
-  -o jsonpath='{.spec.externalTrafficPolicy}{"\n"}{.spec.healthCheckNodePort}{"\n"}{.metadata.annotations}{"\n"}'
-Local
-30796
-{"service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags":"dhhs:operation-owner=xia-feng,red-hat-clustertype=rosa,red-hat-managed=true,dhhs:compliance=pii-hipaa,dhhs:cost-center=cgg2,dhhs:environment=uat,dhhs:application-name=comp-aws-general,dhhs:business-owner=rob-morrell,dhhs:division=division-of-social-services","service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval":"10","service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout":"4","service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-internal":"true","service.beta.kubernetes.io/aws-load-balancer-type":"nlb","traffic-policy.network.alpha.openshift.io/local-with-fallback":""}
-[ec2-user@ip-10-64-46-133 ~]$
-
-
-
-
-
-
-
-[ec2-user@ip-10-64-46-133 ~]$ dig console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
-
-; <<>> DiG 9.18.28 <<>> console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 13291
-;; flags: qr rd ra; QUERY: 1, ANSWER: 2, AUTHORITY: 0, ADDITIONAL: 1
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 4096
-;; QUESTION SECTION:
-;console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com. IN A
-
-;; ANSWER SECTION:
-console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com. 60 IN A 10.64.46.249
-console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com. 60 IN A 10.64.46.206
-
-;; Query time: 0 msec
-;; SERVER: 10.64.46.2#53(10.64.46.2) (UDP)
-;; WHEN: Sun Sep 20 01:12:39 UTC 2026
-;; MSG SIZE  rcvd: 127
-
-[ec2-user@ip-10-64-46-133 ~]$ dig apps.pathnc-pp.7ap4.p1.openshiftapps.com
-
-; <<>> DiG 9.18.28 <<>> apps.pathnc-pp.7ap4.p1.openshiftapps.com
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 42929
-;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 4096
-;; QUESTION SECTION:
-;apps.pathnc-pp.7ap4.p1.openshiftapps.com. IN A
-
-;; AUTHORITY SECTION:
-pathnc-pp.7ap4.p1.openshiftapps.com. 900 IN SOA ns-1536.awsdns-00.co.uk. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
-
-;; Query time: 0 msec
-;; SERVER: 10.64.46.2#53(10.64.46.2) (UDP)
-;; WHEN: Sun Sep 20 01:12:47 UTC 2026
-;; MSG SIZE  rcvd: 153
-
-[ec2-user@ip-10-64-46-133 ~]$ CONSOLE=console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
-[ec2-user@ip-10-64-46-133 ~]$ vi test.sh
-[ec2-user@ip-10-64-46-133 ~]$ vi test_lb.sh
-[ec2-user@ip-10-64-46-133 ~]$ sh test_lb.sh
-===== 10.64.46.206 =====
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-===== 10.64.46.249 =====
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-IP= CODE=000 CONNECT=0.000000s TOTAL=0.000000s ERROR=URL rejected: No host part in the URL
-[ec2-user@ip-10-64-46-133 ~]$ oc get nodes -l node-role.kubernetes.io/infra \
-  -L topology.kubernetes.io/zone -o wide
-NAME                           STATUS   ROLES          AGE    VERSION    INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                                                KERNEL-VERSION                  CONTAINER-RUNTIME                             ZONE
-ip-10-64-46-132.ec2.internal   Ready    infra,worker   675d   v1.32.13   10.64.46.132   <none>        Red Hat Enterprise Linux CoreOS 9.6.20260821-0 (Plow)   5.14.0-570.135.1.el9_6.x86_64   cri-o://1.32.13-11.rhaos4.19.git089e95c.el9   us-east-1b
-ip-10-64-46-149.ec2.internal   Ready    infra,worker   675d   v1.32.13   10.64.46.149   <none>        Red Hat Enterprise Linux CoreOS 9.6.20260821-0 (Plow)   5.14.0-570.135.1.el9_6.x86_64   cri-o://1.32.13-11.rhaos4.19.git089e95c.el9   us-east-1b
-[ec2-user@ip-10-64-46-133 ~]$
-
