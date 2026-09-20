@@ -136,3 +136,235 @@ Local
   --region us-east-1 \
   --query "LoadBalancers[?DNSName=='${LB}'].[LoadBalancerArn,DNSName,State.Code]" \
   --output table
+
+
+[ec2-user@ip-10-64-46-133 ~]$ oc get svc router-default -n openshift-ingress \
+  -o jsonpath='{.spec.externalTrafficPolicy}{"\n"}{.spec.healthCheckNodePort}{"\n"}{.metadata.annotations}{"\n"}'
+Local
+30796
+{"service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags":"dhhs:operation-owner=xia-feng,red-hat-clustertype=rosa,red-hat-managed=true,dhhs:compliance=pii-hipaa,dhhs:cost-center=cgg2,dhhs:environment=uat,dhhs:application-name=comp-aws-general,dhhs:business-owner=rob-morrell,dhhs:division=division-of-social-services","service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval":"10","service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout":"4","service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold":"2","service.beta.kubernetes.io/aws-load-balancer-internal":"true","service.beta.kubernetes.io/aws-load-balancer-type":"nlb","traffic-policy.network.alpha.openshift.io/local-with-fallback":""}
+[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-load-balancers \
+  --region us-east-1 \
+  --query "LoadBalancers[?DNSName=='${LB}'].[LoadBalancerArn,DNSName,State.Code]" \
+  --output table
+
+An error occurred (ExpiredToken) when calling the DescribeLoadBalancers operation: The security token included in the request is expired
+[ec2-user@ip-10-64-46-133 ~]$ vi ~/.aws/credentials
+[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-load-balancers \
+  --region us-east-1 \
+  --query "LoadBalancers[?DNSName=='${LB}'].[LoadBalancerArn,DNSName,State.Code]" \
+  --output table
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|                                                                                                DescribeLoadBalancers                                                                                                |
++-------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------+---------+
+|  arn:aws:elasticloadbalancing:us-east-1:774305615526:loadbalancer/net/a3a36129ce4854c2182e6c92e5518e76/56ee27fd0d510153 |  a3a36129ce4854c2182e6c92e5518e76-56ee27fd0d510153.elb.us-east-1.amazonaws.com  |  active |
++-------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------+---------+
+[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-target-groups \
+  --load-balancer-arn <LOAD_BALANCER_ARN> \
+  --region us-east-1
+-bash: LOAD_BALANCER_ARN: No such file or directory
+[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-target-groups \
+  --load-balancer-arn arn:aws:elasticloadbalancing:us-east-1:774305615526:loadbalancer/net/a3a36129ce4854c2182e6c92e5518e76/56ee27fd0d510153 \
+  --region us-east-1
+{
+    "TargetGroups": [
+        {
+            "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:774305615526:targetgroup/k8s-openshif-routerde-853357192e/1079f3bc1ea75e87",
+            "TargetGroupName": "k8s-openshif-routerde-853357192e",
+            "Protocol": "TCP",
+            "Port": 31200,
+            "VpcId": "vpc-0eae7766be78abbe3",
+            "HealthCheckProtocol": "HTTP",
+            "HealthCheckPort": "30796",
+            "HealthCheckEnabled": true,
+            "HealthCheckIntervalSeconds": 10,
+            "HealthCheckTimeoutSeconds": 6,
+            "HealthyThresholdCount": 2,
+            "UnhealthyThresholdCount": 2,
+            "HealthCheckPath": "/healthz",
+            "Matcher": {
+                "HttpCode": "200-399"
+            },
+            "LoadBalancerArns": [
+                "arn:aws:elasticloadbalancing:us-east-1:774305615526:loadbalancer/net/a3a36129ce4854c2182e6c92e5518e76/56ee27fd0d510153"
+            ],
+            "TargetType": "instance",
+            "IpAddressType": "ipv4"
+        },
+        {
+            "TargetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:774305615526:targetgroup/k8s-openshif-routerde-d0ac4e11ba/c8ddf16e326367ef",
+            "TargetGroupName": "k8s-openshif-routerde-d0ac4e11ba",
+            "Protocol": "TCP",
+            "Port": 31450,
+            "VpcId": "vpc-0eae7766be78abbe3",
+            "HealthCheckProtocol": "HTTP",
+            "HealthCheckPort": "30796",
+            "HealthCheckEnabled": true,
+            "HealthCheckIntervalSeconds": 10,
+            "HealthCheckTimeoutSeconds": 6,
+            "HealthyThresholdCount": 2,
+            "UnhealthyThresholdCount": 2,
+            "HealthCheckPath": "/healthz",
+            "Matcher": {
+                "HttpCode": "200-399"
+            },
+            "LoadBalancerArns": [
+                "arn:aws:elasticloadbalancing:us-east-1:774305615526:loadbalancer/net/a3a36129ce4854c2182e6c92e5518e76/56ee27fd0d510153"
+            ],
+            "TargetType": "instance",
+            "IpAddressType": "ipv4"
+        }
+    ]
+}
+[ec2-user@ip-10-64-46-133 ~]$ ^C
+[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-target-health \
+  --target-group-arn arn:aws:elasticloadbalancing:us-east-1:774305615526:targetgroup/k8s-openshif-routerde-d0ac4e11ba/c8ddf16e326367ef \
+  --region us-east-1 \
+  --output table
+-------------------------------------------------------------------------------------------------------
+|                                        DescribeTargetHealth                                         |
++-----------------------------------------------------------------------------------------------------+
+||                                     TargetHealthDescriptions                                      ||
+|+---------------------------------------------------------------------------------------------------+|
+||                                          HealthCheckPort                                          ||
+|+---------------------------------------------------------------------------------------------------+|
+||  30796                                                                                            ||
+|+---------------------------------------------------------------------------------------------------+|
+|||                                     AdministrativeOverride                                      |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                 Description                |               Reason                |    State     |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                                             Target                                              |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                 Id                                  |           Port            |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||  i-07cd600840c9c1d62                                                |  31450                    |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                          TargetHealth                                           |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+|||           Description           |                  Reason                   |       State       |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+|||  Health checks failed           |  Target.FailedHealthChecks                |  unhealthy        |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+||                                     TargetHealthDescriptions                                      ||
+|+---------------------------------------------------------------------------------------------------+|
+||                                          HealthCheckPort                                          ||
+|+---------------------------------------------------------------------------------------------------+|
+||  30796                                                                                            ||
+|+---------------------------------------------------------------------------------------------------+|
+|||                                     AdministrativeOverride                                      |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                 Description                |               Reason                |    State     |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                                             Target                                              |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                 Id                                  |           Port            |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||  i-02cf86e02e65ff356                                                |  31450                    |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                          TargetHealth                                           |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+|||           Description           |                  Reason                   |       State       |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+|||  Health checks failed           |  Target.FailedHealthChecks                |  unhealthy        |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+||                                     TargetHealthDescriptions                                      ||
+|+---------------------------------------------------------------------------------------------------+|
+||                                          HealthCheckPort                                          ||
+|+---------------------------------------------------------------------------------------------------+|
+||  30796                                                                                            ||
+|+---------------------------------------------------------------------------------------------------+|
+|||                                     AdministrativeOverride                                      |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                 Description                |               Reason                |    State     |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                                             Target                                              |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                 Id                                  |           Port            |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||  i-00f1f34491782c7cd                                                |  31450                    |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                          TargetHealth                                           |||
+[ec2-user@ip-10-64-46-133 ~]$
+[ec2-user@ip-10-64-46-133 ~]$ aws elbv2 describe-target-health \
+  --target-group-arn arn:aws:elasticloadbalancing:us-east-1:774305615526:targetgroup/k8s-openshif-routerde-853357192e/1079f3bc1ea75e87 \
+  --region us-east-1 \
+  --output table
+-------------------------------------------------------------------------------------------------------
+|                                        DescribeTargetHealth                                         |
++-----------------------------------------------------------------------------------------------------+
+||                                     TargetHealthDescriptions                                      ||
+|+---------------------------------------------------------------------------------------------------+|
+||                                          HealthCheckPort                                          ||
+|+---------------------------------------------------------------------------------------------------+|
+||  30796                                                                                            ||
+|+---------------------------------------------------------------------------------------------------+|
+|||                                     AdministrativeOverride                                      |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                 Description                |               Reason                |    State     |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                                             Target                                              |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                 Id                                  |           Port            |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||  i-0edfb984d22845bfa                                                |  31200                    |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                          TargetHealth                                           |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+|||           Description           |                  Reason                   |       State       |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+|||  Health checks failed           |  Target.FailedHealthChecks                |  unhealthy        |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+||                                     TargetHealthDescriptions                                      ||
+|+---------------------------------------------------------------------------------------------------+|
+||                                          HealthCheckPort                                          ||
+|+---------------------------------------------------------------------------------------------------+|
+||  30796                                                                                            ||
+|+---------------------------------------------------------------------------------------------------+|
+|||                                     AdministrativeOverride                                      |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                 Description                |               Reason                |    State     |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                                             Target                                              |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                 Id                                  |           Port            |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||  i-00f1f34491782c7cd                                                |  31200                    |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                          TargetHealth                                           |||
+||+-------------------------------------------+-----------------------------------------------------+||
+|||  State                                    |  healthy                                            |||
+||+-------------------------------------------+-----------------------------------------------------+||
+||                                     TargetHealthDescriptions                                      ||
+|+---------------------------------------------------------------------------------------------------+|
+||                                          HealthCheckPort                                          ||
+|+---------------------------------------------------------------------------------------------------+|
+||  30796                                                                                            ||
+|+---------------------------------------------------------------------------------------------------+|
+|||                                     AdministrativeOverride                                      |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                 Description                |               Reason                |    State     |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||  No override is currently active on target |  AdministrativeOverride.NoOverride  |  no_override |||
+||+--------------------------------------------+-------------------------------------+--------------+||
+|||                                             Target                                              |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                 Id                                  |           Port            |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||  i-046dbae2e4ecc234a                                                |  31200                    |||
+||+---------------------------------------------------------------------+---------------------------+||
+|||                                          TargetHealth                                           |||
+||+---------------------------------+-------------------------------------------+-------------------+||
+|||           Description           |                  Reason                   |       State       |||
+[ec2-user@ip-10-64-46-133 ~]$
+
