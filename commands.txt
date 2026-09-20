@@ -1,16 +1,17 @@
 oc get clusterversion
 
-oc get clusterversion version \
--o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  reason="}{.reason}{"  message="}{.message}{"\n"}{end}'
-
 oc get co
 
 oc get mcp
 
 oc get nodes \
--o custom-columns='NAME:.metadata.name,STATUS:.status.conditions[-1].type,KUBELET:.status.nodeInfo.kubeletVersion'
+-o custom-columns='NAME:.metadata.name,ROLES:.metadata.labels.node-role\.kubernetes\.io/master,KUBELET:.status.nodeInfo.kubeletVersion'
 
-oc adm upgrade
+oc get kubecontrollermanager cluster \
+-o jsonpath='{range .status.conditions[?(@.type=="NodeInstallerProgressing")]}{.reason}{" : "}{.message}{"\n"}{end}'
+
+oc get kubescheduler cluster \
+-o jsonpath='{range .status.conditions[?(@.type=="NodeInstallerProgressing")]}{.reason}{" : "}{.message}{"\n"}{end}'
 
 
 
