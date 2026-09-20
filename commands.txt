@@ -1,21 +1,29 @@
-# 1. DNS
-dig console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
-dig apps.pathnc-pp.7ap4.p1.openshiftapps.com
+oc get clusterversion
 
-# 2. Test the two Console IPs individually
-CONSOLE=console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com
+oc get clusterversion version \
+-o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  reason="}{.reason}{"  message="}{.message}{"\n"}{end}'
 
-for IP in 10.64.46.206 10.64.46.249; do
-  echo "===== $IP ====="
-  for i in {1..10}; do
-    curl -kso /dev/null --connect-timeout 5 --max-time 10 \
-      --resolve "${CONSOLE}:443:${IP}" \
-      -w 'IP=%{remote_ip} CODE=%{http_code} CONNECT=%{time_connect}s TOTAL=%{time_total}s ERROR=%{errormsg}\n' \
-      https://${CONSOLE}/
-    sleep 2
-  done
-done
+oc get co
 
-# 3. Infra-node placement
-oc get nodes -l node-role.kubernetes.io/infra \
-  -L topology.kubernetes.io/zone -o wide
+oc get mcp
+
+oc get nodes \
+-o custom-columns='NAME:.metadata.name,STATUS:.status.conditions[-1].type,KUBELET:.status.nodeInfo.kubeletVersion'
+
+oc adm upgrade
+
+
+
+watch -n 15 '
+echo "=== CLUSTER VERSION ==="
+oc get clusterversion
+echo
+echo "=== OPERATORS ==="
+oc get co
+echo
+echo "=== MCP ==="
+oc get mcp
+echo
+echo "=== NODES ==="
+oc get nodes
+'
