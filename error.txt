@@ -1,82 +1,45 @@
-[ec2-user@ip-10-64-46-133 ~]$ oc get clusterversion version \
--o jsonpath='{range .status.conditions[*]}{.type}{"="}{.status}{"  reason="}{.reason}{"  message="}{.message}{"\n"}{end}'
-RetrievedUpdates=True  reason=  message=
-ImplicitlyEnabledCapabilities=False  reason=AsExpected  message=Capabilities match configured spec
-ReleaseAccepted=True  reason=PayloadLoaded  message=Payload loaded version="4.20.38" image="quay.io/openshift-release-dev/ocp-release@sha256:3f0d4394db6d0248681f0cb1ca1f724d3a9030cd8fe39d24d9a6b6bd1e08c410" architecture="amd64"
-Available=True  reason=  message=Done applying 4.19.45
-Failing=False  reason=  message=
-Progressing=True  reason=ClusterOperatorsUpdating  message=Working towards 4.20.38: 142 of 962 done (14% complete), waiting on kube-controller-manager, kube-scheduler
-Upgradeable=False  reason=MultipleReasons  message=Cluster should not be upgraded between minor versions for multiple reasons: AdminAckRequired,KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade,UpdateInProgress
-* The admissionregistration.k8s.io/v1beta1 group version is deprecated in 4.19 and will be removed in 4.20. Any clients using the v1beta1 version of these resources must be updated to use the corresponding v1 version instead. See https://access.redhat.com/articles/7130599 for more information.
-* Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersionUpgradeable: Kubelet minor versions on 11 nodes will not be supported in the next OpenShift minor version upgrade.
-* An update is already in progress and the details are in the Progressing condition
-UpgradeableAdminAckRequired=False  reason=AdminAckRequired  message=The admissionregistration.k8s.io/v1beta1 group version is deprecated in 4.19 and will be removed in 4.20. Any clients using the v1beta1 version of these resources must be updated to use the corresponding v1 version instead. See https://access.redhat.com/articles/7130599 for more information.
-UpgradeableClusterOperators=False  reason=KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade  message=Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersionUpgradeable: Kubelet minor versions on 11 nodes will not be supported in the next OpenShift minor version upgrade.
-UpgradeableUpgradeInProgress=True  reason=UpdateInProgress  message=An update is already in progress and the details are in the Progressing condition
-[ec2-user@ip-10-64-46-133 ~]$ oc get co
-NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
-authentication                             4.19.45   True        False         False      72d
-baremetal                                  4.19.45   True        False         False      675d
-cloud-controller-manager                   4.19.45   True        False         False      675d
-cloud-credential                           4.19.45   True        False         False      675d
-cluster-autoscaler                         4.19.45   True        False         False      675d
-config-operator                            4.20.38   True        False         False      675d
-console                                    4.19.45   False       False         False      60s     RouteHealthAvailable: failed to GET route (https://console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com): Get "https://console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
-control-plane-machine-set                  4.19.45   True        False         False      675d
-csi-snapshot-controller                    4.19.45   True        False         False      675d
-dns                                        4.19.45   True        False         False      675d
-etcd                                       4.20.38   True        False         False      675d
-image-registry                             4.19.45   True        False         False      675d
-ingress                                    4.19.45   True        False         False      8d
-insights                                   4.19.45   True        False         False      675d
-kube-apiserver                             4.20.38   True        False         False      675d
-kube-controller-manager                    4.19.45   True        True          False      675d    NodeInstallerProgressing: 3 nodes are at revision 57; 0 nodes have achieved new revision 59
-kube-scheduler                             4.19.45   True        True          False      675d    NodeInstallerProgressing: 3 nodes are at revision 47; 0 nodes have achieved new revision 48
-kube-storage-version-migrator              4.19.45   True        False         False      8d
-machine-api                                4.19.45   True        False         False      675d
-machine-approver                           4.19.45   True        False         False      675d
-machine-config                             4.19.45   True        False         False      530d
-marketplace                                4.19.45   True        False         False      675d
-monitoring                                 4.19.45   True        False         False      675d
-network                                    4.19.45   True        False         False      675d
-node-tuning                                4.19.45   True        False         False      17m
-olm                                        4.19.45   True        False         False      8d
-openshift-apiserver                        4.19.45   True        False         False      207d
-openshift-controller-manager               4.19.45   True        False         False      675d
-openshift-samples                          4.19.45   True        False         False      388d
-operator-lifecycle-manager                 4.19.45   True        False         False      675d
-operator-lifecycle-manager-catalog         4.19.45   True        False         False      675d
-operator-lifecycle-manager-packageserver   4.19.45   True        False         False      583d
-service-ca                                 4.19.45   True        False         False      675d
-storage                                    4.19.45   True        False         False      675d
-[ec2-user@ip-10-64-46-133 ~]$ oc get mcp
-NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
-master   rendered-master-06261025a13ba55ab11565e19316cb05   True      False      False      3              3                   3                     0                      675d
-worker   rendered-worker-583cab4dae5fa8e821e3d14d1db004b6   True      False      False      8              8                   8                     0                      675d
-[ec2-user@ip-10-64-46-133 ~]$ oc get nodes \
--o custom-columns='NAME:.metadata.name,STATUS:.status.conditions[-1].type,KUBELET:.status.nodeInfo.kubeletVersion'
-NAME                           STATUS   KUBELET
-ip-10-64-46-132.ec2.internal   Ready    v1.32.13
-ip-10-64-46-135.ec2.internal   Ready    v1.32.13
-ip-10-64-46-136.ec2.internal   Ready    v1.32.13
-ip-10-64-46-137.ec2.internal   Ready    v1.32.13
-ip-10-64-46-141.ec2.internal   Ready    v1.32.13
-ip-10-64-46-145.ec2.internal   Ready    v1.32.13
-ip-10-64-46-149.ec2.internal   Ready    v1.32.13
-ip-10-64-46-150.ec2.internal   Ready    v1.32.13
-ip-10-64-46-151.ec2.internal   Ready    v1.32.13
-ip-10-64-46-154.ec2.internal   Ready    v1.32.13
-ip-10-64-46-157.ec2.internal   Ready    v1.32.13
-[ec2-user@ip-10-64-46-133 ~]$ oc adm upgrade
-info: An upgrade is in progress. Working towards 4.20.38: 142 of 962 done (14% complete), waiting on kube-controller-manager, kube-scheduler
+[ec2-user@ip-10-64-46-133 ~]$ oc get clusterversion
+NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
+version   4.19.45   True        True          52m     Working towards 4.20.38: 830 of 962 done (86% complete), waiting on machine-config
+[ec2-user@ip-10-64-46-133 ~]$ oc adm upgrade status
+info: An upgrade is in progress. Working towards 4.20.38: 830 of 962 done (86% complete), waiting on machine-config
 
 Upgradeable=False
 
   Reason: MultipleReasons
-  Message: Cluster should not be upgraded between minor versions for multiple reasons: AdminAckRequired,KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade,UpdateInProgress
+  Message: Cluster should not be upgraded between minor versions for multiple reasons: AdminAckRequired,ClusterOperatorsNotUpgradeable,UpdateInProgress
 * The admissionregistration.k8s.io/v1beta1 group version is deprecated in 4.19 and will be removed in 4.20. Any clients using the v1beta1 version of these resources must be updated to use the corresponding v1 version instead. See https://access.redhat.com/articles/7130599 for more information.
-* Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersionUpgradeable: Kubelet minor versions on 11 nodes will not be supported in the next OpenShift minor version upgrade.
+* Multiple cluster operators should not be upgraded between minor versions:
+* Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade: KubeletMinorVersionUpgradeable: Kubelet minor versions on 11 nodes will not be supported in the next OpenShift minor version upgrade.
+* Cluster operator operator-lifecycle-manager should not be upgraded between minor versions: IncompatibleOperatorsInstalled: ClusterServiceVersions blocking minor version upgrades to 4.21.0 or higher:
+- maximum supported OCP version for rtf-uat/runtime-fabric-operator.v3.0.1 is 4.20
+- maximum supported OCP version for openshift-logging/cluster-logging.v6.2.11 is 4.20
 * An update is already in progress and the details are in the Progressing condition
 
 No updates available. You may force an upgrade to a specific release image, but doing so may not be supported and result in downtime or data loss.
+[ec2-user@ip-10-64-46-133 ~]$ oc get co ingress console authentication
+NAME             VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+ingress          4.20.38   True        False         False      8d
+console          4.20.38   True        False         False      2m16s
+authentication   4.20.38   True        False         False      72d
+[ec2-user@ip-10-64-46-133 ~]$ oc get mcp
+NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+master   rendered-master-06261025a13ba55ab11565e19316cb05   True      False      False      3              3                   3                     0                      675d
+worker   rendered-worker-583cab4dae5fa8e821e3d14d1db004b6   True      False      False      8              8                   8                     0                      675d
+[ec2-user@ip-10-64-46-133 ~]$ oc get pods -n openshift-ingress -o wide
+NAME                                     READY   STATUS    RESTARTS   AGE   IP             NODE                           NOMINATED NODE   READINESS GATES
+router-default-758b5fc77-2qj5v           1/1     Running   0          27m   10.129.2.39    ip-10-64-46-132.ec2.internal   <none>           <none>
+router-default-758b5fc77-xvxv9           1/1     Running   0          27m   10.130.2.47    ip-10-64-46-149.ec2.internal   <none>           <none>
+router-public-ingress-6c757d84b5-7b8gb   1/1     Running   0          27m   10.129.6.89    ip-10-64-46-150.ec2.internal   <none>           <none>
+router-public-ingress-6c757d84b5-lhd92   1/1     Running   0          27m   10.131.0.164   ip-10-64-46-136.ec2.internal   <none>           <none>
+[ec2-user@ip-10-64-46-133 ~]$ oc get pods -n openshift-ingress-canary -o wide
+NAME                   READY   STATUS    RESTARTS   AGE   IP             NODE                           NOMINATED NODE   READINESS GATES
+ingress-canary-7j8l7   1/1     Running   0          27m   10.131.6.215   ip-10-64-46-157.ec2.internal   <none>           <none>
+ingress-canary-842m7   1/1     Running   0          26m   10.129.2.46    ip-10-64-46-132.ec2.internal   <none>           <none>
+ingress-canary-fmz95   1/1     Running   0          27m   10.130.2.54    ip-10-64-46-149.ec2.internal   <none>           <none>
+ingress-canary-gzgp8   1/1     Running   0          27m   10.131.0.163   ip-10-64-46-136.ec2.internal   <none>           <none>
+ingress-canary-mhlfg   1/1     Running   0          27m   10.128.8.242   ip-10-64-46-154.ec2.internal   <none>           <none>
+ingress-canary-rjt7b   1/1     Running   0          27m   10.128.2.21    ip-10-64-46-145.ec2.internal   <none>           <none>
+ingress-canary-t9jnv   1/1     Running   0          27m   10.129.6.90    ip-10-64-46-150.ec2.internal   <none>           <none>
+ingress-canary-xqf5v   1/1     Running   0          27m   10.131.2.53    ip-10-64-46-151.ec2.internal   <none>           <none>
 [ec2-user@ip-10-64-46-133 ~]$
