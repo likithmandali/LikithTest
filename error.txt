@@ -1,12 +1,55 @@
-[ec2-user@ip-10-64-46-133 ~]$ oc adm upgrade status
-Cluster version is 4.20.38
-
-Upgradeable=False
-
-  Reason: IncompatibleOperatorsInstalled
-  Message: Cluster operator operator-lifecycle-manager should not be upgraded between minor versions: ClusterServiceVersions blocking minor version upgrades to 4.21.0 or higher:
-- maximum supported OCP version for openshift-logging/cluster-logging.v6.2.11 is 4.20
-- maximum supported OCP version for rtf-uat/runtime-fabric-operator.v3.0.1 is 4.20
-
-No updates available. You may force an upgrade to a specific release image, but doing so may not be supported and result in downtime or data loss.
-[ec2-user@ip-10-64-46-133 ~]$
+[ec2-user@ip-10-64-46-133 ~]$ oc get clusterversion
+NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
+version   4.20.38   True        False         24m     Error while reconciling 4.20.38: the cluster operator console is not available
+[ec2-user@ip-10-64-46-133 ~]$ oc get co
+NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+authentication                             4.20.38   True        False         False      72d
+baremetal                                  4.20.38   True        False         False      675d
+cloud-controller-manager                   4.20.38   True        False         False      675d
+cloud-credential                           4.20.38   True        False         False      675d
+cluster-autoscaler                         4.20.38   True        False         False      675d
+config-operator                            4.20.38   True        False         False      675d
+console                                    4.20.38   False       False         True       3m54s   RouteHealthAvailable: failed to GET route (https://console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com): Get "https://console-openshift-console.apps.pathnc-pp.7ap4.p1.openshiftapps.com": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+control-plane-machine-set                  4.20.38   True        False         False      675d
+csi-snapshot-controller                    4.20.38   True        False         False      675d
+dns                                        4.20.38   True        False         False      675d
+etcd                                       4.20.38   True        False         False      675d
+image-registry                             4.20.38   True        False         False      675d
+ingress                                    4.20.38   True        False         False      38m
+insights                                   4.20.38   True        False         False      675d
+kube-apiserver                             4.20.38   True        False         False      675d
+kube-controller-manager                    4.20.38   True        False         False      675d
+kube-scheduler                             4.20.38   True        False         False      675d
+kube-storage-version-migrator              4.20.38   True        False         False      18m
+machine-api                                4.20.38   True        False         False      675d
+machine-approver                           4.20.38   True        False         False      675d
+machine-config                             4.20.38   True        False         False      530d
+marketplace                                4.20.38   True        False         False      675d
+monitoring                                 4.20.38   True        False         False      675d
+network                                    4.20.38   True        False         False      675d
+node-tuning                                4.20.38   True        False         False      12m
+olm                                        4.20.38   True        False         False      32m
+openshift-apiserver                        4.20.38   True        False         False      207d
+openshift-controller-manager               4.20.38   True        False         False      675d
+openshift-samples                          4.20.38   True        False         False      388d
+operator-lifecycle-manager                 4.20.38   True        False         False      675d
+operator-lifecycle-manager-catalog         4.20.38   True        False         False      675d
+operator-lifecycle-manager-packageserver   4.20.38   True        False         False      583d
+service-ca                                 4.20.38   True        False         False      675d
+storage                                    4.20.38   True        False         False      675d
+[ec2-user@ip-10-64-46-133 ~]$ oc get mcp
+NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+master   rendered-master-e14bc1ab688a3d7458c7f7ac071314c6   True      False      False      3              3                   3                     0                      675d
+worker   rendered-worker-bcda7b9d19298eff539b4432c1e2677e   True      False      False      7              7                   7                     0                      675d
+[ec2-user@ip-10-64-46-133 ~]$ oc get nodes -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
+NAME                           KUBELET
+ip-10-64-46-132.ec2.internal   v1.33.13
+ip-10-64-46-135.ec2.internal   v1.33.13
+ip-10-64-46-136.ec2.internal   v1.33.13
+ip-10-64-46-137.ec2.internal   v1.33.13
+ip-10-64-46-141.ec2.internal   v1.33.13
+ip-10-64-46-145.ec2.internal   v1.33.13
+ip-10-64-46-149.ec2.internal   v1.33.13
+ip-10-64-46-150.ec2.internal   v1.33.13
+ip-10-64-46-154.ec2.internal   v1.33.13
+ip-10-64-46-157.ec2.internal   v
