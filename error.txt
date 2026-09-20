@@ -1,8 +1,27 @@
-[ec2-user@ip-10-64-46-133 ~]$ oc get clusterversion
-NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
-version   4.19.45   True        True          52m     Working towards 4.20.38: 830 of 962 done (86% complete), waiting on machine-config
+[ec2-user@ip-10-64-46-133 ~]$ oc get co machine-config
+NAME             VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
+machine-config   4.19.45   True        True          False      530d    Working towards 4.20.38
+[ec2-user@ip-10-64-46-133 ~]$ oc get mcp
+NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
+master   rendered-master-06261025a13ba55ab11565e19316cb05   False     True       False      3              1                   1                     0                      675d
+worker   rendered-worker-583cab4dae5fa8e821e3d14d1db004b6   False     True       False      8              2                   2                     0                      675d
+[ec2-user@ip-10-64-46-133 ~]$ oc get nodes -o custom-columns='NAME.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
+error: unexpected custom-columns spec: NAME.metadata.name, expected <header>:<json-path-expr>
+[ec2-user@ip-10-64-46-133 ~]$ oc get nodes -o custom-columns='NAME:.metadata.name,KUBELET:.status.nodeInfo.kubeletVersion'
+NAME                           KUBELET
+ip-10-64-46-132.ec2.internal   v1.33.13
+ip-10-64-46-135.ec2.internal   v1.32.13
+ip-10-64-46-136.ec2.internal   v1.33.13
+ip-10-64-46-137.ec2.internal   v1.33.13
+ip-10-64-46-141.ec2.internal   v1.33.13
+ip-10-64-46-145.ec2.internal   v1.32.13
+ip-10-64-46-149.ec2.internal   v1.32.13
+ip-10-64-46-150.ec2.internal   v1.32.13
+ip-10-64-46-151.ec2.internal   v1.32.13
+ip-10-64-46-154.ec2.internal   v1.32.13
+ip-10-64-46-157.ec2.internal   v1.32.13
 [ec2-user@ip-10-64-46-133 ~]$ oc adm upgrade status
-info: An upgrade is in progress. Working towards 4.20.38: 830 of 962 done (86% complete), waiting on machine-config
+info: An upgrade is in progress. Working towards 4.20.38: 120 of 962 done (12% complete), waiting up to 40 minutes on etcd, kube-apiserver
 
 Upgradeable=False
 
@@ -10,36 +29,11 @@ Upgradeable=False
   Message: Cluster should not be upgraded between minor versions for multiple reasons: AdminAckRequired,ClusterOperatorsNotUpgradeable,UpdateInProgress
 * The admissionregistration.k8s.io/v1beta1 group version is deprecated in 4.19 and will be removed in 4.20. Any clients using the v1beta1 version of these resources must be updated to use the corresponding v1 version instead. See https://access.redhat.com/articles/7130599 for more information.
 * Multiple cluster operators should not be upgraded between minor versions:
-* Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade: KubeletMinorVersionUpgradeable: Kubelet minor versions on 11 nodes will not be supported in the next OpenShift minor version upgrade.
 * Cluster operator operator-lifecycle-manager should not be upgraded between minor versions: IncompatibleOperatorsInstalled: ClusterServiceVersions blocking minor version upgrades to 4.21.0 or higher:
-- maximum supported OCP version for rtf-uat/runtime-fabric-operator.v3.0.1 is 4.20
 - maximum supported OCP version for openshift-logging/cluster-logging.v6.2.11 is 4.20
+- maximum supported OCP version for rtf-uat/runtime-fabric-operator.v3.0.1 is 4.20
+* Cluster operator kube-apiserver should not be upgraded between minor versions: KubeletMinorVersion_KubeletMinorVersionUnsupportedNextUpgrade: KubeletMinorVersionUpgradeable: Kubelet minor versions on 8 nodes will not be supported in the next OpenShift minor version upgrade.
 * An update is already in progress and the details are in the Progressing condition
 
 No updates available. You may force an upgrade to a specific release image, but doing so may not be supported and result in downtime or data loss.
-[ec2-user@ip-10-64-46-133 ~]$ oc get co ingress console authentication
-NAME             VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE   MESSAGE
-ingress          4.20.38   True        False         False      8d
-console          4.20.38   True        False         False      2m16s
-authentication   4.20.38   True        False         False      72d
-[ec2-user@ip-10-64-46-133 ~]$ oc get mcp
-NAME     CONFIG                                             UPDATED   UPDATING   DEGRADED   MACHINECOUNT   READYMACHINECOUNT   UPDATEDMACHINECOUNT   DEGRADEDMACHINECOUNT   AGE
-master   rendered-master-06261025a13ba55ab11565e19316cb05   True      False      False      3              3                   3                     0                      675d
-worker   rendered-worker-583cab4dae5fa8e821e3d14d1db004b6   True      False      False      8              8                   8                     0                      675d
-[ec2-user@ip-10-64-46-133 ~]$ oc get pods -n openshift-ingress -o wide
-NAME                                     READY   STATUS    RESTARTS   AGE   IP             NODE                           NOMINATED NODE   READINESS GATES
-router-default-758b5fc77-2qj5v           1/1     Running   0          27m   10.129.2.39    ip-10-64-46-132.ec2.internal   <none>           <none>
-router-default-758b5fc77-xvxv9           1/1     Running   0          27m   10.130.2.47    ip-10-64-46-149.ec2.internal   <none>           <none>
-router-public-ingress-6c757d84b5-7b8gb   1/1     Running   0          27m   10.129.6.89    ip-10-64-46-150.ec2.internal   <none>           <none>
-router-public-ingress-6c757d84b5-lhd92   1/1     Running   0          27m   10.131.0.164   ip-10-64-46-136.ec2.internal   <none>           <none>
-[ec2-user@ip-10-64-46-133 ~]$ oc get pods -n openshift-ingress-canary -o wide
-NAME                   READY   STATUS    RESTARTS   AGE   IP             NODE                           NOMINATED NODE   READINESS GATES
-ingress-canary-7j8l7   1/1     Running   0          27m   10.131.6.215   ip-10-64-46-157.ec2.internal   <none>           <none>
-ingress-canary-842m7   1/1     Running   0          26m   10.129.2.46    ip-10-64-46-132.ec2.internal   <none>           <none>
-ingress-canary-fmz95   1/1     Running   0          27m   10.130.2.54    ip-10-64-46-149.ec2.internal   <none>           <none>
-ingress-canary-gzgp8   1/1     Running   0          27m   10.131.0.163   ip-10-64-46-136.ec2.internal   <none>           <none>
-ingress-canary-mhlfg   1/1     Running   0          27m   10.128.8.242   ip-10-64-46-154.ec2.internal   <none>           <none>
-ingress-canary-rjt7b   1/1     Running   0          27m   10.128.2.21    ip-10-64-46-145.ec2.internal   <none>           <none>
-ingress-canary-t9jnv   1/1     Running   0          27m   10.129.6.90    ip-10-64-46-150.ec2.internal   <none>           <none>
-ingress-canary-xqf5v   1/1     Running   0          27m   10.131.2.53    ip-10-64-46-151.ec2.internal   <none>           <none>
 [ec2-user@ip-10-64-46-133 ~]$
